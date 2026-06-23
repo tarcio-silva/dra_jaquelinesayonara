@@ -1,1 +1,0 @@
-export {navItens, socialLinks} from "./contants/CONSTANTS";
