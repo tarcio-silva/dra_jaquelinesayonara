@@ -1,0 +1,131 @@
+header {
+  height: 100vh;
+  margin: 0;
+  width: 100%;
+}
+.header-nav {
+  align-items: center;
+  background-color: #fae7ebd8;
+  display: flex;
+  gap: 32px;
+  height: 40px;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin: 0;
+  position: fixed;
+  transition: all 0.5s ease-in-out;
+  width: 100%;
+  z-index: 100;
+}
+.header-nav img {
+  height: 32px;
+  width: 32px;
+}
+
+.header-nav ul {
+  justify-content: center;
+  list-style: none;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  z-index: 101;
+}
+.header-nav ul li a img {
+  height: 20px;
+  width: 20px;
+}
+.header-nav ul .switch-button-darkmode {
+  display: flex;
+  margin: 0;
+}
+
+header .banner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background: center / cover no-repeat
+    url("../../img/header/main-banner/trabalho_em_consultorio2.webp") fixed;
+}
+
+div.logo-container {
+  align-items: center;
+  background-color: var(--logo-pallete-petal-rose);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 180px;
+  margin-top: -145px;
+  width: 100%;
+}
+
+div.logo-container div.logo > img {
+  width: 320px;
+}
+div.logo-container .slogan {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+section .banner-image-container {
+  justify-content: center;
+  display: flex;
+  background-color: #fae7eb92;
+  margin-top: 40px;
+  width: 100%;
+}
+section .banner-image-container > img {
+  width: 100%;
+}
+
+@media only screen and (min-device-width: 300px) and (max-device-width: 1199px) {
+  header {
+    height: 100%;
+  }
+  .header-nav ul {
+    display: none;
+  }
+}
+@media only screen and (min-device-width: 433px) and (max-device-width: 1199px) {
+  section .banner-image-container > img {
+    max-width: 200px;
+  }
+}
+
+@media screen and (min-device-width: 1200px) {
+  header {
+    height: initial;
+  }
+  .header-nav {
+    justify-content: center;
+  }
+  .header-nav ul {
+    display: flex;
+  }
+  .header-nav .header-link > p {
+    padding: 16px;
+  }
+   .header-nav .header-link > p:hover {
+    background-color: #a25356;
+    color: #fae7eb;
+    transition: all .5s ease-in-out;
+  }
+  .header-nav ul li p {
+    font-size: large;
+  }
+
+  div.logo-container {
+    height: 300px;
+    margin-top: -290px;
+  }
+  div.logo-container div.logo > img {
+    width: 600px;
+  }
+
+  section .banner-image-container > img {
+    width: 500px;
+  }
+  div.logo-container .slogan {
+    margin-top: 16px;
+  }
+}

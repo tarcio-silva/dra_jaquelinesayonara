@@ -1,0 +1,49 @@
+.about-container {
+  background-color: #fae7eb9b;
+  background-attachment: fixed;
+  border-radius: 8px;
+  margin: 0;
+  padding: 24px;
+}
+
+.about-container div section {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+}
+.about-container div > h2,
+p {
+  margin: 0;
+}
+.about-container div section > img {
+  width: 240px;
+}
+
+
+@media screen and (min-device-width: 1200px) {
+  .about-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 48px;
+  }
+
+  .about-container div section {
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 0 64px;
+    padding: 96px;
+  }
+
+ 
+
+  .about-container div section > img {
+    width: 400px;
+  }
+  .about-container div section p.about-description {
+    font-size: 2.5rem;
+    margin: 32px 0;
+    
+  }
+}

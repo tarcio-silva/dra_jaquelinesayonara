@@ -1,0 +1,25 @@
+.location-container {
+  margin-bottom: 24px;
+}
+
+.location-container > div {
+  width: 100%;
+}
+
+.location-container > div > div iframe {
+  width: 100%;
+ 
+}
+
+
+@media screen and (min-device-width: 1200px) {
+  .location-container > div div {
+    flex-direction: row-reverse;
+    gap: 8px;
+  }
+
+  .location-container > div iframe {
+    width: calc(60% - 4px);
+    height: 500px;
+  }
+}
