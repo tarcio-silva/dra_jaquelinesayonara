@@ -28,7 +28,7 @@
   margin: 0;
   margin-bottom: 8px;
 }
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .cards-container {
     gap: 24px;
   }

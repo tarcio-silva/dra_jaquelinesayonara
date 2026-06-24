@@ -78,7 +78,7 @@ section .banner-image-container > img {
   width: 100%;
 }
 
-@media only screen and (min-device-width: 300px) and (max-device-width: 1199px) {
+@media only screen and (min-width: 300px) and (max-width: 1199px) {
   header {
     height: 100%;
   }
@@ -86,13 +86,13 @@ section .banner-image-container > img {
     display: none;
   }
 }
-@media only screen and (min-device-width: 433px) and (max-device-width: 1199px) {
+@media only screen and (min-width: 433px) and (max-width: 1199px) {
   section .banner-image-container > img {
     max-width: 200px;
   }
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   header {
     height: initial;
   }

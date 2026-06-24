@@ -273,21 +273,21 @@ p {
 
 ## 📋 Resumo de Prioridades
 
-| Prioridade | Item | Esforço | Impacto |
-|-----------|------|---------|---------|
-| 🔴 Crítico | API Key exposta | Baixo | Segurança |
-| 🟡 Alto | Corrigir sitemap.xml | Mínimo | SEO |
-| 🟡 Alto | Schema.org + OG tags | Baixo | SEO |
-| 🟡 Alto | Heading hierarchy (h1) | Mínimo | SEO |
-| 🟢 Alto | Remover jQuery | Médio | -90KB, performance |
-| 🟢 Alto | Consolidar CSS | Médio | Menos requests |
-| 🟢 Médio | font-display: swap + woff2 | Baixo | LCP |
-| 🔵 Alto | Corrigir min-device-width | Baixo | Compatibilidade |
-| 🔵 Alto | ARIA no menu/toggle | Baixo | Acessibilidade |
-| 🔵 Médio | Alt texts em português | Baixo | Acessibilidade |
-| 🔵 Médio | Skip link + focus visible | Baixo | Acessibilidade |
-| 🎨 Médio | Hover animations + clamp() | Baixo | UX moderna |
-| 🎨 Baixo | CSS Grid nos cards | Baixo | Layout responsivo |
+| Prioridade | Item | Esforço | Impacto | Status |
+|-----------|------|---------|---------|--------|
+| 🔴 Crítico | API Key exposta | Baixo | Segurança | ✅ Concluído |
+| 🟡 Alto | Corrigir sitemap.xml | Mínimo | SEO | ✅ Concluído |
+| 🟡 Alto | Schema.org + OG tags | Baixo | SEO | ✅ Concluído |
+| 🟡 Alto | Heading hierarchy (h1) | Mínimo | SEO | ✅ Concluído |
+| 🟢 Alto | Remover jQuery | Médio | -132KB, performance | ✅ Concluído |
+| 🟢 Alto | Consolidar CSS | Médio | 1 request (era 13) | ✅ Concluído |
+| 🟢 Médio | font-display: swap + woff2 | Baixo | LCP | ✅ Concluído |
+| 🔵 Alto | Corrigir min-device-width | Baixo | Compatibilidade | ✅ Concluído |
+| 🔵 Alto | ARIA no menu/toggle | Baixo | Acessibilidade | ✅ Concluído |
+| 🔵 Médio | Alt texts em português | Baixo | Acessibilidade | ✅ Concluído |
+| 🔵 Médio | Skip link + focus visible | Baixo | Acessibilidade | ✅ Concluído |
+| 🎨 Médio | Hover animations + clamp() | Baixo | UX moderna | ⬚ Pendente |
+| 🎨 Baixo | CSS Grid nos cards | Baixo | Layout responsivo | ⬚ Pendente |
 
 ---
 

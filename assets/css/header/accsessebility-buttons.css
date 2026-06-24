@@ -24,7 +24,7 @@
   width: 20px;
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .accssebility-buttons {
     left: calc(100% - 64px);
   }

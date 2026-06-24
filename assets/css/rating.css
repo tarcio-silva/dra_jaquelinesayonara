@@ -107,7 +107,7 @@
   }
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .user-description .rating-stars {
     font-size: 3rem;
   }

@@ -1,0 +1,13 @@
+@import "./dark-theme.css";
+@import "./globalStyle.css";
+@import "./header/header.css";
+@import "./header/hamburger.css";
+@import "./header/accsessebility-buttons.css";
+@import "./header/offcanva.css";
+@import "./header/switch-button.css";
+@import "./about.css";
+@import "./cards.css";
+@import "./results.css";
+@import "./rating.css";
+@import "./location.css";
+@import "./footer.css";

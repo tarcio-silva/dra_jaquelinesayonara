@@ -21,7 +21,7 @@ p {
 }
 
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .about-container {
     display: flex;
     justify-content: center;

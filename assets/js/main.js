@@ -13,9 +13,13 @@ function toggleNav() {
 
   if (isActive) {
     hamburgerButton.classList.remove("is-active");
+    hamburgerButton.setAttribute("aria-expanded", "false");
+    offCanva.setAttribute("aria-hidden", "true");
     offCanva.style.left = "-120%";
   } else {
     hamburgerButton.classList.add("is-active");
+    hamburgerButton.setAttribute("aria-expanded", "true");
+    offCanva.setAttribute("aria-hidden", "false");
     offCanva.style.left = "0";
   }
 }

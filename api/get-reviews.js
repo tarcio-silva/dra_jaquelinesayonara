@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const apiKey = "AIzaSyDBBBLdU6T0me66qborCmUL7TUjxbl0-C0"; // process.env.VITE_GOOGLE_PLACES_API_KEY; // Hidden on the server!
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
   const placeId = "ChIJG2ynEABZrAcRE0WvmWTIAgk";
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`;
 

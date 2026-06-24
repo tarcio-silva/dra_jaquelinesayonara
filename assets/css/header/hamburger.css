@@ -98,7 +98,7 @@
   transform: translate3d(0, -20px, 0) rotate(-90deg);
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   .hamburger {
     display: none;
   }

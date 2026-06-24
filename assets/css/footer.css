@@ -52,7 +52,7 @@ footer .footer-logos .tslogo {
   width: 16px;
 }
 
-@media screen and (min-device-width: 1200px) {
+@media screen and (min-width: 1200px) {
   footer {
     padding: 24px;
   }
