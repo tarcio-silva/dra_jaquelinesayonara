@@ -13,6 +13,17 @@
   --logo-pallete-velvety-cherry: #a25356;
   --logo-pallete-light: #fff;
   --logo-pallete--dark: #000;
+
+  --color-bg: #fdfbfc;
+  --color-surface: #ffffff;
+  --color-text: #2d2d2d;
+  --color-text-muted: #6b6b6b;
+  --color-accent: #c8727a;
+  --color-success: #25d366;
+
+  --shadow-sm: 0 2px 8px rgba(162, 83, 86, 0.08);
+  --shadow-md: 0 8px 24px rgba(162, 83, 86, 0.12);
+  --shadow-lg: 0 16px 48px rgba(162, 83, 86, 0.16);
 }
 * {
   border: 0;
@@ -23,9 +34,14 @@
   scroll-margin-top: 80px;
   vertical-align: baseline;
 }
+html {
+  scroll-padding-top: 80px;
+}
 body {
   color: var(--logo-pallete-velvety-cherry);
   font-family: "Manrope";
+  background-color: var(--color-bg);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 p {
