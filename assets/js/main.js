@@ -25,12 +25,12 @@ function toggleNav() {
 }
 
 const getRating = async () => {
-  const response = await fetch("/api/get-reviews.js");
-  const reviews = await response.json();
-
-  console.log(reviews);
-
-  //return reviews;
+  try {
+    const response = await fetch("/api/get-reviews.js");
+    if (!response.ok) return;
+    const reviews = await response.json();
+    console.log(reviews);
+  } catch (e) {}
 };
 
 getRating();
