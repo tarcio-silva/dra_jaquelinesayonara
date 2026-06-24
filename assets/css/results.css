@@ -47,3 +47,30 @@
     flex: 0 0 calc(33.333% - 4px);
   }
 }
+
+.results-carousel {
+  position: relative;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 2.4rem;
+  color: var(--logo-pallete-velvety-cherry);
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s, color 0.2s;
+}
+.carousel-btn:hover {
+  background: var(--logo-pallete-velvety-cherry);
+  color: #fff;
+}
+.prev { left: 8px; }
+.next { right: 8px; }

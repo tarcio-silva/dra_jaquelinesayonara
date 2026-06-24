@@ -35,6 +35,19 @@ const getRating = async () => {
 
 getRating();
 
+// Active section indicator
+const sections = document.querySelectorAll("section[id]");
+const navObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll(".header-link").forEach(l => l.classList.remove("active"));
+      const active = document.querySelector(`.header-link[href="#${entry.target.id}"]`);
+      if (active) active.classList.add("active");
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => navObserver.observe(s));
+
 
 //const userContainer = document.getElementById("user-container");
 
@@ -74,3 +87,25 @@ getRating();
 //                         </div>
 //                     </div>`;
 //     });
+
+// Fade-in on scroll
+const fadeEls = document.querySelectorAll(".fade-in");
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add("visible");
+      fadeObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+fadeEls.forEach(el => fadeObserver.observe(el));
+
+// Carousel navigation
+const track = document.querySelector(".results-track");
+const prevBtn = document.querySelector(".carousel-btn.prev");
+const nextBtn = document.querySelector(".carousel-btn.next");
+if (track && prevBtn && nextBtn) {
+  const scrollAmount = () => track.querySelector(".result-item")?.offsetWidth + 5 || 300;
+  prevBtn.addEventListener("click", () => track.scrollBy({ left: -scrollAmount(), behavior: "smooth" }));
+  nextBtn.addEventListener("click", () => track.scrollBy({ left: scrollAmount(), behavior: "smooth" }));
+}

@@ -1,19 +1,23 @@
 header {
-  height: 100vh;
   margin: 0;
   width: 100%;
 }
+
+/* Navbar */
 .header-nav {
   align-items: center;
-  background-color: #fae7ebd8;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(162, 83, 86, 0.08);
   display: flex;
   gap: 32px;
-  height: 40px;
+  height: 64px;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 0 24px;
   margin: 0;
   position: fixed;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease;
   width: 100%;
   z-index: 100;
 }
@@ -21,11 +25,10 @@ header {
   height: 32px;
   width: 32px;
 }
-
 .header-nav ul {
   justify-content: center;
   list-style: none;
-  gap: 32px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   z-index: 101;
@@ -39,94 +42,109 @@ header {
   margin: 0;
 }
 
-header .banner {
+/* Active section indicator */
+.header-link > p {
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.header-link.active > p {
+  background-color: rgba(162, 83, 86, 0.1);
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  background: url("../../img/header/main-banner/trabalho_em_consultorio2.webp") center/cover no-repeat fixed;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(162, 83, 86, 0.75) 0%,
+    rgba(250, 231, 235, 0.4) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  background: center / cover no-repeat
-    url("../../img/header/main-banner/trabalho_em_consultorio2.webp") fixed;
-}
-
-div.logo-container {
   align-items: center;
-  background-color: var(--logo-pallete-petal-rose);
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  height: 180px;
-  margin-top: -145px;
-  width: 100%;
+  gap: 16px;
 }
 
-div.logo-container div.logo > img {
-  width: 320px;
-}
-div.logo-container .slogan {
-  font-size: 20px;
-  font-weight: 600;
-}
-
-section .banner-image-container {
-  justify-content: center;
-  display: flex;
-  background-color: #fae7eb92;
-  margin-top: 40px;
-  width: 100%;
-}
-section .banner-image-container > img {
-  width: 100%;
+.hero-logo {
+  width: 280px;
   height: auto;
+  filter: brightness(0) invert(1);
 }
 
-@media only screen and (min-width: 300px) and (max-width: 1199px) {
-  header {
-    height: 100%;
-  }
+.hero-subtitle {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 1.6rem !important;
+  font-weight: 400;
+}
+
+.hero-content .slogan {
+  color: #fff;
+  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  font-weight: 700;
+}
+
+.hero-content .slogan span {
+  color: #fff;
+}
+
+.btn-cta {
+  display: inline-block;
+  background: #fff;
+  color: var(--logo-pallete-velvety-cherry);
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+@media only screen and (max-width: 1199px) {
   .header-nav ul {
     display: none;
   }
 }
-@media only screen and (min-width: 433px) and (max-width: 1199px) {
-  section .banner-image-container > img {
-    max-width: 200px;
-  }
-}
 
 @media screen and (min-width: 1200px) {
-  header {
-    height: initial;
-  }
   .header-nav {
     justify-content: center;
+    padding: 0 32px;
   }
   .header-nav ul {
     display: flex;
   }
-  .header-nav .header-link > p {
-    padding: 16px;
-  }
-   .header-nav .header-link > p:hover {
-    background-color: #a25356;
-    color: #fae7eb;
-    transition: all .5s ease-in-out;
+  .header-nav .header-link > p:hover {
+    background-color: rgba(162, 83, 86, 0.1);
+    color: var(--logo-pallete-velvety-cherry);
   }
   .header-nav ul li p {
     font-size: large;
   }
-
-  div.logo-container {
-    height: 300px;
-    margin-top: -290px;
-  }
-  div.logo-container div.logo > img {
-    width: 600px;
-  }
-
-  section .banner-image-container > img {
-    width: 500px;
-  }
-  div.logo-container .slogan {
-    margin-top: 16px;
+  .hero-logo {
+    width: 480px;
   }
 }
