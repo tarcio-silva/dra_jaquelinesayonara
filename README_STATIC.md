@@ -58,8 +58,8 @@ Landing page institucional estática para a **Dra. Jaqueline Sayonara**, cirurgi
 
 | Seção | ID | Descrição |
 |-------|------|-----------|
-| Header | `#home` | Banner com foto, logo, slogan "Cuidado, Saúde, Autoestima" |
-| Sobre | `#about` | Apresentação da profissional |
+| Header | — | Hero split: foto da Dra. (50%) + logo, slogan e CTA (50%). Layout space-between. |
+| Sobre | `#about` | Apresentação da profissional com foto arredondada, CRO e botão "Conheça meu trabalho" |
 | Tratamentos | `#care` | 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
 | Resultados | `#results` | Carrossel CSS Scroll Snap com antes/depois |
 | Avaliações | — | Reviews do Google com skeleton loading |
@@ -108,7 +108,9 @@ npx serve .
 
 ## Build CSS
 
-O CSS é modular (13 arquivos) e consolidado em um único `styles.min.css` via LightningCSS:
+O CSS está atualmente **inline no `<head>`** do `index.html` (tag `<style>`) para performance máxima (zero requests CSS extras). Os arquivos `.css` modulares em `assets/css/` servem como fonte de referência/desenvolvimento.
+
+Para editar estilos, modifique diretamente a tag `<style>` no `index.html` ou edite os módulos e re-gere o inline com LightningCSS:
 
 ```bash
 npx lightningcss --minify --bundle assets/css/styles.css -o assets/css/styles.min.css

@@ -4,6 +4,38 @@ Guia técnico de melhorias visuais e de UX para tornar o site mais moderno, prof
 
 ---
 
+## ✅ Changelog — Alterações Implementadas (25/06/2026)
+
+### Header / Hero Section — Redesenhado
+- **Layout split (space-between):** imagem `header_picture_mobile.webp` à esquerda (50%) e conteúdo à direita (50%)
+- **Imagem como elemento `<img>`** com `object-fit: cover` em vez de background CSS
+- **Overlay gradiente** de baixo para cima removido (overlay agora `display:none` no layout split)
+- **Logo** com cores originais (removido `filter: brightness(0) invert()`) para contraste em fundo claro
+- **Slogan** "Cuidado, Saúde, Autoestima" com cor `--logo-pallete-velvety-cherry` (não mais branco)
+- **Botão CTA** "Agende sua consulta" com fundo cherry e texto branco
+- **Subtítulo** "Ortodontia e Estética Dental — Sapé/PB" removido
+- **Responsivo mobile:** empilha verticalmente (imagem em cima 50vh, conteúdo embaixo)
+
+### Seção Sobre — Redesenhada
+- **Título** atualizado para "Sobre Mim"
+- **Subtítulo** com CRO adicionado: "Dra. Jaqueline Sayonara — CRO-PB 9833"
+- **Foto** com `border-radius: 16px` e sombra elegante (`box-shadow`)
+- **Botão** "Conheça meu trabalho" com estilo outline (borda cherry) e hover preenchido
+- **Espaçamento** generoso com `gap: 32px` (mobile) e `gap: 64px` (desktop)
+- **Layout desktop:** side-by-side com imagem à direita (380px × 500px)
+- **Dark mode:** cores do about adaptadas (surface, text-muted, botão)
+
+### Dark Mode — Ajustes
+- **Nav social media:** adicionado `color: #f5f0f1` para links e SVGs (contraste no fundo escuro)
+- **Offcanva:** texto claro no dark mode
+- **Hero overlay:** gradiente atualizado para paleta escura
+
+### Navbar
+- Mantido glassmorphism com `backdrop-filter: blur(12px)`
+- Dark mode com background `#1a1218d9` e borda transparente
+
+---
+
 ## Diagnóstico do Design Atual
 
 ### Pontos Fortes
@@ -507,23 +539,23 @@ html {
 
 ## 📋 Resumo de Prioridades
 
-| # | Item | Esforço | Impacto Visual | Impacto Conversão |
-|---|------|---------|----------------|-------------------|
-| 1 | Hero com CTA | Médio | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 2 | Botão WhatsApp flutuante | Baixo | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ |
-| 3 | Navbar glassmorphism + ativa | Baixo | ⭐⭐⭐⭐ | ⭐⭐ |
-| 4 | Tipografia clamp() | Baixo | ⭐⭐⭐⭐ | ⭐ |
-| 5 | Cards com hover + Grid | Baixo | ⭐⭐⭐⭐ | ⭐⭐ |
-| 6 | White space generoso | Baixo | ⭐⭐⭐⭐⭐ | ⭐⭐ |
-| 7 | Seção Sobre split layout | Médio | ⭐⭐⭐⭐ | ⭐ |
-| 8 | Animações fade-in | Baixo | ⭐⭐⭐⭐ | ⭐ |
-| 9 | Carrossel com controles | Baixo | ⭐⭐⭐ | ⭐⭐ |
-| 10 | Footer em colunas | Médio | ⭐⭐⭐ | ⭐ |
-| 11 | Paleta expandida | Baixo | ⭐⭐⭐ | ⭐ |
-| 12 | Ícones SVG | Médio | ⭐⭐⭐ | ⭐ |
-| 13 | Depoimentos redesenhados | Médio | ⭐⭐⭐⭐ | ⭐⭐⭐ |
-| 14 | Dark mode refinado | Baixo | ⭐⭐⭐ | ⭐ |
-| 15 | Scroll padding + transitions | Mínimo | ⭐⭐ | ⭐ |
+| # | Item | Esforço | Impacto Visual | Impacto Conversão | Status |
+|---|------|---------|----------------|-------------------|--------|
+| 1 | Hero com CTA | Médio | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ Concluído |
+| 2 | Botão WhatsApp flutuante | Baixo | ⭐⭐⭐ | ⭐⭐⭐⭐⭐ | ✅ Concluído |
+| 3 | Navbar glassmorphism + ativa | Baixo | ⭐⭐⭐⭐ | ⭐⭐ | ✅ Concluído |
+| 4 | Tipografia clamp() | Baixo | ⭐⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 5 | Cards com hover + Grid | Baixo | ⭐⭐⭐⭐ | ⭐⭐ | ✅ Concluído |
+| 6 | White space generoso | Baixo | ⭐⭐⭐⭐⭐ | ⭐⭐ | ✅ Concluído |
+| 7 | Seção Sobre split layout | Médio | ⭐⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 8 | Animações fade-in | Baixo | ⭐⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 9 | Carrossel com controles | Baixo | ⭐⭐⭐ | ⭐⭐ | ✅ Concluído |
+| 10 | Footer em colunas | Médio | ⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 11 | Paleta expandida | Baixo | ⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 12 | Ícones SVG | Médio | ⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 13 | Depoimentos redesenhados | Médio | ⭐⭐⭐⭐ | ⭐⭐⭐ | Pendente |
+| 14 | Dark mode refinado | Baixo | ⭐⭐⭐ | ⭐ | ✅ Concluído |
+| 15 | Scroll padding + transitions | Mínimo | ⭐⭐ | ⭐ | ✅ Concluído |
 
 ---
 
