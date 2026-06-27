@@ -41,6 +41,28 @@
   margin: 0 0 8px;
 }
 
+@media only screen and (max-width: 1199px) {
+  .card-container {
+    border-radius: 20px;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .card-container:active {
+    transform: scale(0.97);
+    transition: transform 0.1s;
+  }
+  .btn-cta,
+  .btn-about {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .btn-cta:active,
+  .btn-about:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+}
+
 @media screen and (min-width: 1200px) {
   .cards-container {
     gap: 32px;

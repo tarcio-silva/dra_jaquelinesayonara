@@ -109,3 +109,13 @@ if (track && prevBtn && nextBtn) {
   prevBtn.addEventListener("click", () => track.scrollBy({ left: -scrollAmount(), behavior: "smooth" }));
   nextBtn.addEventListener("click", () => track.scrollBy({ left: scrollAmount(), behavior: "smooth" }));
 }
+
+// Rating carousel navigation
+const ratingTrack = document.getElementById("user-container");
+const ratingPrev = document.querySelector(".rating-prev");
+const ratingNext = document.querySelector(".rating-next");
+if (ratingTrack && ratingPrev && ratingNext) {
+  const ratingScroll = () => ratingTrack.querySelector(".user-container, .skeleton")?.offsetWidth + 16 || 406;
+  ratingPrev.addEventListener("click", () => ratingTrack.scrollBy({ left: -ratingScroll(), behavior: "smooth" }));
+  ratingNext.addEventListener("click", () => ratingTrack.scrollBy({ left: ratingScroll(), behavior: "smooth" }));
+}

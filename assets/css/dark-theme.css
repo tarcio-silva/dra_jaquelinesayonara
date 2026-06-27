@@ -24,12 +24,22 @@
   border-bottom-color: rgba(255, 255, 255, 0.05);
 }
 
+.dark-theme .header-nav a,
+.dark-theme .header-nav p {
+  color: #f5f0f1;
+}
+
 .dark-theme .offcanva {
   background-color: var(--color-surface);
 }
 
+.dark-theme .offcanva a,
+.dark-theme .offcanva p {
+  color: #f5f0f1;
+}
+
 .dark-theme .hero-overlay {
-  background: linear-gradient(160deg, rgba(26, 18, 24, 0.8) 0%, rgba(42, 31, 35, 0.6) 100%);
+  background: linear-gradient(to top, rgba(26, 18, 24, 0.9) 0%, rgba(26, 18, 24, 0.5) 40%, rgba(0, 0, 0, 0.3) 100%);
 }
 
 .dark-theme .btn-cta {
@@ -39,10 +49,26 @@
 
 .dark-theme .about-container {
   background-color: var(--color-surface);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
 }
 
 .dark-theme .about-container p.about-description {
   color: var(--color-text-muted);
+}
+
+.dark-theme .about-subtitle {
+  color: var(--color-text-muted);
+}
+
+.dark-theme .btn-about {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.dark-theme .btn-about:hover {
+  background: var(--logo-pallete-velvety-cherry);
+  color: #fff;
+  border-color: var(--logo-pallete-velvety-cherry);
 }
 
 .dark-theme .card-container {
