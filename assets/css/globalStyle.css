@@ -36,12 +36,16 @@
 }
 html {
   scroll-padding-top: 80px;
+  overscroll-behavior-y: none;
 }
 body {
   color: var(--logo-pallete-velvety-cherry);
   font-family: "Manrope";
   background-color: var(--color-bg);
   transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
 p {
@@ -130,4 +134,16 @@ main section {
 }
 .whatsapp-float:hover {
   transform: scale(1.1);
+}
+
+@media only screen and (max-width: 1199px) {
+  main section {
+    padding: 40px 16px;
+  }
+  .section-title {
+    font-size: 2.2rem;
+  }
+  .whatsapp-float {
+    bottom: calc(24px + env(safe-area-inset-bottom));
+  }
 }
