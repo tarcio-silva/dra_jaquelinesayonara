@@ -77,15 +77,24 @@
 }
 
 .dark-theme .rating-container {
+  background: var(--color-bg);
+}
+
+.dark-theme .review-card {
   background: var(--color-surface);
 }
 
-.dark-theme .user-description {
-  background-color: var(--color-bg);
+.dark-theme .review-content strong {
+  color: var(--color-text);
 }
 
-.dark-theme .user-container > img {
-  border-color: var(--color-surface);
+.dark-theme .review-content p {
+  color: var(--color-text-muted);
+}
+
+.dark-theme .review-skeleton .skel-avatar,
+.dark-theme .review-skeleton .skel-line {
+  background: #3d2f33;
 }
 
 .dark-theme footer {

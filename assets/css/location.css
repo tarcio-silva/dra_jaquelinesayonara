@@ -2,24 +2,38 @@
   margin-bottom: 24px;
 }
 
-.location-container > div {
-  width: 100%;
+.location-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
 }
 
-.location-container > div > div iframe {
-  width: 100%;
- 
+.location-video {
+  border-radius: 16px;
+  overflow: hidden;
 }
 
+.location-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+.location-grid iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 16px;
+}
 
 @media screen and (min-width: 1200px) {
-  .location-container > div div {
-    flex-direction: row-reverse;
-    gap: 8px;
+  .location-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
-
-  .location-container > div iframe {
-    width: calc(60% - 4px);
-    height: 500px;
+  .location-grid iframe {
+    height: 100%;
+    min-height: 400px;
   }
 }

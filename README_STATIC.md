@@ -1,136 +1,147 @@
-# Dra. Jaqueline Sayonara — Site Estático (static-app)
+# Documentação Técnica — Site Dra. Jaqueline Sayonara
 
-Landing page institucional estática para a **Dra. Jaqueline Sayonara**, cirurgiã-dentista especialista em Ortodontia — Sapé/PB.
+Documentação técnica completa da landing page institucional.
 
 🔗 **Produção:** https://drajaquelinesayonara.vercel.app/
 
-## Stack
+---
 
-| Tecnologia | Versão | Uso |
-|-----------|--------|-----|
-| HTML5 | — | Estrutura semântica |
-| CSS3 | — | Estilização modular com custom properties + CSS Scroll Snap |
-| JavaScript | ES Modules | Lógica do cliente (dark mode, reviews, menu) |
-| LightningCSS | 1.28.2 | Bundling e minificação CSS |
-| normalize.css | 8.0.1 | Reset CSS cross-browser |
-| Google Places API | — | Avaliações de pacientes |
-| Vercel | — | Deploy e Serverless Functions |
+## Arquitetura
 
-## Estrutura de Arquivos
+O site é uma **single-page estática** com CSS inline para performance máxima (zero requests CSS extras). Os módulos CSS em `assets/css/` são a fonte de desenvolvimento — o build gera o bundle minificado que é copiado para o inline do `<head>`.
+
+### Fluxo de build
 
 ```
-├── index.html                 # Página principal
-├── build-css.sh               # Script de build — gera styles.min.css
-├── api/
-│   └── get-reviews.js         # Serverless function (Vercel) — Google Places API
-├── assets/
-│   ├── css/
-│   │   ├── styles.css         # Entry point — importa todos os módulos
-│   │   ├── styles.min.css     # Bundle minificado (produção)
-│   │   ├── globalStyle.css    # Variáveis, tipografia, reset base, utilitários
-│   │   ├── dark-theme.css     # Tema escuro
-│   │   ├── about.css          # Seção Sobre
-│   │   ├── cards.css          # Cards de tratamentos
-│   │   ├── results.css        # Seção Resultados (CSS Scroll Snap)
-│   │   ├── rating.css         # Seção Avaliações + skeleton loading
-│   │   ├── location.css       # Seção Localização (iframe mapa)
-│   │   ├── footer.css         # Rodapé
-│   │   └── header/
-│   │       ├── header.css     # Banner, navbar, logo
-│   │       ├── hamburger.css  # Botão hamburger animado
-│   │       ├── offcanva.css   # Menu off-canvas mobile
-│   │       ├── switch-button.css  # Toggle dark mode
-│   │       └── accsessebility-buttons.css
-│   ├── js/
-│   │   └── main.js            # Lógica principal (reviews, menu, ARIA)
-│   ├── img/                   # Imagens (webp, png)
-│   └── font/
-│       ├── Manrope-VariableFont_wght.woff2  # Fonte principal (55KB)
-│       └── Manrope-VariableFont_wght.ttf    # Fallback
-├── robots.txt
-├── sitemap.xml
-├── google962378b089d1b19d.html # Verificação Google Search Console
-├── package.json
-└── package-lock.json
+assets/css/*.css  →  LightningCSS (bundle + minify)  →  styles.min.css  →  inline no <style>
 ```
 
-## Seções da Página
+### Módulos CSS
 
-| Seção | ID | Descrição |
-|-------|------|-----------|
-| Header | — | Hero split: foto da Dra. (50%) + logo, slogan e CTA (50%). Layout space-between. |
-| Sobre | `#about` | Apresentação da profissional com foto arredondada, CRO e botão "Conheça meu trabalho" |
-| Tratamentos | `#care` | 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
-| Resultados | `#results` | Carrossel CSS Scroll Snap com antes/depois |
-| Avaliações | — | Reviews do Google com skeleton loading |
-| Localização | `#location` | Iframe Google Maps |
-| Footer | — | Contato, redes sociais, CRO |
+| Arquivo | Responsabilidade |
+|---------|-----------------|
+| `globalStyle.css` | Variáveis, tipografia (`clamp()`), reset, utilitários (`.sr-only`, `.skip-link`, `.fade-in`, `.whatsapp-float`) |
+| `dark-theme.css` | Overrides de cores para `.dark-theme` (bg, surface, text, sombras) |
+| `header/header.css` | Navbar glassmorphism, hero split, logo, CTA, responsividade |
+| `header/hamburger.css` | Botão hamburger animado (slider) |
+| `header/offcanva.css` | Menu off-canvas mobile |
+| `header/switch-button.css` | Toggle dark mode (checkbox + slider) |
+| `header/accsessebility-buttons.css` | Botões de acessibilidade |
+| `about.css` | Seção Sobre (card, foto, layout split desktop) |
+| `cards.css` | Cards de tratamentos (Grid, hover com elevação, zoom na imagem) |
+| `results.css` | Grid de resultados (2/3 colunas), hover reveal com label, lightbox |
+| `rating.css` | Cards de avaliações (grid responsivo, skeleton loading) |
+| `location.css` | Layout split vídeo + mapa (grid 1fr 1fr) |
+| `footer.css` | Footer em colunas (grid 1/3), bottom bar, logo |
 
-## Funcionalidades
+---
 
-- **Responsividade** — Breakpoint em 1200px (`min-width`); menu hamburger no mobile, navbar fixa no desktop
-- **Dark Mode** — Toggle via checkbox com `aria-label`, aplica classe `.dark-theme` no body
-- **Avaliações Google** — Serverless function (`/api/get-reviews.js`) consulta Google Places API via variável de ambiente
-- **Skeleton Loading** — Placeholder animado enquanto reviews carregam
-- **Carrossel** — CSS Scroll Snap com responsividade (1/2/3 itens por breakpoint)
-- **SEO** — Meta tags, Open Graph, Twitter Cards, JSON-LD (Schema.org), canonical, robots.txt, sitemap
-- **Acessibilidade** — ARIA no menu/toggle, skip link, `:focus-visible`, alt texts descritivos em português, heading hierarchy (`<h1>`)
+## JavaScript (`assets/js/main.js`)
 
-## Design System
+Zero dependências. Funcionalidades:
 
-```css
-:root {
-  --logo-pallete-petal-rose: #fae7eb;
-  --logo-pallete-velvety-cherry: #a25356;
-  --logo-pallete-light: #fff;
-  --logo-pallete--dark: #000;
+| Funcionalidade | Implementação |
+|----------------|---------------|
+| Menu off-canvas | Toggle de classe + ARIA (`aria-expanded`, `aria-hidden`) |
+| Avaliações Google | `fetch('/api/get-reviews')` → renderiza cards ou mantém skeletons |
+| Seção ativa (navbar) | `IntersectionObserver` nas `section[id]` → classe `.active` no link |
+| Fade-in on scroll | `IntersectionObserver` em `.fade-in` → adiciona `.visible` |
+| Lightbox | Click em `.result-item` → overlay com imagem ampliada |
+
+---
+
+## Serverless Function (`api/get-reviews.js`)
+
+```javascript
+// Vercel Serverless — busca reviews do Google Places API
+export default async function handler(req, res) {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  const placeId = "ChIJG2ynEABZrAcRE0WvmWTIAgk";
+  // Retorna array de reviews com: author_name, profile_photo_url, rating, text
 }
 ```
 
-- **Fonte:** Manrope (variable font, WOFF2 + TTF fallback, `font-display: swap`)
-- **Base font-size:** 62.5% (1rem = 10px)
+**Requisitos:**
+- Variável `GOOGLE_PLACES_API_KEY` no painel Vercel
+- Chave restrita ao domínio no Google Cloud Console
 
-## Como Executar
+---
 
-```bash
-# Instalar dependências
-npm install
+## SEO
 
-# Build CSS (bundle + minificação)
-./build-css.sh
+| Recurso | Implementação |
+|---------|---------------|
+| Schema.org | JSON-LD `Dentist` no `<head>` |
+| Open Graph | `og:title`, `og:description`, `og:image`, `og:url` |
+| Twitter Cards | `summary_large_image` |
+| Canonical | `<link rel="canonical">` |
+| Sitemap | `sitemap.xml` |
+| Robots | `robots.txt` |
+| Heading hierarchy | `<h1>` (sr-only) → `<h2>` por seção |
+| Google Verification | `google962378b089d1b19d.html` |
 
-# Servir localmente
-npx serve .
+---
+
+## Acessibilidade
+
+- **Skip link** — "Pular para o conteúdo principal"
+- **ARIA** — `aria-expanded`, `aria-hidden`, `aria-label` no menu e botões
+- **Focus visible** — Outline cherry com offset de 2px
+- **Alt texts** — Em português, descritivos por procedimento
+- **Dark mode** — Toggle acessível via `<input type="checkbox">`
+- **Fonte legível** — Manrope variable, tamanhos com `clamp()`
+
+---
+
+## Performance
+
+| Otimização | Detalhes |
+|-----------|----------|
+| CSS inline | Zero requests CSS (tudo no `<style>`) |
+| Font preload | WOFF2 com `<link rel="preload">` |
+| Preconnect | Google Maps e Google APIs |
+| Lazy loading | `loading="lazy"` em imagens e iframe |
+| Video | `preload="none"` + autoplay/muted/loop |
+| Imagens WebP | Todas otimizadas em formato WebP |
+| Zero JS libs | Vanilla JS, sem dependências |
+
+---
+
+## Dark Mode
+
+Ativado via checkbox que togla `.dark-theme` no `<body>`. Override de variáveis:
+
+```css
+.dark-theme {
+  --color-bg: #1a1218;
+  --color-surface: #2a1f23;
+  --color-text: #f5f0f1;
+  --color-text-muted: #b8a8ab;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
 ```
 
-> A serverless function `/api/get-reviews.js` funciona apenas no ambiente Vercel.
-> Requer variável de ambiente `GOOGLE_PLACES_API_KEY` configurada no painel da Vercel.
+Componentes com estilos específicos no dark: navbar, hero overlay, about, cards, reviews, footer.
 
-## Build CSS
+---
 
-O CSS está atualmente **inline no `<head>`** do `index.html` (tag `<style>`) para performance máxima (zero requests CSS extras). Os arquivos `.css` modulares em `assets/css/` servem como fonte de referência/desenvolvimento.
+## Responsividade
 
-Para editar estilos, modifique diretamente a tag `<style>` no `index.html` ou edite os módulos e re-gere o inline com LightningCSS:
+| Breakpoint | Comportamento |
+|-----------|---------------|
+| `< 768px` | Grid 1-2 colunas, menu hamburger, hero empilhado |
+| `768px – 1199px` | Grid 2-3 colunas, transição |
+| `≥ 1200px` | Navbar com links visíveis, hero split 42%/58%, layouts side-by-side |
 
-```bash
-npx lightningcss --minify --bundle assets/css/styles.css -o assets/css/styles.min.css
-```
+Mobile-first com `min-width` media queries. Safe area insets para dispositivos com notch.
 
-Após editar qualquer arquivo `.css`, execute `./build-css.sh` para regenerar o bundle.
+---
 
-## Deploy
+## Como Contribuir
 
-O site é deployado automaticamente na **Vercel** a cada push na branch `static-app`.
+1. Editar os módulos CSS em `assets/css/`
+2. Rodar `./build-css.sh` para gerar `styles.min.css`
+3. Atualizar o inline no `index.html` (copiar conteúdo do min para a tag `<style>`)
+4. Testar com `npx serve .`
 
-### Variáveis de Ambiente (Vercel)
-
-| Variável | Descrição |
-|----------|-----------|
-| `GOOGLE_PLACES_API_KEY` | Chave da Google Places API para buscar avaliações |
-
-## Contato
-
-- 📱 WhatsApp: (83) 99405-8749
-- 📷 Instagram: [@drajaquelinesayonara](https://www.instagram.com/drajaquelinesayonara/)
-- 📘 Facebook: [Dra Jaqueline Sayonara](https://www.facebook.com/drajaquelinesayonara)
-- 🏥 CRO-PB: 9833
+> **Dica:** Para desenvolvimento rápido, referencie `styles.min.css` via `<link>` temporariamente em vez do inline.

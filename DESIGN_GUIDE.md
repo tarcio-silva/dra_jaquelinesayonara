@@ -553,7 +553,7 @@ html {
 | 10 | Footer em colunas | Médio | ⭐⭐⭐ | ⭐ | ✅ Concluído |
 | 11 | Paleta expandida | Baixo | ⭐⭐⭐ | ⭐ | ✅ Concluído |
 | 12 | Ícones SVG | Médio | ⭐⭐⭐ | ⭐ | ✅ Concluído |
-| 13 | Depoimentos redesenhados | Médio | ⭐⭐⭐⭐ | ⭐⭐⭐ | Pendente |
+| 13 | Depoimentos redesenhados | Médio | ⭐⭐⭐⭐ | ⭐⭐⭐ | ✅ Concluído |
 | 14 | Dark mode refinado | Baixo | ⭐⭐⭐ | ⭐ | ✅ Concluído |
 | 15 | Scroll padding + transitions | Mínimo | ⭐⭐ | ⭐ | ✅ Concluído |
 

@@ -1,133 +1,121 @@
 .rating-container {
-  background-color: #fae7eb9b;
-  background-attachment: fixed;
-  padding-bottom: 24px;
+  background-color: var(--color-bg);
 }
 
-.rating-carousel {
-  position: relative;
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+.review-card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.review-card img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.review-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.review-content strong {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-text);
+}
+
+.review-stars {
+  color: #e4a700;
+  font-size: 1.6rem;
+  margin-bottom: 8px;
+}
+
+.review-content p {
+  font-size: 1.3rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.users-container {
+/* Skeleton */
+.review-skeleton {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
   display: flex;
   gap: 16px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -webkit-overflow-scrolling: touch;
+  align-items: flex-start;
+  animation: shimmer 1.5s infinite;
 }
 
-.users-container::-webkit-scrollbar {
-  display: none;
+.review-skeleton .skel-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e0d6d8;
 }
 
-.user-container {
-  align-items: center;
+.review-skeleton .skel-lines {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  width: 390px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-}
-.user-container > img {
-  border: 4px solid var(--logo-pallete-petal-rose);
-  border-radius: 50%;
-  margin-bottom: -100px;
-  width: 200px;
-  z-index: 1;
-}
-.user-description {
-  background-color: var(--logo-pallete-petal-rose);
-  border-radius: 8px;
-  padding: 16px;
-  padding-top: 116px;
-  height: 144px;
-  text-align: center;
-  width: 100%;
+  gap: 8px;
 }
 
-.user-description .rating-stars .star {
-  color: rgb(204, 187, 4);
-  font-size: 2.5rem;
-}
-.user-description span {
-  font-size: 1.75rem;
-  font-weight: 900;
-}
-.user-description p {
-  font-size: 1.25rem;
-}
-
-.skeleton {
-  align-items: center;
-  animation: fadeCard 4s infinite alternate;
-  display: flex;
-  flex-direction: column;
-  width: 390px;
-  flex-shrink: 0;
-  scroll-snap-align: start;
-}
-.skeleton > img {
-  background-color: #4b4b4b;
-  border: 4px solid #7d7b7b;
-  border-radius: 50%;
-  margin-bottom: -100px;
-  height: 200px;
-  width: 200px;
-  z-index: 1;
-}
-.skeleton > div {
-  background-color: #4b4b4b;
-  border-radius: 8px;
-  height: 200px;
-  width: 100%;
-}
-.skeleton > div .skeleton-name {
-  animation: fadeCard 4s infinite alternate;
-  background-color: #7d7b7b;
-  border-radius: 8px;
+.review-skeleton .skel-line {
   height: 12px;
-  margin: 116px auto 4px auto;
-  width: 100px;
-}
-.skeleton > div > div .skeleton-stars {
-  animation: fadeCard 4s infinite alternate;
-  background-color: #7d7b7b;
-  border-radius: 8px;
-  height: 12px;
-  margin: 0 auto 4px auto;
-  width: 132px;
+  border-radius: 6px;
+  background: #e0d6d8;
 }
 
-.skeleton > div > .skeleton-description {
-  background-color: #7d7b7b;
-  border-radius: 8px;
-  height: 32px;
-  margin: 0 auto 4px auto;
-  width: 90%;
+.review-skeleton .skel-line:nth-child(1) { width: 40%; }
+.review-skeleton .skel-line:nth-child(2) { width: 30%; }
+.review-skeleton .skel-line:nth-child(3) { width: 90%; }
+.review-skeleton .skel-line:nth-child(4) { width: 70%; }
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 
-@keyframes fadeCard {
-  0% {
-    opacity: 0.5;
-  }
-
-  50% {
-    opacity: 0.9;
-  }
-
-  100% {
-    opacity: 0.5;
+@media screen and (min-width: 768px) {
+  .reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .user-description .rating-stars {
-    font-size: 3rem;
+  .reviews-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  .user-description p {
-    font-size: 1.75rem;
+  .review-content strong {
+    font-size: 1.6rem;
+  }
+  .review-content p {
+    font-size: 1.4rem;
   }
 }
