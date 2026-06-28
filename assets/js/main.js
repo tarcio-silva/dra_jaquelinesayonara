@@ -25,11 +25,21 @@ function toggleNav() {
 }
 
 const getRating = async () => {
+  const grid = document.getElementById("reviews-grid");
   try {
-    const response = await fetch("/api/get-reviews.js");
+    const response = await fetch("/api/get-reviews");
     if (!response.ok) return;
     const reviews = await response.json();
-    console.log(reviews);
+    if (!reviews?.length) return;
+    grid.innerHTML = reviews.map(r => `
+      <div class="review-card">
+        <img src="${r.profile_photo_url}" alt="${r.author_name}" loading="lazy">
+        <div class="review-content">
+          <strong>${r.author_name}</strong>
+          <div class="review-stars">${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</div>
+          <p>${r.text || ""}</p>
+        </div>
+      </div>`).join("");
   } catch (e) {}
 };
 
@@ -49,45 +59,6 @@ const navObserver = new IntersectionObserver((entries) => {
 sections.forEach(s => navObserver.observe(s));
 
 
-//const userContainer = document.getElementById("user-container");
-
-// rating.length > 0
-//   ? rating.map((review) => {
-//       userContainer.innerHTML += `
-    
-//                     <div class="user-container">
-//                         <img class="user-photo" src=${
-//                           review?.profile_photo_url
-//                         } alt="user photo">
-//                         <div class="user-description">
-//                             <span>${review?.author_name}</span>
-//                             <div class="rating-stars">
-//                                 ${[...Array((Number(review.rating))).keys()]
-//                                   .map((i) => {
-//                                     return '<span class="star">★</span>'
-//                                   })
-//                                   .join("")}
-//                             </div>
-//                             <p>${review?.text || ""}</p>
-//                         </div>
-//                     </div>
-  
-//   `;
-//     })
-//   : [1, 2, 3].map((element) => {
-//       userContainer.innerHTML += `<div class="skeleton">
-//                         <img />
-//                         <div>
-//                             <div class="skeleton-name">
-//                             </div>
-//                             <div>
-//                                 <div class="skeleton-stars"></div>
-//                             </div>
-//                             <div class="skeleton-description"></div>
-//                         </div>
-//                     </div>`;
-//     });
-
 // Fade-in on scroll
 const fadeEls = document.querySelectorAll(".fade-in");
 const fadeObserver = new IntersectionObserver((entries) => {
@@ -100,22 +71,16 @@ const fadeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 fadeEls.forEach(el => fadeObserver.observe(el));
 
-// Carousel navigation
-const track = document.querySelector(".results-track");
-const prevBtn = document.querySelector(".carousel-btn.prev");
-const nextBtn = document.querySelector(".carousel-btn.next");
-if (track && prevBtn && nextBtn) {
-  const scrollAmount = () => track.querySelector(".result-item")?.offsetWidth + 5 || 300;
-  prevBtn.addEventListener("click", () => track.scrollBy({ left: -scrollAmount(), behavior: "smooth" }));
-  nextBtn.addEventListener("click", () => track.scrollBy({ left: scrollAmount(), behavior: "smooth" }));
-}
 
-// Rating carousel navigation
-const ratingTrack = document.getElementById("user-container");
-const ratingPrev = document.querySelector(".rating-prev");
-const ratingNext = document.querySelector(".rating-next");
-if (ratingTrack && ratingPrev && ratingNext) {
-  const ratingScroll = () => ratingTrack.querySelector(".user-container, .skeleton")?.offsetWidth + 16 || 406;
-  ratingPrev.addEventListener("click", () => ratingTrack.scrollBy({ left: -ratingScroll(), behavior: "smooth" }));
-  ratingNext.addEventListener("click", () => ratingTrack.scrollBy({ left: ratingScroll(), behavior: "smooth" }));
-}
+
+// Lightbox
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = lightbox.querySelector("img");
+document.querySelectorAll(".result-item").forEach(item => {
+  item.addEventListener("click", () => {
+    lightboxImg.src = item.querySelector("img").src;
+    lightboxImg.alt = item.querySelector("img").alt;
+    lightbox.classList.add("active");
+  });
+});
+lightbox.addEventListener("click", () => lightbox.classList.remove("active"));

@@ -6,70 +6,99 @@
   margin-bottom: 2rem;
 }
 
-.results-carousel {
-  overflow: hidden;
-}
-
-.results-track {
-  display: flex;
-  gap: 5px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.results-track::-webkit-scrollbar {
-  display: none;
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .result-item {
-  flex: 0 0 100%;
-  scroll-snap-align: start;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .result-item img {
   width: 100%;
-  border-radius: 8px;
+  height: 100%;
+  object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
 }
 
-@media screen and (min-width: 600px) {
-  .result-item {
-    flex: 0 0 calc(50% - 3px);
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .result-item {
-    flex: 0 0 calc(33.333% - 4px);
-  }
-}
-
-.results-carousel {
-  position: relative;
-}
-
-.carousel-btn {
+.result-item .result-label {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  font-size: 2.4rem;
-  color: var(--logo-pallete-velvety-cherry);
-  cursor: pointer;
-  z-index: 10;
-  transition: background 0.2s, color 0.2s;
+  inset: 0;
+  background: linear-gradient(to top, rgba(162, 83, 86, 0.85) 0%, transparent 50%);
+  display: flex;
+  align-items: flex-end;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-.carousel-btn:hover {
-  background: var(--logo-pallete-velvety-cherry);
+
+.result-item .result-label span {
   color: #fff;
+  font-size: 1.4rem;
+  font-weight: 600;
 }
-.prev { left: 8px; }
-.next { right: 8px; }
+
+.result-item:hover img {
+  transform: scale(1.05);
+}
+
+.result-item:hover .result-label {
+  opacity: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .results-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .result-item {
+    border-radius: 16px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .results-grid {
+    gap: 20px;
+  }
+  .result-item .result-label span {
+    font-size: 1.6rem;
+  }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 12px;
+  object-fit: contain;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.lightbox.active img {
+  transform: scale(1);
+}

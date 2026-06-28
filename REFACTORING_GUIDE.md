@@ -286,8 +286,8 @@ p {
 | 🔵 Alto | ARIA no menu/toggle | Baixo | Acessibilidade | ✅ Concluído |
 | 🔵 Médio | Alt texts em português | Baixo | Acessibilidade | ✅ Concluído |
 | 🔵 Médio | Skip link + focus visible | Baixo | Acessibilidade | ✅ Concluído |
-| 🎨 Médio | Hover animations + clamp() | Baixo | UX moderna | ⬚ Pendente |
-| 🎨 Baixo | CSS Grid nos cards | Baixo | Layout responsivo | ⬚ Pendente |
+| 🎨 Médio | Hover animations + clamp() | Baixo | UX moderna | ✅ Concluído |
+| 🎨 Baixo | CSS Grid nos cards | Baixo | Layout responsivo | ✅ Concluído |
 
 ---
 

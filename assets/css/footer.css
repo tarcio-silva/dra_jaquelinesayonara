@@ -18,7 +18,7 @@ footer {
 }
 
 .footer-col p {
-  color: var(--color-text-muted);
+  color: var(--logo-pallete-velvety-cherry);
   margin-bottom: 4px;
 }
 
@@ -62,7 +62,7 @@ footer {
 
 .copyright {
   font-size: 1.2rem !important;
-  color: var(--color-text-muted) !important;
+  color: var(--logo-pallete-velvety-cherry) !important;
 }
 
 @media screen and (min-width: 768px) {
