@@ -11,7 +11,7 @@ header {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(162, 83, 86, 0.08);
   display: flex;
-  gap: 32px;
+  gap: 16px;
   height: 64px;
   justify-content: space-between;
   padding: 0 24px;
@@ -20,30 +20,35 @@ header {
   transition: all 0.3s ease;
   width: 100%;
   z-index: 100;
+  box-sizing: border-box;
 }
-.header-nav img {
+
+.header-nav-logo img {
   height: 32px;
   width: 32px;
 }
-.header-nav ul {
+
+.header-nav-links {
+  display: none;
   justify-content: center;
   list-style: none;
-  gap: 8px;
+  gap: 0;
   margin: 0;
   padding: 0;
-  z-index: 101;
 }
-.header-nav ul li a img {
-  height: 20px;
-  width: 20px;
-}
-.header-nav ul .switch-button-darkmode {
-  display: flex;
-  margin: 0;
+
+.header-nav-actions {
+  display: none;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .nav-social {
-  gap: 12px;
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
 }
 
 .nav-social a {
@@ -56,13 +61,34 @@ header {
   transform: translateY(-2px);
 }
 
+.btn-header-cta {
+  background: var(--logo-pallete-velvety-cherry);
+  color: var(--logo-pallete-light);
+  padding: 8px 18px;
+  border-radius: 50px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.btn-header-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(162, 83, 86, 0.3);
+}
+
 /* Active section indicator */
-.header-link > p {
-  padding: 8px 16px;
+.header-link > span {
+  padding: 8px 12px;
   border-radius: 8px;
   transition: all 0.3s ease;
+  font-size: 1.5rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
-.header-link.active > p {
+.header-link.active > span {
   background-color: rgba(162, 83, 86, 0.1);
   color: var(--logo-pallete-velvety-cherry);
 }
@@ -112,9 +138,47 @@ header {
 
 .hero-logo {
   width: 100%;
-  max-width: 400px;
+  max-width: 200px;
   height: auto;
   animation: fadeUp 0.8s ease-out 0.3s both;
+}
+
+.hero-location {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-text-muted);
+  animation: fadeUp 0.8s ease-out 0.2s both;
+}
+
+.hero-description {
+  color: var(--color-text-muted);
+  font-size: 1.6rem !important;
+  line-height: 1.6;
+  max-width: 440px;
+  animation: fadeUp 0.8s ease-out 0.6s both;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: fadeUp 0.8s ease-out 0.7s both;
+}
+
+.btn-hero-secondary {
+  color: var(--logo-pallete-velvety-cherry);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.btn-hero-secondary:hover {
+  color: var(--color-accent);
 }
 
 .hero-subtitle {
@@ -125,13 +189,11 @@ header {
 
 .hero-content .slogan {
   color: var(--logo-pallete-velvety-cherry);
-  font-size: clamp(2.4rem, 4vw, 4.8rem);
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
   font-weight: 700;
-  animation: fadeUp 0.8s ease-out 0.5s both;
-}
-
-.hero-content .slogan span {
-  color: var(--logo-pallete-velvety-cherry);
+  line-height: 1.3;
+  max-width: 500px;
+  animation: fadeUp 0.8s ease-out 0.4s both;
 }
 
 .btn-cta {
@@ -153,7 +215,10 @@ header {
 }
 
 @media only screen and (max-width: 1199px) {
-  .header-nav ul {
+  .header-nav-links {
+    display: none;
+  }
+  .header-nav-actions {
     display: none;
   }
   .header-nav {
@@ -196,7 +261,7 @@ header {
     gap: 12px;
   }
   .hero-content .hero-logo {
-    max-width: 200px;
+    max-width: 140px;
   }
   .hero-content .slogan {
     font-size: 1.8rem;
@@ -205,25 +270,33 @@ header {
     padding: 12px 28px;
     font-size: 1.4rem;
   }
+  .hero-description {
+    font-size: 1.4rem !important;
+  }
+  .hero-location {
+    font-size: 1.2rem;
+  }
+  .btn-hero-secondary {
+    font-size: 1.4rem;
+  }
 }
 
 @media screen and (min-width: 1200px) {
   .header-nav {
-    justify-content: center;
     padding: 0 32px;
   }
-  .header-nav ul {
+  .header-nav-links {
     display: flex;
   }
-  .header-nav .header-link > p:hover {
+  .header-nav-actions {
+    display: flex;
+  }
+  .header-nav .header-link > span:hover {
     background-color: rgba(162, 83, 86, 0.1);
     color: var(--logo-pallete-velvety-cherry);
   }
-  .header-nav ul li p {
-    font-size: large;
-  }
   .hero-logo {
-    max-width: 560px;
+    max-width: 240px;
   }
 }
 
