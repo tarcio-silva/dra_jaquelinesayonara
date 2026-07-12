@@ -69,6 +69,10 @@
   .btn-about {
     -webkit-user-select: none;
     user-select: none;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
   .btn-cta:active,
   .btn-about:active {

@@ -10,11 +10,11 @@
   width: 100%;
   z-index: 1000;
 }
-ul {
+.offcanva ul {
   list-style: none;
   padding: 24px;
 }
-a {
+.offcanva a {
   color: var(--logo-pallete-velvety-cherry);
   text-decoration: none;
 }
