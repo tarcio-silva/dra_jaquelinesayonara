@@ -1,12 +1,14 @@
 const hamburgerButton = document.getElementById("hamburger-button");
 const offCanva = document.getElementById("offcanva");
 
-hamburgerButton.addEventListener("click", toggleNav);
+if (hamburgerButton && offCanva) {
+  hamburgerButton.addEventListener("click", toggleNav);
 
-const navLinks = document.querySelectorAll(".offcanva-nav--link");
-navLinks.forEach((navLink) => {
-  navLink.addEventListener("click", toggleNav);
-});
+  const navLinks = document.querySelectorAll(".offcanva-nav--link");
+  navLinks.forEach((navLink) => {
+    navLink.addEventListener("click", toggleNav);
+  });
+}
 
 function toggleNav() {
   const isActive = hamburgerButton.classList.contains("is-active");
@@ -75,12 +77,20 @@ fadeEls.forEach(el => fadeObserver.observe(el));
 
 // Lightbox
 const lightbox = document.getElementById("lightbox");
-const lightboxImg = lightbox.querySelector("img");
-document.querySelectorAll(".result-item").forEach(item => {
-  item.addEventListener("click", () => {
-    lightboxImg.src = item.querySelector("img").src;
-    lightboxImg.alt = item.querySelector("img").alt;
-    lightbox.classList.add("active");
+if (lightbox) {
+  const lightboxImg = lightbox.querySelector("img");
+  document.querySelectorAll(".result-item").forEach(item => {
+    item.addEventListener("click", () => {
+      const img = item.querySelector("img");
+      if (img && lightboxImg) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+        lightbox.classList.add("active");
+      }
+    });
   });
-});
-lightbox.addEventListener("click", () => lightbox.classList.remove("active"));
+  lightbox.addEventListener("click", () => lightbox.classList.remove("active"));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") lightbox.classList.remove("active");
+  });
+}
