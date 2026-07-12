@@ -21,6 +21,23 @@
   margin-top: 20px;
 }
 
+.location-cta a {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: 50px;
+  border: 2px solid var(--logo-pallete-velvety-cherry);
+  color: var(--logo-pallete-velvety-cherry);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.location-cta a:hover {
+  background: var(--logo-pallete-velvety-cherry);
+  color: var(--logo-pallete-light);
+}
+
 .location-grid {
   display: grid;
   grid-template-columns: 1fr;
