@@ -99,9 +99,12 @@ p {
 
   .about-container div section > img {
     width: auto;
-    max-width: 300px;
+    max-width: 380px;
     height: 100%;
+    min-height: 420px;
     align-self: stretch;
+    object-fit: cover;
+    object-position: top center;
   }
 
   .about-container .section-title {
