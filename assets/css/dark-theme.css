@@ -26,7 +26,7 @@
 
 .dark-theme .header-nav a,
 .dark-theme .header-nav p {
-  color: #f5f0f1;
+  color: var(--color-text);
 }
 
 .dark-theme .offcanva {
@@ -35,7 +35,7 @@
 
 .dark-theme .offcanva a,
 .dark-theme .offcanva p {
-  color: #f5f0f1;
+  color: var(--color-text);
 }
 
 .dark-theme .hero-overlay {
@@ -44,7 +44,7 @@
 
 .dark-theme .btn-cta {
   background: var(--logo-pallete-velvety-cherry);
-  color: #fff;
+  color: var(--logo-pallete-light);
 }
 
 .dark-theme .about-container {
@@ -67,7 +67,7 @@
 
 .dark-theme .btn-about:hover {
   background: var(--logo-pallete-velvety-cherry);
-  color: #fff;
+  color: var(--logo-pallete-light);
   border-color: var(--logo-pallete-velvety-cherry);
 }
 
@@ -90,11 +90,6 @@
 
 .dark-theme .review-content p {
   color: var(--color-text-muted);
-}
-
-.dark-theme .review-skeleton .skel-avatar,
-.dark-theme .review-skeleton .skel-line {
-  background: #3d2f33;
 }
 
 .dark-theme footer {

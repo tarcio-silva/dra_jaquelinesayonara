@@ -60,48 +60,6 @@
   overflow: hidden;
 }
 
-/* Skeleton */
-.review-skeleton {
-  background: var(--color-surface);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  animation: shimmer 1.5s infinite;
-}
-
-.review-skeleton .skel-avatar {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #e0d6d8;
-}
-
-.review-skeleton .skel-lines {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.review-skeleton .skel-line {
-  height: 12px;
-  border-radius: 6px;
-  background: #e0d6d8;
-}
-
-.review-skeleton .skel-line:nth-child(1) { width: 40%; }
-.review-skeleton .skel-line:nth-child(2) { width: 30%; }
-.review-skeleton .skel-line:nth-child(3) { width: 90%; }
-.review-skeleton .skel-line:nth-child(4) { width: 70%; }
-
-@keyframes shimmer {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
 @media screen and (min-width: 768px) {
   .reviews-grid {
     grid-template-columns: repeat(2, 1fr);

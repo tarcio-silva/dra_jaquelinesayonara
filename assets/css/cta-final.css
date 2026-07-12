@@ -1,0 +1,22 @@
+.cta-final {
+  text-align: center;
+  background: var(--logo-pallete-petal-rose);
+  padding: 64px 24px;
+}
+.cta-final .section-title {
+  margin-bottom: 12px;
+}
+.cta-final-text {
+  color: var(--color-text-muted);
+  font-size: clamp(1.4rem, 1.2vw, 1.6rem);
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+.cta-final .btn-cta {
+  animation: none;
+}
+@media only screen and (max-width: 1199px) {
+  .cta-final {
+    padding: 48px 20px;
+  }
+}
