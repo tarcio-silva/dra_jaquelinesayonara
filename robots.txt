@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: https://drajaquelinesayonara.vercel.app/sitemap.xml
+Sitemap: https://drajaquelinesayonara.com.br/sitemap.xml
