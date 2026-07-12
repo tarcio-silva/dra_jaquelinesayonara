@@ -2,6 +2,25 @@
   margin-bottom: 24px;
 }
 
+.location-subtitle {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.location-address {
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.location-cta {
+  text-align: center;
+  margin-top: 20px;
+}
+
 .location-grid {
   display: grid;
   grid-template-columns: 1fr;
