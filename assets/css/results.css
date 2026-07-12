@@ -40,7 +40,7 @@
 }
 
 .result-item .result-label span {
-  color: #fff;
+  color: var(--logo-pallete-light);
   font-size: 1.4rem;
   font-weight: 600;
 }

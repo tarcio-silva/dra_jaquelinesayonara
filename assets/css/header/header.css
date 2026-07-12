@@ -137,7 +137,7 @@ header {
 .btn-cta {
   display: inline-block;
   background: var(--logo-pallete-velvety-cherry);
-  color: #fff;
+  color: var(--logo-pallete-light);
   padding: 16px 40px;
   border-radius: 50px;
   font-size: 1.6rem;

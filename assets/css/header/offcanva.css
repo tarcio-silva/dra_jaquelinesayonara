@@ -15,7 +15,7 @@ ul {
   padding: 24px;
 }
 a {
-  color: #000;
+  color: var(--color-text);
   text-decoration: none;
 }
 .offcanva {

@@ -94,7 +94,7 @@ main section {
   left: 0;
   padding: 8px 16px;
   background: var(--logo-pallete-velvety-cherry);
-  color: #fff;
+  color: var(--logo-pallete-light);
   z-index: 9999;
   text-decoration: none;
 }

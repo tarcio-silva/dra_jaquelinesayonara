@@ -53,7 +53,7 @@ p {
 
 .btn-about:hover {
   background: var(--logo-pallete-velvety-cherry);
-  color: #fff;
+  color: var(--logo-pallete-light);
 }
 
 @media only screen and (max-width: 1199px) {
