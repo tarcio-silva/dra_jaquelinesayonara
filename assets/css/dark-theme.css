@@ -25,7 +25,7 @@
 }
 
 .dark-theme .header-nav a,
-.dark-theme .header-nav p {
+.dark-theme .header-nav span {
   color: var(--color-text);
 }
 

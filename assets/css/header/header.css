@@ -11,7 +11,7 @@ header {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(162, 83, 86, 0.08);
   display: flex;
-  gap: 32px;
+  gap: 24px;
   height: 64px;
   justify-content: space-between;
   padding: 0 24px;
@@ -21,29 +21,32 @@ header {
   width: 100%;
   z-index: 100;
 }
-.header-nav img {
+
+.header-nav-logo img {
   height: 32px;
   width: 32px;
 }
-.header-nav ul {
+
+.header-nav-links {
+  display: none;
   justify-content: center;
   list-style: none;
-  gap: 8px;
+  gap: 4px;
   margin: 0;
   padding: 0;
-  z-index: 101;
 }
-.header-nav ul li a img {
-  height: 20px;
-  width: 20px;
-}
-.header-nav ul .switch-button-darkmode {
-  display: flex;
-  margin: 0;
+
+.header-nav-actions {
+  display: none;
+  align-items: center;
+  gap: 16px;
 }
 
 .nav-social {
+  display: flex;
   gap: 12px;
+  list-style: none;
+  padding: 0;
 }
 
 .nav-social a {
@@ -56,13 +59,32 @@ header {
   transform: translateY(-2px);
 }
 
+.btn-header-cta {
+  background: var(--logo-pallete-velvety-cherry);
+  color: var(--logo-pallete-light);
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s;
+  white-space: nowrap;
+}
+
+.btn-header-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(162, 83, 86, 0.3);
+}
+
 /* Active section indicator */
-.header-link > p {
-  padding: 8px 16px;
+.header-link > span {
+  padding: 8px 14px;
   border-radius: 8px;
   transition: all 0.3s ease;
+  font-size: 1.4rem;
+  font-weight: 500;
 }
-.header-link.active > p {
+.header-link.active > span {
   background-color: rgba(162, 83, 86, 0.1);
   color: var(--logo-pallete-velvety-cherry);
 }
@@ -153,7 +175,10 @@ header {
 }
 
 @media only screen and (max-width: 1199px) {
-  .header-nav ul {
+  .header-nav-links {
+    display: none;
+  }
+  .header-nav-actions {
     display: none;
   }
   .header-nav {
@@ -209,18 +234,17 @@ header {
 
 @media screen and (min-width: 1200px) {
   .header-nav {
-    justify-content: center;
     padding: 0 32px;
   }
-  .header-nav ul {
+  .header-nav-links {
     display: flex;
   }
-  .header-nav .header-link > p:hover {
+  .header-nav-actions {
+    display: flex;
+  }
+  .header-nav .header-link > span:hover {
     background-color: rgba(162, 83, 86, 0.1);
     color: var(--logo-pallete-velvety-cherry);
-  }
-  .header-nav ul li p {
-    font-size: large;
   }
   .hero-logo {
     max-width: 560px;
