@@ -21,9 +21,9 @@ p {
 
 .about-container div section > img {
   width: 280px;
-  border-radius: 16px;
-  object-fit: cover;
-  box-shadow: 0 8px 32px rgba(162, 83, 86, 0.15);
+  border-radius: 0;
+  object-fit: contain;
+  box-shadow: none;
 }
 
 .about-subtitle {
@@ -64,8 +64,8 @@ p {
   }
   .about-container div section > img {
     width: 100%;
-    max-width: 300px;
-    border-radius: 20px;
+    max-width: 260px;
+    border-radius: 0;
   }
 }
 
@@ -82,8 +82,8 @@ p {
   }
 
   .about-container div section > img {
-    width: 380px;
-    height: 500px;
+    width: 320px;
+    height: auto;
   }
 
   .about-description {
