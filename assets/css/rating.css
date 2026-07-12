@@ -2,6 +2,48 @@
   background-color: var(--color-bg);
 }
 
+.rating-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.rating-badge-stars {
+  color: #e4a700;
+  font-size: 1.8rem;
+}
+
+.rating-badge-score {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.rating-badge-text {
+  color: var(--color-text-muted);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.rating-link {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.rating-link a {
+  color: var(--color-accent);
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.rating-link a:hover {
+  color: var(--logo-pallete-velvety-cherry);
+}
+
 .reviews-grid {
   display: grid;
   grid-template-columns: 1fr;
