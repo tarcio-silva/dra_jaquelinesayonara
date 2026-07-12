@@ -59,6 +59,7 @@ p {
   font-size: clamp(2.4rem, 3.5vw, 5rem);
   margin-bottom: 16px;
   font-weight: 700;
+  text-align: center;
 }
 .care-title {
   color: var(--logo-pallete-velvety-cherry)
