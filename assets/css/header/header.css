@@ -31,9 +31,10 @@ header {
   display: none;
   justify-content: center;
   list-style: none;
-  gap: 4px;
+  gap: 2px;
   margin: 0;
   padding: 0;
+  flex: 1;
 }
 
 .header-nav-actions {
@@ -62,13 +63,14 @@ header {
 .btn-header-cta {
   background: var(--logo-pallete-velvety-cherry);
   color: var(--logo-pallete-light);
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 50px;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 600;
   text-decoration: none;
   transition: transform 0.3s, box-shadow 0.3s;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-header-cta:hover {
@@ -78,10 +80,10 @@ header {
 
 /* Active section indicator */
 .header-link > span {
-  padding: 8px 14px;
+  padding: 6px 10px;
   border-radius: 8px;
   transition: all 0.3s ease;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 500;
 }
 .header-link.active > span {
