@@ -78,12 +78,17 @@ p {
     flex-direction: row-reverse;
     justify-content: center;
     align-items: center;
-    gap: 64px;
+    gap: 48px;
   }
 
   .about-container div section > img {
-    width: 320px;
+    width: 300px;
+    max-width: 300px;
     height: auto;
+  }
+
+  .about-container .section-title {
+    text-align: left;
   }
 
   .about-description {
