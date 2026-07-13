@@ -153,3 +153,46 @@
 .dark-theme .offcanva-dark-mode-label {
   color: var(--color-text);
 }
+
+/* Hero logo — inverter para branco (consistente com footer) */
+.dark-theme .hero-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Footer — overrides com especificidade suficiente */
+.dark-theme .footer-col h3 {
+  color: var(--color-text);
+}
+
+.dark-theme .footer-col p {
+  color: var(--color-text);
+}
+
+.dark-theme .copyright {
+  color: var(--color-text) !important;
+}
+
+/* Hero text */
+.dark-theme .hero-content .slogan {
+  color: var(--color-text);
+}
+
+.dark-theme .btn-hero-secondary {
+  color: var(--color-text);
+}
+
+.dark-theme .btn-hero-secondary:hover {
+  color: var(--color-accent);
+}
+
+/* Plan cards */
+.dark-theme .plan-card-name {
+  color: var(--color-text);
+}
+
+/* Hamburger menu icon */
+.dark-theme .hamburger-inner,
+.dark-theme .hamburger-inner:before,
+.dark-theme .hamburger-inner:after {
+  background-color: var(--color-text);
+}
