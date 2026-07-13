@@ -3,6 +3,9 @@
   --color-surface: #2a1f23;
   --color-text: #f5f0f1;
   --color-text-muted: #b8a8ab;
+  --logo-pallete-velvety-cherry: #d4888b;
+  --logo-pallete-petal-rose: #2a1f23;
+  --color-accent: #e09498;
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
@@ -43,7 +46,7 @@
 }
 
 .dark-theme .btn-cta {
-  background: var(--logo-pallete-velvety-cherry);
+  background: #a25356;
   color: var(--logo-pallete-light);
 }
 
@@ -66,9 +69,9 @@
 }
 
 .dark-theme .btn-about:hover {
-  background: var(--logo-pallete-velvety-cherry);
+  background: #a25356;
   color: var(--logo-pallete-light);
-  border-color: var(--logo-pallete-velvety-cherry);
+  border-color: #a25356;
 }
 
 .dark-theme .card-container {
@@ -124,4 +127,29 @@
 
 .dark-theme .cta-final-text {
   color: var(--color-text-muted);
+}
+
+/* Botões e elementos que usam cherry como background — manter original */
+.dark-theme .btn-header-cta {
+  background: #a25356;
+}
+
+.dark-theme .skip-link {
+  background: #a25356;
+}
+
+.dark-theme .location-cta a {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+.dark-theme .location-cta a:hover {
+  background: #a25356;
+  color: var(--logo-pallete-light);
+  border-color: #a25356;
+}
+
+/* Offcanva dark mode label */
+.dark-theme .offcanva-dark-mode-label {
+  color: var(--color-text);
 }
