@@ -2,6 +2,23 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "drajaquelinesayonara.vercel.app"
+        }
+      ],
+      "destination": "https://www.drajaquelinesayonara.com.br/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "drajaquelinesayonara.com.br"
+        }
+      ],
       "destination": "https://www.drajaquelinesayonara.com.br/$1",
       "permanent": true
     }
