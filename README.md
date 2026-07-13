@@ -2,11 +2,17 @@
 
 Site de divulgação de serviços odontológicos da **Dra. Jaqueline Sayonara**, cirurgiã-dentista especialista em Ortodontia, localizada em Sapé/PB.
 
-🔗 **Produção:** https://drajaquelinesayonara.com.br/
+🔗 **Produção:** https://www.drajaquelinesayonara.com.br/
 
 ## Sobre o Projeto
 
 Landing page institucional com design moderno e performance otimizada, contendo informações sobre a profissional, tratamentos oferecidos, galeria de resultados, planos odontológicos aceitos, vídeo do consultório, localização e avaliações reais de pacientes.
+
+### Lighthouse Scores
+
+| Performance | Acessibilidade | SEO |
+|:-----------:|:--------------:|:---:|
+| 97/100 | 100/100 | 100/100 |
 
 ### Seções
 
@@ -15,7 +21,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 | Header/Hero | — | Layout split: foto da Dra. (42%) + logo, slogan, badge avaliações, CTA e horários |
 | Sobre | `#about` | Apresentação profissional com foto, CRO e botão de ação |
 | Tratamentos | `#care` | Grid de 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
-| Resultados | `#results` | Grid de antes/depois com lightbox zoom (click + Escape) |
+| Resultados | `#results` | Grid de antes/depois com lightbox acessível (click, Enter/Space, Escape, focus trap) |
 | Planos | `#plans` | Cards dos convênios aceitos (Clin e Unidentis) com links externos |
 | Avaliações | — | 5 reviews reais do Google em cards responsivos (grid 1/2/3 colunas) |
 | CTA Final | — | Call-to-action "Pronto para transformar seu sorriso?" com botão WhatsApp |
@@ -24,18 +30,20 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 
 ### Funcionalidades
 
-- Layout responsivo (mobile-first, breakpoint 1200px)
-- Menu off-canvas animado (mobile) + navbar glassmorphism com indicador de seção ativa (desktop)
-- Dark mode com toggle acessível
+- Layout responsivo (mobile-first, breakpoint `max-width: 1199px` / `min-width: 1200px`)
+- Menu off-canvas animado com focus trap (mobile) + navbar glassmorphism com indicador de seção ativa (desktop)
+- Dark mode com toggle acessível (`role="switch"`, `aria-checked`) — visível no desktop e mobile (offcanva)
 - Fade-in on scroll (Intersection Observer)
-- Lightbox para imagens de resultados (click + Escape para fechar)
+- Lightbox acessível para resultados (`role="dialog"`, `aria-modal`, botão fechar, focus trap, keyboard navigation)
 - Avaliações estáticas (5 reviews reais do Google, sem dependência de API)
-- Vídeo do consultório (autoplay, muted, loop)
+- Vídeo do consultório (autoplay, muted, loop; pausa automática em `prefers-reduced-motion`)
 - Botão flutuante de WhatsApp
 - Badge de avaliações no hero (prova social)
 - Horários de atendimento visíveis
-- SEO completo (Schema.org JSON-LD com insuranceAccepted, Open Graph, Twitter Cards, sitemap, robots.txt)
-- Acessibilidade (ARIA, skip link, focus-visible, alt texts em português)
+- SEO completo (Schema.org JSON-LD com aggregateRating, geo, areaServed, sameAs, Open Graph, Twitter Cards, sitemap, robots.txt)
+- Acessibilidade WCAG AA (ARIA, skip link → `#main-content`, focus-visible, focus traps, contraste ≥4.5:1, `rel="noopener noreferrer"`)
+- Redirect 301 para migração de domínio (via `vercel.json`)
+- Cache imutável para assets estáticos (font, img, js, css, media)
 
 ## Stack
 
@@ -43,9 +51,9 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 |-----------|-----|
 | HTML5 | Estrutura semântica |
 | CSS3 | Custom properties, CSS Grid, clamp(), @media (hover: hover) |
-| JavaScript ES Modules | Lógica do cliente (vanilla, zero dependências) |
+| JavaScript (vanilla) | Lógica do cliente (zero dependências) |
 | LightningCSS 1.28.2 | Bundling e minificação CSS |
-| Vercel | Deploy (domínio custom) |
+| Vercel | Deploy (domínio custom + redirect 301 + cache headers) |
 | Manrope | Fonte variável self-hosted (WOFF2 + TTF fallback) |
 
 ## Estrutura de Arquivos
@@ -53,6 +61,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 ```
 ├── index.html                 # Página principal (CSS inline para performance)
 ├── build-css.sh               # Script de build CSS
+├── OPTIMIZATION_GUIDE.md      # Guia de otimização (tasks + resultados Lighthouse)
 ├── DOMAIN_SETUP.md            # Instruções de configuração do domínio
 ├── api/
 │   └── get-reviews.js         # Serverless function (legada, não utilizada)
@@ -61,18 +70,18 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   │   ├── styles.css         # Entry point (importa módulos)
 │   │   ├── styles.min.css     # Bundle minificado (produção)
 │   │   ├── globalStyle.css    # Variáveis, tipografia, utilitários, hero-rating
-│   │   ├── dark-theme.css     # Tema escuro
+│   │   ├── dark-theme.css     # Tema escuro (hero-logo + footer-logo + variáveis)
 │   │   ├── about.css          # Seção Sobre
 │   │   ├── cards.css          # Cards de tratamentos (Grid + hover)
-│   │   ├── results.css        # Grid de resultados + lightbox
+│   │   ├── results.css        # Grid de resultados + lightbox + lightbox-close
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
 │   │   ├── location.css       # Vídeo + mapa (split layout)
 │   │   ├── footer.css         # Footer em colunas
-│   │   └── header/            # Header, hamburger, offcanva, switch, a11y
+│   │   └── header/            # Header, hamburger, offcanva (+ dark mode toggle), switch
 │   ├── js/
-│   │   └── main.js            # Lógica: menu, observers, lightbox
+│   │   └── main.js            # Menu (focus trap), lightbox (a11y), dark mode, observers
 │   ├── img/
 │   │   ├── plans/             # Logos dos planos (Clin, Unidentis)
 │   │   ├── results/           # Fotos antes/depois
@@ -80,9 +89,9 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   ├── font/                  # Manrope variable font
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-├── robots.txt
-├── sitemap.xml
-└── vercel.json
+├── robots.txt                 # Crawl rules + sitemap URL (www)
+├── sitemap.xml                # URL canônica com www
+└── vercel.json                # Cache headers + redirect 301
 ```
 
 ## Como Executar
@@ -96,11 +105,18 @@ npm install
 
 # Servir localmente
 npx serve .
+
+# Rodar Lighthouse (opcional)
+npx lighthouse http://localhost:3000 --only-categories=performance,accessibility,seo
 ```
 
 ## Deploy
 
 Deploy automático na **Vercel** a cada push na branch `main`.
+
+O `vercel.json` configura:
+- **Redirect 301:** Tráfego de `*.vercel.app` → `www.drajaquelinesayonara.com.br`
+- **Cache imutável** (1 ano) para: `/assets/css/`, `/assets/font/`, `/assets/img/`, `/assets/js/`, `/assets/media/`
 
 ### Configuração do Domínio
 
@@ -116,8 +132,8 @@ Consulte [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) para instruções de configuraç
   --color-bg: #fdfbfc;                    /* Background geral */
   --color-surface: #ffffff;               /* Cards/superfícies */
   --color-text: #2d2d2d;                  /* Texto principal */
-  --color-text-muted: #6b6b6b;           /* Texto secundário */
-  --color-accent: #c8727a;               /* Hover/destaque */
+  --color-text-muted: #6b4a4c;           /* Texto secundário (5.8:1 WCAG AA) */
+  --color-accent: #a85860;               /* Hover/destaque (4.6:1 WCAG AA) */
 }
 ```
 
@@ -127,6 +143,31 @@ Consulte [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) para instruções de configuraç
 - **Sombras:** sm/md/lg com matiz cherry
 - **Border-radius:** 16px (cards), 50px (botões)
 - **Cores de texto:** Todas via variáveis CSS (exceto marcas externas: Google ★, WhatsApp)
+- **Dark mode:** Variáveis override em `.dark-theme` — `--color-text-muted: #b8a8ab` (7.0:1 sobre fundo escuro)
+
+## Acessibilidade
+
+- Skip link para `#main-content`
+- Focus trap no menu offcanva (Tab/Shift+Tab circular, Escape para fechar)
+- Focus trap no lightbox (Tab preso no botão fechar)
+- `role="dialog"` + `aria-modal="true"` no lightbox
+- `role="switch"` + `aria-checked` no toggle de dark mode
+- `role="button"` + `tabindex="0"` nos result-items (keyboard: Enter/Space)
+- Contraste mínimo 4.5:1 em todas as combinações de cor (WCAG AA)
+- `aria-label` no vídeo, botões e links de redes sociais
+- `rel="noopener noreferrer"` em todos os links `target="_blank"`
+- `prefers-reduced-motion`: pausa vídeos autoplay, desabilita animações
+
+## SEO
+
+- Canonical URL: `https://www.drajaquelinesayonara.com.br/`
+- Schema.org JSON-LD: `Dentist` com aggregateRating (5.0/5, 7 reviews), geo, areaServed, sameAs
+- Open Graph completo (title, description, image, url, type, locale, site_name)
+- Twitter Cards (summary_large_image com title, description, image)
+- Meta description otimizada (152 chars)
+- Keywords relevantes sem typos
+- Sitemap XML com lastmod atualizado
+- Redirect 301 de domínio legado
 
 ## Convênios Aceitos
 
@@ -145,6 +186,7 @@ Consulte [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) para instruções de configuraç
 
 ## Documentação Complementar
 
+- [`OPTIMIZATION_GUIDE.md`](./OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
 - [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
 - [`README_STATIC.md`](./README_STATIC.md) — Documentação técnica detalhada
 - [`DESIGN_GUIDE.md`](./DESIGN_GUIDE.md) — Guia de design e referências visuais
