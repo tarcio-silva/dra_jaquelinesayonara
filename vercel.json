@@ -1,5 +1,18 @@
 {
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.drajaquelinesayonara.com.br/$1",
+      "permanent": true
+    }
+  ],
   "headers": [
+    {
+      "source": "/assets/css/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
     {
       "source": "/assets/font/(.*)",
       "headers": [
@@ -14,6 +27,12 @@
     },
     {
       "source": "/assets/js/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/assets/media/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
