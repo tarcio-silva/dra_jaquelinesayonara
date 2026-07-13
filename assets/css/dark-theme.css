@@ -109,6 +109,10 @@
   filter: brightness(0) invert(1);
 }
 
+.dark-theme .hero-logo {
+  filter: brightness(0) invert(1);
+}
+
 .dark-theme .about-container > div > section > img {
   filter: brightness(0.9);
   background: transparent;

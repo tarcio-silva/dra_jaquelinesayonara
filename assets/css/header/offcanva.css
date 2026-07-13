@@ -66,6 +66,20 @@
   }
 }
 
+.offcanva-dark-mode {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding: 24px;
+}
+
+.offcanva-dark-mode-label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--logo-pallete-velvety-cherry);
+}
+
 @media screen and (min-width: 1200px) {
   .offcanva {
     display: none;
