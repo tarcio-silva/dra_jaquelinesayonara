@@ -61,37 +61,46 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 ```
 ├── index.html                 # Página principal (CSS inline para performance)
 ├── build-css.sh               # Script de build CSS
-├── OPTIMIZATION_GUIDE.md      # Guia de otimização (tasks + resultados Lighthouse)
-├── DOMAIN_SETUP.md            # Instruções de configuração do domínio
-├── api/
-│   └── get-reviews.js         # Serverless function (legada, não utilizada)
+├── vercel.json                # Cache headers + redirect 301
+├── robots.txt                 # Crawl rules + sitemap URL (www)
+├── sitemap.xml                # URL canônica com www
+├── docs/                      # Documentação do projeto
+│   ├── adr/                   # Architecture Decision Records
+│   ├── IMPLEMENTATION_PLAN.md # Plano de implementação multipage
+│   ├── TEST_PLAN.md           # Plano de testes unitários
+│   ├── MULTIPAGE_STRATEGY.md  # Estratégia SEO multipage
+│   ├── OPTIMIZATION_GUIDE.md  # Guia de otimização Lighthouse
+│   ├── DOMAIN_SETUP.md        # Configuração do domínio
+│   ├── DESIGN_GUIDE.md        # Guia de design e referências
+│   └── REFACTORING_GUIDE.md   # Histórico de refatorações
 ├── assets/
 │   ├── css/
 │   │   ├── styles.css         # Entry point (importa módulos)
 │   │   ├── styles.min.css     # Bundle minificado (produção)
 │   │   ├── globalStyle.css    # Variáveis, tipografia, utilitários, hero-rating
-│   │   ├── dark-theme.css     # Tema escuro (hero-logo + footer-logo + variáveis)
+│   │   ├── dark-theme.css     # Tema escuro (variáveis + overrides)
 │   │   ├── about.css          # Seção Sobre
 │   │   ├── cards.css          # Cards de tratamentos (Grid + hover)
-│   │   ├── results.css        # Grid de resultados + lightbox + lightbox-close
+│   │   ├── results.css        # Grid de resultados + lightbox
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
 │   │   ├── location.css       # Vídeo + mapa (split layout)
 │   │   ├── footer.css         # Footer em colunas
-│   │   └── header/            # Header, hamburger, offcanva (+ dark mode toggle), switch
+│   │   └── header/            # Header, hamburger, offcanva, switch
 │   ├── js/
 │   │   └── main.js            # Menu (focus trap), lightbox (a11y), dark mode, observers
 │   ├── img/
+│   │   ├── about/             # Foto da profissional
+│   │   ├── care/              # Imagens dos tratamentos
+│   │   ├── header/            # Banner principal
+│   │   ├── icons/             # Ícones do menu mobile
 │   │   ├── plans/             # Logos dos planos (Clin, Unidentis)
-│   │   ├── results/           # Fotos antes/depois
-│   │   └── ...                # Demais imagens (WebP otimizadas)
-│   ├── font/                  # Manrope variable font
+│   │   └── results/           # Fotos antes/depois
+│   ├── font/                  # Manrope variable font (WOFF2 + TTF)
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-├── robots.txt                 # Crawl rules + sitemap URL (www)
-├── sitemap.xml                # URL canônica com www
-└── vercel.json                # Cache headers + redirect 301
+└── tratamentos/               # (futuro) Páginas individuais de tratamento
 ```
 
 ## Como Executar
@@ -120,7 +129,7 @@ O `vercel.json` configura:
 
 ### Configuração do Domínio
 
-Consulte [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) para instruções de configuração do domínio `drajaquelinesayonara.com.br` na Vercel e no registrador DNS.
+Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de configuração do domínio `drajaquelinesayonara.com.br` na Vercel e no registrador DNS.
 
 ## Design System
 
@@ -186,11 +195,13 @@ Consulte [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) para instruções de configuraç
 
 ## Documentação Complementar
 
-- [`OPTIMIZATION_GUIDE.md`](./OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
-- [`DOMAIN_SETUP.md`](./DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
-- [`README_STATIC.md`](./README_STATIC.md) — Documentação técnica detalhada
-- [`DESIGN_GUIDE.md`](./DESIGN_GUIDE.md) — Guia de design e referências visuais
-- [`REFACTORING_GUIDE.md`](./REFACTORING_GUIDE.md) — Histórico de refatorações e melhorias
+- [`OPTIMIZATION_GUIDE.md`](./docs/OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
+- [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
+- [`DESIGN_GUIDE.md`](./docs/DESIGN_GUIDE.md) — Guia de design e referências visuais
+- [`REFACTORING_GUIDE.md`](./docs/REFACTORING_GUIDE.md) — Histórico de refatorações e melhorias
+- [`MULTIPAGE_STRATEGY.md`](./docs/MULTIPAGE_STRATEGY.md) — Estratégia SEO multipage
+- [`IMPLEMENTATION_PLAN.md`](./docs/IMPLEMENTATION_PLAN.md) — Plano de implementação multipage
+- [`TEST_PLAN.md`](./docs/TEST_PLAN.md) — Plano de testes unitários
 
 ## Contato
 
