@@ -1,0 +1,269 @@
+/* ==========================================================================
+   Treatment Pages — Páginas individuais de tratamento
+   Componentes: breadcrumb, hero, content, FAQ, related treatments
+   ========================================================================== */
+
+/* --- Breadcrumb --- */
+.breadcrumb {
+  padding: 80px 24px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  font-size: 1.3rem;
+}
+
+.breadcrumb li + li::before {
+  content: "›";
+  margin-right: 8px;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* --- Treatment Hero --- */
+.treatment-hero {
+  padding: 40px 24px 64px;
+}
+
+.treatment-hero > div {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.treatment-hero h1 {
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  font-weight: 700;
+  color: var(--logo-pallete-velvety-cherry);
+  line-height: 1.2;
+}
+
+.treatment-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.6rem;
+  line-height: 1.6;
+  margin: 16px 0 24px;
+}
+
+.treatment-hero img {
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Treatment Content --- */
+.treatment-content {
+  padding: 64px 24px;
+  background: var(--color-surface);
+}
+
+.treatment-content > div {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.treatment-content h2 {
+  color: var(--logo-pallete-velvety-cherry);
+  font-size: clamp(2rem, 2.5vw, 2.8rem);
+  margin: 48px 0 16px;
+  font-weight: 700;
+}
+
+.treatment-content h2:first-child {
+  margin-top: 0;
+}
+
+.treatment-content p {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+
+.treatment-content ul {
+  padding-left: 24px;
+  margin-bottom: 24px;
+}
+
+.treatment-content li {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  list-style: disc;
+}
+
+.treatment-content li::marker {
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+/* --- FAQ (details/summary) --- */
+.treatment-faq {
+  margin-top: 48px;
+}
+
+.treatment-faq h2 {
+  margin-bottom: 24px;
+}
+
+.treatment-content details {
+  border: 1px solid var(--shadow-sm, #a2535614);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  background: var(--color-bg);
+  transition: box-shadow 0.2s;
+}
+
+.treatment-content details[open] {
+  box-shadow: var(--shadow-sm);
+}
+
+.treatment-content summary {
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--logo-pallete-velvety-cherry);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.treatment-content summary::before {
+  content: "+";
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--color-accent);
+  transition: transform 0.2s;
+}
+
+.treatment-content details[open] summary::before {
+  content: "−";
+}
+
+.treatment-content summary::-webkit-details-marker {
+  display: none;
+}
+
+.treatment-content details p {
+  margin-top: 12px;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+}
+
+/* --- Related Treatments --- */
+.related-treatments {
+  padding: 64px 24px;
+}
+
+.related-treatments > div {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.related-treatments .cards-container {
+  margin-top: 32px;
+}
+
+/* --- Dark Mode Overrides --- */
+.dark-theme .treatment-content {
+  background: var(--color-surface);
+}
+
+.dark-theme .treatment-content p,
+.dark-theme .treatment-content li {
+  color: var(--color-text);
+}
+
+.dark-theme .treatment-content details {
+  border-color: #ffffff0d;
+  background: var(--color-bg);
+}
+
+.dark-theme .treatment-hero img {
+  filter: brightness(0.9);
+}
+
+.dark-theme .breadcrumb a {
+  color: var(--color-accent);
+}
+
+.dark-theme .breadcrumb [aria-current="page"] {
+  color: var(--color-text-muted);
+}
+
+/* --- Responsive (Mobile) --- */
+@media only screen and (max-width: 1199px) {
+  .breadcrumb {
+    padding: 68px 16px 0;
+  }
+
+  .treatment-hero {
+    padding: 24px 16px 48px;
+  }
+
+  .treatment-hero > div {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .treatment-hero img {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .treatment-hero .btn-cta {
+    animation: none;
+  }
+
+  .treatment-content {
+    padding: 48px 16px;
+  }
+
+  .treatment-content h2 {
+    margin-top: 32px;
+  }
+
+  .related-treatments {
+    padding: 48px 16px;
+  }
+}
+
+/* --- Desktop enhancements --- */
+@media screen and (min-width: 1200px) {
+  .treatment-hero > div > div {
+    flex: 1;
+  }
+
+  .treatment-content details:hover {
+    box-shadow: var(--shadow-sm);
+  }
+}
