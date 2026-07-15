@@ -1,0 +1,427 @@
+/* ==========================================================================
+   Treatment Pages — Páginas individuais de tratamento
+   Componentes: breadcrumb, hero, content, FAQ, related treatments
+   ========================================================================== */
+
+/* --- Breadcrumb --- */
+.breadcrumb {
+  padding: 80px 24px 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  font-size: 1.3rem;
+}
+
+.breadcrumb li + li::before {
+  content: "›";
+  margin-right: 8px;
+  color: var(--color-text-muted);
+}
+
+.breadcrumb a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+/* --- Treatment Hero --- */
+.treatment-hero {
+  padding: 40px 24px 64px;
+}
+
+.treatment-hero > div {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.treatment-hero h1 {
+  font-size: clamp(2.8rem, 4vw, 4.8rem);
+  font-weight: 700;
+  color: var(--logo-pallete-velvety-cherry);
+  line-height: 1.2;
+}
+
+.treatment-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.6rem;
+  line-height: 1.6;
+  margin: 16px 0 24px;
+}
+
+.treatment-hero img {
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+}
+
+/* --- Treatment Content --- */
+.treatment-content {
+  padding: 64px 24px;
+  background: var(--color-surface);
+}
+
+.treatment-content > div {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.treatment-content h2 {
+  color: var(--logo-pallete-velvety-cherry);
+  font-size: clamp(2rem, 2.5vw, 2.8rem);
+  margin: 48px 0 16px;
+  font-weight: 700;
+}
+
+.treatment-content h2:first-child {
+  margin-top: 0;
+}
+
+.treatment-content p {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 16px;
+}
+
+.treatment-content ul {
+  padding-left: 24px;
+  margin-bottom: 24px;
+}
+
+.treatment-content li {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: var(--color-text);
+  margin-bottom: 8px;
+  list-style: disc;
+}
+
+.treatment-content li::marker {
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+/* --- FAQ (details/summary) --- */
+.treatment-faq {
+  margin-top: 48px;
+}
+
+.treatment-faq h2 {
+  margin-bottom: 24px;
+}
+
+.treatment-content details {
+  border: 1px solid var(--shadow-sm, #a2535614);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  background: var(--color-bg);
+  transition: box-shadow 0.2s;
+}
+
+.treatment-content details[open] {
+  box-shadow: var(--shadow-sm);
+}
+
+.treatment-content summary {
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--logo-pallete-velvety-cherry);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.treatment-content summary::before {
+  content: "+";
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--color-accent);
+  transition: transform 0.2s;
+}
+
+.treatment-content details[open] summary::before {
+  content: "−";
+}
+
+.treatment-content summary::-webkit-details-marker {
+  display: none;
+}
+
+.treatment-content details p {
+  margin-top: 12px;
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+}
+
+/* --- Related Treatments --- */
+.related-treatments {
+  padding: 64px 24px;
+}
+
+.related-treatments > div {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.related-treatments .section-title {
+  margin-bottom: 32px;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.related-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 24px;
+  background: var(--color-surface);
+  border-radius: 16px;
+  border: 1px solid #a2535610;
+  text-decoration: none;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.related-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #a2535608 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.related-card:hover::before {
+  opacity: 1;
+}
+
+.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: #a2535630;
+}
+
+.related-card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s;
+}
+
+.related-card-icon {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: var(--logo-pallete-petal-rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  transition: transform 0.3s;
+}
+
+.related-card:hover .related-card-icon {
+  transform: scale(1.1);
+}
+
+.related-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.related-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--logo-pallete-velvety-cherry);
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.related-card-desc {
+  font-size: 1.3rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.related-card-arrow {
+  flex-shrink: 0;
+  color: var(--color-accent);
+  font-size: 1.8rem;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.related-card:hover .related-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* --- Dark Mode — Related Treatments --- */
+.dark-theme .related-card {
+  background: var(--color-surface);
+  border-color: #ffffff0d;
+}
+
+.dark-theme .related-card:hover {
+  border-color: #ffffff1a;
+}
+
+.dark-theme .related-card::before {
+  background: linear-gradient(135deg, #ffffff08 0%, transparent 50%);
+}
+
+.dark-theme .related-card-icon {
+  background: #a2535630;
+}
+
+/* --- Responsive (Mobile) — Related --- */
+@media only screen and (max-width: 1199px) {
+  .related-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .related-card {
+    padding: 16px 20px;
+  }
+
+  .related-card-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 2rem;
+    border-radius: 10px;
+  }
+
+  .related-card-arrow {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .related-treatments {
+    padding: 48px 16px;
+  }
+}
+
+/* --- Desktop — Related --- */
+@media screen and (min-width: 1200px) {
+  .related-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .related-card {
+    padding: 24px 28px;
+  }
+}
+
+/* --- Dark Mode Overrides --- */
+.dark-theme .treatment-content {
+  background: var(--color-surface);
+}
+
+.dark-theme .treatment-content p,
+.dark-theme .treatment-content li {
+  color: var(--color-text);
+}
+
+.dark-theme .treatment-content details {
+  border-color: #ffffff0d;
+  background: var(--color-bg);
+}
+
+.dark-theme .treatment-hero img {
+  filter: brightness(0.9);
+}
+
+.dark-theme .breadcrumb a {
+  color: var(--color-accent);
+}
+
+.dark-theme .breadcrumb [aria-current="page"] {
+  color: var(--color-text-muted);
+}
+
+/* --- Responsive (Mobile) --- */
+@media only screen and (max-width: 1199px) {
+  .breadcrumb {
+    padding: 68px 16px 0;
+  }
+
+  .treatment-hero {
+    padding: 24px 16px 48px;
+  }
+
+  .treatment-hero > div {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .treatment-hero img {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  .treatment-hero .btn-cta {
+    animation: none;
+  }
+
+  .treatment-content {
+    padding: 48px 16px;
+  }
+
+  .treatment-content h2 {
+    margin-top: 32px;
+  }
+
+  .related-treatments {
+    padding: 48px 16px;
+  }
+}
+
+/* --- Desktop enhancements --- */
+@media screen and (min-width: 1200px) {
+  .treatment-hero > div > div {
+    flex: 1;
+  }
+
+  .treatment-content details:hover {
+    box-shadow: var(--shadow-sm);
+  }
+}

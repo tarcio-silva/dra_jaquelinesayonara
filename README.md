@@ -53,6 +53,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 | CSS3 | Custom properties, CSS Grid, clamp(), @media (hover: hover) |
 | JavaScript (vanilla) | Lógica do cliente (zero dependências) |
 | LightningCSS 1.28.2 | Bundling e minificação CSS |
+| Vitest 2 + happy-dom | Testes unitários e de integração |
 | Vercel | Deploy (domínio custom + redirect 301 + cache headers) |
 | Manrope | Fonte variável self-hosted (WOFF2 + TTF fallback) |
 
@@ -61,11 +62,13 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 ```
 ├── index.html                 # Página principal (CSS inline para performance)
 ├── build-css.sh               # Script de build CSS
+├── vitest.config.js           # Configuração dos testes
 ├── vercel.json                # Cache headers + redirect 301
 ├── robots.txt                 # Crawl rules + sitemap URL (www)
 ├── sitemap.xml                # URL canônica com www
 ├── docs/                      # Documentação do projeto
 │   ├── adr/                   # Architecture Decision Records
+│   ├── RESTRUCTURE.md         # Histórico de reorganização
 │   ├── IMPLEMENTATION_PLAN.md # Plano de implementação multipage
 │   ├── TEST_PLAN.md           # Plano de testes unitários
 │   ├── MULTIPAGE_STRATEGY.md  # Estratégia SEO multipage
@@ -73,12 +76,20 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   ├── DOMAIN_SETUP.md        # Configuração do domínio
 │   ├── DESIGN_GUIDE.md        # Guia de design e referências
 │   └── REFACTORING_GUIDE.md   # Histórico de refatorações
+├── tests/                     # Testes unitários e de integração
+│   ├── setup.js               # Setup global (mocks, cleanup)
+│   ├── mocks/                 # Mocks (IntersectionObserver, matchMedia)
+│   ├── helpers/               # Utilitários DOM e keyboard events
+│   ├── fixtures/              # HTML fixtures para testes
+│   ├── unit/                  # Testes unitários do main.js
+│   └── integration/           # Testes de HTML, SEO, acessibilidade
 ├── assets/
 │   ├── css/
 │   │   ├── styles.css         # Entry point (importa módulos)
 │   │   ├── styles.min.css     # Bundle minificado (produção)
 │   │   ├── globalStyle.css    # Variáveis, tipografia, utilitários, hero-rating
 │   │   ├── dark-theme.css     # Tema escuro (variáveis + overrides)
+│   │   ├── treatment.css      # Estilos das páginas de tratamento
 │   │   ├── about.css          # Seção Sobre
 │   │   ├── cards.css          # Cards de tratamentos (Grid + hover)
 │   │   ├── results.css        # Grid de resultados + lightbox
@@ -100,7 +111,15 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   ├── font/                  # Manrope variable font (WOFF2 + TTF)
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-└── tratamentos/               # (futuro) Páginas individuais de tratamento
+└── tratamentos/               # Páginas individuais de tratamento
+    ├── _template.html         # Template base (placeholders)
+    ├── aparelho-ortodontico/  # (em desenvolvimento)
+    ├── clareamento-dental/
+    ├── exodontia/
+    ├── facetas-dentarias/
+    ├── profilaxia/
+    ├── protese-dentaria/
+    └── restauracao-dentaria/
 ```
 
 ## Como Executar
@@ -112,12 +131,90 @@ npm install
 # Build CSS (bundle + minificação)
 ./build-css.sh
 
+# Rodar testes
+npm test
+
+# Testes em modo watch
+npm run test:watch
+
+# Testes com cobertura
+npm run test:coverage
+
 # Servir localmente
 npx serve .
 
 # Rodar Lighthouse (opcional)
 npx lighthouse http://localhost:3000 --only-categories=performance,accessibility,seo
 ```
+
+## Testes
+
+Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funcionalidades JavaScript, acessibilidade e SEO.
+
+### Resultados
+
+```
+ ✓ tests/unit/menu-offcanva.test.js       (17 testes)
+ ✓ tests/unit/lightbox.test.js            (15 testes)
+ ✓ tests/integration/seo.test.js          (22 testes)
+ ✓ tests/integration/html-validation.test.js (14 testes)
+ ✓ tests/unit/dark-mode.test.js           (7 testes)
+ ✓ tests/unit/fade-in.test.js             (6 testes)
+ ✓ tests/unit/active-section.test.js      (5 testes)
+ ✓ tests/unit/reduced-motion.test.js      (3 testes)
+
+ Test Files  8 passed
+      Tests  89 passed
+   Duration  ~1s
+```
+
+### Cobertura por Módulo
+
+| Módulo (main.js) | Testes | Funcionalidades cobertas |
+|------------------|--------|--------------------------|
+| Menu Offcanva | 17 | toggle, aria-expanded, focus trap, Escape, nav links |
+| Lightbox | 15 | open/close, keyboard (Enter/Space/Escape), backdrop, focus management |
+| SEO (integração) | 22 | meta tags, OG, Twitter, Schema.org, sitemap, robots.txt |
+| HTML (integração) | 14 | skip link, ARIA, headings, alt, rel, semântica |
+| Dark Mode | 7 | toggle, aria-checked, sincronização desktop ↔ mobile |
+| Fade-in | 6 | IntersectionObserver, .visible, unobserve |
+| Active Section | 5 | threshold 0.3, .active, remoção de outros |
+| Reduced Motion | 3 | pausa vídeo, remove autoplay |
+
+### Estrutura de Testes
+
+```
+tests/
+├── setup.js                       # Setup global: mocks de IO e matchMedia, cleanup
+├── mocks/
+│   ├── intersection-observer.js   # Mock com triggerIntersection() helper
+│   └── match-media.js             # Mock com setMediaQuery() helper
+├── helpers/
+│   ├── dom-utils.js               # Fixtures reutilizáveis (menu, lightbox, dark-mode, etc.)
+│   └── keyboard-events.js         # pressKey, pressTab, pressEscape, pressEnter, pressSpace
+├── fixtures/
+│   └── home.html                  # Fixture simplificada do index.html
+├── unit/                          # Testes unitários do main.js
+│   ├── menu-offcanva.test.js
+│   ├── lightbox.test.js
+│   ├── dark-mode.test.js
+│   ├── fade-in.test.js
+│   ├── active-section.test.js
+│   └── reduced-motion.test.js
+└── integration/                   # Testes de validação do HTML e SEO
+    ├── html-validation.test.js
+    └── seo.test.js
+```
+
+### Executando
+
+```bash
+npm test                # Roda todos os testes uma vez
+npm run test:watch      # Modo watch (re-roda ao salvar)
+npm run test:coverage   # Gera relatório de cobertura (v8)
+```
+
+Consulte [`TEST_PLAN.md`](./docs/TEST_PLAN.md) para o plano completo com todos os test cases detalhados.
 
 ## Deploy
 

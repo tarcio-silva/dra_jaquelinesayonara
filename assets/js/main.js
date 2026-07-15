@@ -148,9 +148,26 @@ if (lightbox) {
 const darkModeButton = document.getElementById("dark-mode-button");
 const darkModeToggleMobile = document.querySelector(".dark-mode-toggle-mobile");
 
+// Restaurar preferência salva
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-theme");
+  if (darkModeButton) {
+    darkModeButton.checked = true;
+    darkModeButton.setAttribute("aria-checked", "true");
+  }
+  if (darkModeToggleMobile) {
+    darkModeToggleMobile.checked = true;
+    darkModeToggleMobile.setAttribute("aria-checked", "true");
+  }
+}
+
 function toggleDarkMode(source) {
   document.body.classList.toggle("dark-theme");
   const isActive = document.body.classList.contains("dark-theme");
+
+  // Persistir preferência
+  localStorage.setItem("theme", isActive ? "dark" : "light");
 
   // Sincronizar ambos os toggles
   if (darkModeButton) {
