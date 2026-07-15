@@ -43,6 +43,9 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 - SEO completo (Schema.org JSON-LD com aggregateRating, geo, areaServed, sameAs, Open Graph, Twitter Cards, sitemap, robots.txt)
 - Acessibilidade WCAG AA (ARIA, skip link → `#main-content`, focus-visible, focus traps, contraste ≥4.5:1, `rel="noopener noreferrer"`)
 - Redirect 301 para migração de domínio (via `vercel.json`)
+- Persistência de tema (dark/light) via localStorage entre páginas
+- Cards de tratamento clicáveis (card inteiro como link)
+- Layout mosaico bento grid nos cards de tratamento
 - Cache imutável para assets estáticos (font, img, js, css, media)
 
 ## Stack
@@ -158,13 +161,14 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
  ✓ tests/unit/lightbox.test.js            (15 testes)
  ✓ tests/integration/seo.test.js          (22 testes)
  ✓ tests/integration/html-validation.test.js (14 testes)
- ✓ tests/unit/dark-mode.test.js           (7 testes)
+ ✓ tests/unit/dark-mode.test.js           (10 testes)
  ✓ tests/unit/fade-in.test.js             (6 testes)
  ✓ tests/unit/active-section.test.js      (5 testes)
  ✓ tests/unit/reduced-motion.test.js      (3 testes)
+ ✓ tests/integration/treatment-pages.test.js (210 testes)
 
- Test Files  8 passed
-      Tests  89 passed
+ Test Files  9 passed
+      Tests  307 passed
    Duration  ~1s
 ```
 
@@ -176,10 +180,11 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
 | Lightbox | 15 | open/close, keyboard (Enter/Space/Escape), backdrop, focus management |
 | SEO (integração) | 22 | meta tags, OG, Twitter, Schema.org, sitemap, robots.txt |
 | HTML (integração) | 14 | skip link, ARIA, headings, alt, rel, semântica |
-| Dark Mode | 7 | toggle, aria-checked, sincronização desktop ↔ mobile |
+| Dark Mode | 10 | toggle, aria-checked, sincronização desktop ↔ mobile, persistência localStorage |
 | Fade-in | 6 | IntersectionObserver, .visible, unobserve |
 | Active Section | 5 | threshold 0.3, .active, remoção de outros |
 | Reduced Motion | 3 | pausa vídeo, remove autoplay |
+| Tratamentos (integração) | 210 | acessibilidade, SEO, Schema.org, estrutura, performance (7 páginas × 30 checks) |
 
 ### Estrutura de Testes
 
@@ -203,7 +208,8 @@ tests/
 │   └── reduced-motion.test.js
 └── integration/                   # Testes de validação do HTML e SEO
     ├── html-validation.test.js
-    └── seo.test.js
+    ├── seo.test.js
+    └── treatment-pages.test.js
 ```
 
 ### Executando

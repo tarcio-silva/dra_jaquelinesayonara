@@ -4,7 +4,7 @@
 |-------|-------|
 | **Status** | Aceito |
 | **Data** | 2026-07-14 |
-| **Decisores** | Thiago Silva |
+| **Decisores** | Tarcio Silva |
 | **Contexto** | Expansão do site para múltiplas páginas de tratamento (SEO local) |
 
 ---
