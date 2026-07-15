@@ -226,19 +226,10 @@
 
   /* Cards 2-5: 1x1 padrão */
 
-  /* Card 6 (Prótese): 2 colunas na segunda linha */
-  .card-container:nth-child(6) {
+  /* Cards 6 e 7: dividem a última linha (2 cols cada) */
+  .card-container:nth-child(6),
+  .card-container:nth-child(7) {
     grid-column: span 2;
-  }
-
-  /* Card 7 (Restauração): full width */
-  .card-container:last-child {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
-
-  .card-container:last-child .card img {
-    height: 200px;
   }
 
   .card-description h3 {
