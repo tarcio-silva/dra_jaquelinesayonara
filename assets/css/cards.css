@@ -1,70 +1,103 @@
 /* ==========================================================================
-   Cards de Tratamentos — Layout Mosaico (Bento Grid)
-   Desktop: grid assimétrico com destaque no primeiro e último card
-   Mobile: stack vertical com cards uniformes
+   Cards de Tratamentos — Mosaico de Imagens
+   Cards com imagem full + overlay de texto por cima (estilo galeria)
+   Desktop: grid assimétrico bento | Mobile: grid 2 colunas
    ========================================================================== */
 
 .cards-container {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
 }
 
 .card-container {
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(162, 83, 86, 0.08);
+  position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card-container:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(162, 83, 86, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(162, 83, 86, 0.2);
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  position: relative;
   height: 100%;
 }
 
 .card img {
   width: 100%;
-  height: 200px;
+  height: 100%;
+  min-height: 200px;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  display: block;
+  transition: transform 0.5s ease;
 }
 
 .card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
+/* Overlay gradient + texto sobre a imagem */
 .card-description {
-  padding: 20px;
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  flex: 1;
+  justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7) 0%,
+    rgba(0, 0, 0, 0.3) 40%,
+    transparent 70%
+  );
+  transition: background 0.3s;
+}
+
+.card:hover .card-description {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 75%
+  );
 }
 
 .card-description h3 {
+  color: #fff;
   font-size: 1.6rem;
-  margin: 0 0 8px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .card-description p {
-  flex: 1;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.3rem;
+  line-height: 1.4;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .card-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 1.3rem;
   font-weight: 600;
-  color: var(--color-accent);
+  color: #fff;
   text-decoration: none;
-  transition: color 0.2s, gap 0.3s;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s, color 0.2s;
 }
 
 .card-link::after {
@@ -72,18 +105,50 @@
   transition: transform 0.3s;
 }
 
+.card:hover .card-link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .card-link:hover {
-  color: var(--logo-pallete-velvety-cherry);
+  color: var(--logo-pallete-petal-rose);
 }
 
 .card-link:hover::after {
   transform: translateX(4px);
 }
 
-/* --- Mobile interactions --- */
-@media only screen and (max-width: 1199px) {
+/* --- Mobile (default 2 cols) --- */
+@media only screen and (max-width: 599px) {
+  .cards-container {
+    gap: 8px;
+  }
+
+  .card img {
+    min-height: 180px;
+  }
+
+  .card-description {
+    padding: 14px;
+  }
+
+  .card-description h3 {
+    font-size: 1.4rem;
+  }
+
+  .card-description p {
+    display: none; /* Só título no mobile */
+  }
+
+  .card-link {
+    opacity: 1;
+    transform: translateY(0);
+    font-size: 1.2rem;
+    margin-top: 6px;
+  }
+
   .card-container {
-    border-radius: 20px;
+    border-radius: 12px;
     -webkit-user-select: none;
     user-select: none;
   }
@@ -93,100 +158,131 @@
     transition: transform 0.1s;
   }
 
-  .btn-cta,
-  .btn-about {
-    -webkit-user-select: none;
-    user-select: none;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  /* Último card (7) ocupa largura total */
+  .card-container:last-child {
+    grid-column: 1 / -1;
   }
 
-  .btn-cta:active,
-  .btn-about:active {
-    transform: scale(0.95);
-    transition: transform 0.1s;
+  .card-container:last-child .card img {
+    min-height: 160px;
   }
 }
 
-/* --- Tablet (2 colunas) --- */
+/* --- Tablet (3 colunas) --- */
 @media screen and (min-width: 600px) and (max-width: 1199px) {
   .cards-container {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  /* Último card (ímpar) centralizado */
-  .card-container:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    max-width: 50%;
-    justify-self: center;
-  }
-}
-
-/* --- Desktop: Mosaico Bento (3 colunas assimétrico) --- */
-@media screen and (min-width: 1200px) {
-  .cards-container {
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto auto;
-    gap: 24px;
+    gap: 12px;
   }
 
-  /* Card 1 (Aparelho — especialidade): destaque, span 2 rows */
-  .card-container:nth-child(1) {
-    grid-row: span 2;
-  }
-
-  .card-container:nth-child(1) .card {
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .card-container:nth-child(1) .card img {
-    height: 100%;
-    min-height: 320px;
-    flex: 1;
-  }
-
-  .card-container:nth-child(1) .card-description {
-    padding: 28px;
-  }
-
-  .card-container:nth-child(1) .card-description h3 {
-    font-size: 2.2rem;
-  }
-
-  /* Cards regulares */
   .card img {
-    height: 180px;
+    min-height: 220px;
   }
 
-  .card-description h3 {
-    font-size: 1.8rem;
+  /* Card 1: span 2 colunas */
+  .card-container:nth-child(1) {
+    grid-column: span 2;
   }
 
-  /* Card 7 (último — Restauração): span 2 colunas, layout horizontal */
+  /* Último card: span 2 colunas */
   .card-container:last-child {
     grid-column: span 2;
   }
 
-  .card-container:last-child .card {
-    flex-direction: row;
+  .card-container {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .card-container:active {
+    transform: scale(0.97);
+    transition: transform 0.1s;
+  }
+
+  .card-link {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Desktop: Mosaico Bento --- */
+@media screen and (min-width: 1200px) {
+  .cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 240px 240px;
+    gap: 16px;
+  }
+
+  .card img {
+    min-height: unset;
+    height: 100%;
+  }
+
+  /* Card 1 (Aparelho): destaque — 2 cols, 2 rows */
+  .card-container:nth-child(1) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  /* Cards 2-5: 1x1 padrão */
+
+  /* Card 6 (Prótese): 2 colunas na segunda linha */
+  .card-container:nth-child(6) {
+    grid-column: span 2;
+  }
+
+  /* Card 7 (Restauração): full width */
+  .card-container:last-child {
+    grid-column: 1 / -1;
+    grid-row: auto;
   }
 
   .card-container:last-child .card img {
-    width: 45%;
-    height: 100%;
-    min-height: 220px;
+    height: 200px;
   }
 
-  .card-container:last-child .card-description {
-    padding: 32px;
-    justify-content: center;
-  }
-
-  .card-container:last-child .card-description h3 {
+  .card-description h3 {
     font-size: 2rem;
+  }
+
+  .card-container:nth-child(1) .card-description h3 {
+    font-size: 2.6rem;
+  }
+
+  .card-container:nth-child(1) .card-description p {
+    font-size: 1.5rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .card-description {
+    padding: 28px;
+  }
+}
+
+/* --- Dark mode (minimal — overlay já é dark) --- */
+.dark-theme .card-container {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .card-container:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Botões globais (mantidos do original) --- */
+.btn-cta,
+.btn-about {
+  -webkit-user-select: none;
+  user-select: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1199px) {
+  .btn-cta:active,
+  .btn-about:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
   }
 }
