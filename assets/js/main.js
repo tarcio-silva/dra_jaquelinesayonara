@@ -85,7 +85,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
       fadeObserver.unobserve(e.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.05 });
 fadeEls.forEach(el => fadeObserver.observe(el));
 
 
