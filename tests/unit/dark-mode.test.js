@@ -10,6 +10,7 @@ describe('Dark Mode Toggle', () => {
   let desktopToggle, mobileToggle;
 
   beforeEach(async () => {
+    localStorage.clear();
     createDarkModeFixture();
     await loadMainJs();
     desktopToggle = document.getElementById('dark-mode-button');
@@ -24,10 +25,8 @@ describe('Dark Mode Toggle', () => {
     });
 
     it('remove .dark-theme ao desativar', () => {
-      // Ativar
       desktopToggle.checked = true;
       desktopToggle.dispatchEvent(new Event('change', { bubbles: true }));
-      // Desativar
       desktopToggle.checked = false;
       desktopToggle.dispatchEvent(new Event('change', { bubbles: true }));
       expect(document.body.classList.contains('dark-theme')).toBe(false);
@@ -69,6 +68,34 @@ describe('Dark Mode Toggle', () => {
       mobileToggle.dispatchEvent(new Event('change', { bubbles: true }));
       expect(desktopToggle.checked).toBe(true);
       expect(desktopToggle.getAttribute('aria-checked')).toBe('true');
+    });
+  });
+
+  describe('Persistência (localStorage)', () => {
+    it('salva "dark" no localStorage ao ativar', () => {
+      desktopToggle.checked = true;
+      desktopToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(localStorage.getItem('theme')).toBe('dark');
+    });
+
+    it('salva "light" no localStorage ao desativar', () => {
+      desktopToggle.checked = true;
+      desktopToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      desktopToggle.checked = false;
+      desktopToggle.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(localStorage.getItem('theme')).toBe('light');
+    });
+
+    it('restaura dark mode ao carregar se localStorage tem "dark"', async () => {
+      localStorage.setItem('theme', 'dark');
+      createDarkModeFixture();
+      vi.resetModules();
+      await import('../../assets/js/main.js');
+
+      expect(document.body.classList.contains('dark-theme')).toBe(true);
+      const toggle = document.getElementById('dark-mode-button');
+      expect(toggle.checked).toBe(true);
+      expect(toggle.getAttribute('aria-checked')).toBe('true');
     });
   });
 });
