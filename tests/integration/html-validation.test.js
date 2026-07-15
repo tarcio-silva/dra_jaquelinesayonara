@@ -108,4 +108,35 @@ describe('Validação HTML — index.html', () => {
       });
     });
   });
+
+  describe('Performance', () => {
+    it('font preload presente', () => {
+      const preload = doc.querySelector('link[rel="preload"][as="font"]');
+      expect(preload).not.toBeNull();
+      expect(preload.getAttribute('href')).toContain('Manrope');
+    });
+
+    it('CSS inline presente (não link externo)', () => {
+      const style = doc.querySelector('style');
+      expect(style).not.toBeNull();
+      expect(style.textContent.length).toBeGreaterThan(1000);
+    });
+
+    it('JS carregado com defer', () => {
+      const script = doc.querySelector('script[src*="main.js"]');
+      expect(script).not.toBeNull();
+      expect(script.hasAttribute('defer')).toBe(true);
+    });
+
+    it('imagem hero com fetchpriority="high"', () => {
+      const heroImg = doc.querySelector('.hero-image img');
+      expect(heroImg).not.toBeNull();
+      expect(heroImg.getAttribute('fetchpriority')).toBe('high');
+    });
+
+    it('imagens lazy-loaded (exceto hero)', () => {
+      const lazyImgs = doc.querySelectorAll('main img[loading="lazy"]');
+      expect(lazyImgs.length).toBeGreaterThan(0);
+    });
+  });
 });
