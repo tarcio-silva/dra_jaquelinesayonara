@@ -26,3 +26,6 @@ npm-debug.log*
 # Coverage (testes)
 coverage/
 .nyc_output/
+
+# Lighthouse CI output
+.lighthouseci/
