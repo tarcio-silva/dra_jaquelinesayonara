@@ -7,9 +7,6 @@
     "test:coverage": "vitest run --coverage",
     "build:css": "./build-css.sh"
   },
-  "dependencies": {
-    "normalize.css": "^8.0.1"
-  },
   "devDependencies": {
     "@vitest/coverage-v8": "^2.1.9",
     "happy-dom": "^15.11.7",
