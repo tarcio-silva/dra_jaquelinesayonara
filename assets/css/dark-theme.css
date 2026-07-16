@@ -185,6 +185,31 @@
   color: var(--color-accent);
 }
 
+/* Hero mobile — fundo escuro na div sobreposta */
+@media only screen and (max-width: 1199px) {
+  .dark-theme .hero-content {
+    background: rgba(26, 18, 24, 0.92);
+  }
+
+  .dark-theme .hero-overlay {
+    background: linear-gradient(
+      to top,
+      rgba(26, 18, 24, 1) 5%,
+      rgba(26, 18, 24, 0.9) 30%,
+      rgba(26, 18, 24, 0.5) 50%,
+      transparent 75%
+    );
+  }
+}
+
+.dark-theme .hero-description {
+  color: var(--color-text-muted);
+}
+
+.dark-theme .hero-location {
+  color: var(--color-text-muted);
+}
+
 /* Plan cards */
 .dark-theme .plan-card-name {
   color: var(--color-text);
