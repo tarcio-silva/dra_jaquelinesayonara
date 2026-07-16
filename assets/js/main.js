@@ -147,6 +147,7 @@ if (lightbox) {
 // --- Dark mode toggle com aria-checked (TASK-17 + TASK-24c) ---
 const darkModeButton = document.getElementById("dark-mode-button");
 const darkModeToggleMobile = document.querySelector(".dark-mode-toggle-mobile");
+const darkModeToggleNav = document.querySelector(".dark-mode-toggle-nav");
 
 // Restaurar preferência salva
 const savedTheme = localStorage.getItem("theme");
@@ -160,6 +161,10 @@ if (savedTheme === "dark") {
     darkModeToggleMobile.checked = true;
     darkModeToggleMobile.setAttribute("aria-checked", "true");
   }
+  if (darkModeToggleNav) {
+    darkModeToggleNav.checked = true;
+    darkModeToggleNav.setAttribute("aria-checked", "true");
+  }
 }
 
 function toggleDarkMode(source) {
@@ -169,7 +174,7 @@ function toggleDarkMode(source) {
   // Persistir preferência
   localStorage.setItem("theme", isActive ? "dark" : "light");
 
-  // Sincronizar ambos os toggles
+  // Sincronizar todos os toggles
   if (darkModeButton) {
     darkModeButton.checked = isActive;
     darkModeButton.setAttribute("aria-checked", String(isActive));
@@ -178,6 +183,10 @@ function toggleDarkMode(source) {
     darkModeToggleMobile.checked = isActive;
     darkModeToggleMobile.setAttribute("aria-checked", String(isActive));
   }
+  if (darkModeToggleNav) {
+    darkModeToggleNav.checked = isActive;
+    darkModeToggleNav.setAttribute("aria-checked", String(isActive));
+  }
 }
 
 if (darkModeButton) {
@@ -185,6 +194,9 @@ if (darkModeButton) {
 }
 if (darkModeToggleMobile) {
   darkModeToggleMobile.addEventListener("change", () => toggleDarkMode("mobile"));
+}
+if (darkModeToggleNav) {
+  darkModeToggleNav.addEventListener("change", () => toggleDarkMode("nav"));
 }
 
 
