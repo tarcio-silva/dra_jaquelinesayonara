@@ -290,11 +290,12 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 
 ## Branches
 
-| Branch | Descrição | Stack |
-|--------|-----------|-------|
-| `main` | Versão em produção | HTML5, CSS3, JS vanilla, LightningCSS |
-| `static-app` | Branch de trabalho/desenvolvimento | HTML5, CSS3, JS vanilla, LightningCSS |
-| `react-app` | Versão SPA em React (arquivada) | React 18, Vite 6, Styled Components, Recoil |
+| Branch | Descrição |
+|--------|-----------|
+| `main` | Produção — deploy automático via Vercel |
+| `develop` | Branch de trabalho/desenvolvimento |
+
+**Fluxo:** Trabalho na `develop` → merge/PR para `main` quando pronto para produção.
 
 ## Documentação Complementar
 
