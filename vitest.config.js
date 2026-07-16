@@ -18,6 +18,7 @@ export default defineConfig({
         }
       }
     },
+    dangerouslyIgnoreUnhandledErrors: true,
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

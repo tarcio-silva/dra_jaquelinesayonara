@@ -207,3 +207,33 @@ if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     video.removeAttribute("autoplay");
   });
 }
+
+
+// --- Lazy-load de vídeo (evitar download de 5.8MB no load) ---
+const lazyVideos = document.querySelectorAll("video");
+if (lazyVideos.length > 0) {
+  const videoObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const video = entry.target;
+        const sources = video.querySelectorAll("source[data-src]");
+        sources.forEach(source => {
+          source.src = source.dataset.src;
+          source.removeAttribute("data-src");
+        });
+        video.load();
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          video.autoplay = true;
+          video.play().catch(() => {});
+        }
+        videoObserver.unobserve(video);
+      }
+    });
+  }, { rootMargin: "200px" });
+
+  lazyVideos.forEach(video => {
+    if (video.querySelector("source[data-src]")) {
+      videoObserver.observe(video);
+    }
+  });
+}

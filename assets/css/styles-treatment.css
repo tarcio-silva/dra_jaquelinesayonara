@@ -1,0 +1,10 @@
+/* Entry point CSS para páginas de tratamento (tree-shaked) */
+@import "./dark-theme.css";
+@import "./globalStyle.css";
+@import "./header/header.css";
+@import "./header/hamburger.css";
+@import "./header/offcanva.css";
+@import "./header/switch-button.css";
+@import "./cta-final.css";
+@import "./footer.css";
+@import "./treatment.css";

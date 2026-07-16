@@ -1,19 +1,25 @@
 {
   "name": "drajaquelinesayonara",
   "private": true,
+  "type": "module",
+  "lint-staged": {
+    "assets/css/**/*.css": "npm run build:css",
+    "assets/img/**/*.{webp,png,jpg}": "node scripts/check-image-size.js"
+  },
   "scripts": {
+    "build": "node scripts/build.js",
+    "build:css": "./build-css.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "build:css": "./build-css.sh"
-  },
-  "dependencies": {
-    "normalize.css": "^8.0.1"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^2.1.9",
     "happy-dom": "^15.11.7",
+    "husky": "^9.1.7",
     "lightningcss-cli": "^1.28.2",
+    "lint-staged": "^15.4.3",
     "vitest": "^2.1.9"
   }
 }
