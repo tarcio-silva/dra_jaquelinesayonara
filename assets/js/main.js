@@ -1,6 +1,9 @@
-// --- Menu Offcanva com Focus Trap (TASK-09) ---
+// --- Menu Offcanva com Focus Trap, Backdrop, Swipe e Inert ---
 const hamburgerButton = document.getElementById("hamburger-button");
 const offCanva = document.getElementById("offcanva");
+const offCanvaBackdrop = document.getElementById("offcanva-backdrop");
+const offCanvaClose = offCanva ? offCanva.querySelector(".offcanva-close") : null;
+const mainContent = document.getElementById("main-content");
 
 if (hamburgerButton && offCanva) {
   hamburgerButton.addEventListener("click", toggleNav);
@@ -12,29 +15,79 @@ if (hamburgerButton && offCanva) {
 
   // Fechar com Escape
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && hamburgerButton.classList.contains("is-active")) {
+    if (e.key === "Escape" && offCanva.classList.contains("is-open")) {
       toggleNav();
     }
   });
+
+  // Fechar via backdrop
+  if (offCanvaBackdrop) {
+    offCanvaBackdrop.addEventListener("click", toggleNav);
+  }
+
+  // Fechar via botão fechar
+  if (offCanvaClose) {
+    offCanvaClose.addEventListener("click", toggleNav);
+  }
+
+  // Swipe-to-close
+  let swipeStartX = 0;
+  const SWIPE_THRESHOLD = 80;
+
+  offCanva.addEventListener("touchstart", (e) => {
+    swipeStartX = e.touches[0].clientX;
+  }, { passive: true });
+
+  offCanva.addEventListener("touchend", (e) => {
+    if (!offCanva.classList.contains("is-open")) return;
+    const swipeEndX = e.changedTouches[0].clientX;
+    const diff = swipeEndX - swipeStartX;
+
+    // Só fechar com swipe para a esquerda (diff negativo)
+    if (diff < -SWIPE_THRESHOLD) {
+      toggleNav();
+    }
+  }, { passive: true });
 }
 
 function toggleNav() {
-  const isActive = hamburgerButton.classList.contains("is-active");
+  const isOpen = offCanva.classList.contains("is-open");
 
-  if (isActive) {
+  if (isOpen) {
+    // Fechar
+    offCanva.classList.remove("is-open");
     hamburgerButton.classList.remove("is-active");
     hamburgerButton.setAttribute("aria-expanded", "false");
     offCanva.setAttribute("aria-hidden", "true");
-    offCanva.style.left = "-120%";
     document.body.style.overflow = "";
     offCanva.removeEventListener("keydown", trapFocusInOffcanva);
+
+    // Backdrop
+    if (offCanvaBackdrop) {
+      offCanvaBackdrop.classList.remove("is-visible");
+      offCanvaBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    // Inert
+    if (mainContent) mainContent.removeAttribute("inert");
+
     hamburgerButton.focus();
   } else {
+    // Abrir
+    offCanva.classList.add("is-open");
     hamburgerButton.classList.add("is-active");
     hamburgerButton.setAttribute("aria-expanded", "true");
     offCanva.setAttribute("aria-hidden", "false");
-    offCanva.style.left = "0";
     document.body.style.overflow = "hidden";
+
+    // Backdrop
+    if (offCanvaBackdrop) {
+      offCanvaBackdrop.classList.add("is-visible");
+      offCanvaBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    // Inert
+    if (mainContent) mainContent.setAttribute("inert", "");
 
     // Mover foco para o primeiro link
     const firstLink = offCanva.querySelector("a");
@@ -62,14 +115,20 @@ function trapFocusInOffcanva(e) {
 }
 
 
-// --- Active section indicator ---
+// --- Active section indicator (desktop + mobile) ---
 const sections = document.querySelectorAll("section[id]");
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
+      // Desktop
       document.querySelectorAll(".header-link").forEach(l => l.classList.remove("active"));
-      const active = document.querySelector(`.header-link[href="#${entry.target.id}"]`);
-      if (active) active.classList.add("active");
+      const activeDesktop = document.querySelector(`.header-link[href="#${entry.target.id}"]`);
+      if (activeDesktop) activeDesktop.classList.add("active");
+
+      // Mobile offcanva
+      document.querySelectorAll(".offcanva-nav--link").forEach(l => l.classList.remove("active"));
+      const activeMobile = document.querySelector(`.offcanva-nav--link[href="#${entry.target.id}"]`);
+      if (activeMobile) activeMobile.classList.add("active");
     }
   });
 }, { threshold: 0.3 });

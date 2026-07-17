@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createMenuFixture } from '../helpers/dom-utils.js';
 import { pressEscape } from '../helpers/keyboard-events.js';
+import { triggerIntersection, getObserverInstances } from '../mocks/intersection-observer.js';
 
 /**
  * O main.js executa no escopo global, então precisamos:
@@ -287,36 +288,31 @@ describe('Menu Offcanva', () => {
 
   describe('Indicador de seção ativa mobile', () => {
     it('link da seção visível recebe classe .active', () => {
-      hamburger.click();
+      // O navObserver é o último IntersectionObserver criado pelo main.js
+      const observers = getObserverInstances();
+      // Encontrar o observer que observa sections (o do active section indicator)
+      const navObserverIndex = observers.findIndex(obs =>
+        obs.options && obs.options.threshold === 0.3
+      );
 
-      // Simular IntersectionObserver trigger para seção #about
       const aboutSection = document.getElementById('about');
-      const entry = { target: aboutSection, isIntersecting: true };
-
-      // Acionar o observer callback manualmente
-      const observers = window.__intersectionObservers || [];
-      observers.forEach(obs => {
-        if (obs.callback) obs.callback([entry]);
-      });
+      triggerIntersection(navObserverIndex, [{ target: aboutSection, isIntersecting: true }]);
 
       const aboutLink = offcanva.querySelector('.offcanva-nav--link[href="#about"]');
       expect(aboutLink.classList.contains('active')).toBe(true);
     });
 
     it('outros links perdem classe .active quando nova seção fica visível', () => {
-      hamburger.click();
+      const observers = getObserverInstances();
+      const navObserverIndex = observers.findIndex(obs =>
+        obs.options && obs.options.threshold === 0.3
+      );
 
-      // Simular seção #about ativa
       const aboutSection = document.getElementById('about');
       const careSection = document.getElementById('care');
 
-      const observers = window.__intersectionObservers || [];
-      observers.forEach(obs => {
-        if (obs.callback) {
-          obs.callback([{ target: aboutSection, isIntersecting: true }]);
-          obs.callback([{ target: careSection, isIntersecting: true }]);
-        }
-      });
+      triggerIntersection(navObserverIndex, [{ target: aboutSection, isIntersecting: true }]);
+      triggerIntersection(navObserverIndex, [{ target: careSection, isIntersecting: true }]);
 
       const aboutLink = offcanva.querySelector('.offcanva-nav--link[href="#about"]');
       const careLink = offcanva.querySelector('.offcanva-nav--link[href="#care"]');
