@@ -35,7 +35,7 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 32px 24px 16px;
+  padding: 56px 24px 8px;
 }
 
 .offcanva-avatar {
@@ -65,34 +65,27 @@
 
 .offcanva-nav ul {
   list-style: none;
-  padding: 24px;
+  padding: 16px 24px;
+}
+
+.offcanva-nav ul li {
+  margin-bottom: 4px;
 }
 
 .offcanva-nav ul a {
   align-items: center;
-  display: flex;
+  gap: 10px;
   padding: 12px 16px;
   border-radius: 8px;
-  transition: background 0.2s, color 0.2s;
+  display: flex;
+  text-decoration: none;
+  transition: background 0.2s;
 }
-
-.offcanva-nav ul li {
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.offcanva.is-open .offcanva-nav li:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
-.offcanva.is-open .offcanva-nav li:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.10s; }
-.offcanva.is-open .offcanva-nav li:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.15s; }
-.offcanva.is-open .offcanva-nav li:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.20s; }
-.offcanva.is-open .offcanva-nav li:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.25s; }
-.offcanva.is-open .offcanva-nav li:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.30s; }
 
 .offcanva-nav ul li img {
-  margin: 0 8px 0 0;
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
 .offcanva-nav ul li p {
@@ -109,37 +102,35 @@
 /* --- Indicador de seção ativa (mobile) --- */
 
 .offcanva-nav--link.active {
-  background-color: var(--logo-pallete-velvety-cherry);
-  color: var(--logo-pallete-light) !important;
-}
-
-.offcanva-nav--link.active img {
-  filter: brightness(0) invert(1);
+  color: var(--logo-pallete-velvety-cherry) !important;
+  font-weight: 700;
+  background-color: rgba(162, 83, 86, 0.05);
+  border-radius: 8px;
 }
 
 .offcanva-nav--link.active p {
-  color: var(--logo-pallete-light);
+  font-weight: 700;
 }
 
 /* --- Social links --- */
 
 .offcanva-nav--social {
   width: 100%;
+  padding: 16px 24px 0;
 }
 
 .offcanva-nav--social ul {
   display: flex;
-  justify-content: space-around;
-  list-style: none;
+  justify-content: center;
+  gap: 24px;
   padding: 0;
-}
-
-.offcanva-nav--social li a img {
-  width: 24px;
+  list-style: none;
 }
 
 .offcanva-nav--social a {
   color: var(--logo-pallete-velvety-cherry);
+  padding: 8px;
+  display: flex;
 }
 
 /* --- Dark mode toggle --- */
