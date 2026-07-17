@@ -2,7 +2,6 @@
 const hamburgerButton = document.getElementById("hamburger-button");
 const offCanva = document.getElementById("offcanva");
 const offCanvaBackdrop = document.getElementById("offcanva-backdrop");
-const offCanvaClose = offCanva ? offCanva.querySelector(".offcanva-close") : null;
 const mainContent = document.getElementById("main-content");
 
 if (hamburgerButton && offCanva) {
@@ -23,11 +22,6 @@ if (hamburgerButton && offCanva) {
   // Fechar via backdrop
   if (offCanvaBackdrop) {
     offCanvaBackdrop.addEventListener("click", toggleNav);
-  }
-
-  // Fechar via botão fechar
-  if (offCanvaClose) {
-    offCanvaClose.addEventListener("click", toggleNav);
   }
 
   // Swipe-to-close

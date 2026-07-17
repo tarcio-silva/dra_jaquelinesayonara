@@ -28,27 +28,6 @@
   flex-direction: column;
 }
 
-/* --- Botão fechar --- */
-
-.offcanva-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  background: none;
-  border: none;
-  color: var(--logo-pallete-velvety-cherry);
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background 0.2s;
-  z-index: 1;
-}
-
-.offcanva-close:hover,
-.offcanva-close:focus-visible {
-  background: rgba(162, 83, 86, 0.1);
-}
-
 /* --- Identidade visual (topo) --- */
 
 .offcanva-identity {

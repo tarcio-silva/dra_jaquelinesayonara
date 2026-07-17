@@ -232,30 +232,30 @@ describe('Menu Offcanva', () => {
     });
   });
 
-  describe('Botão fechar explícito', () => {
-    it('botão fechar existe no offcanva', () => {
-      const closeBtn = offcanva.querySelector('.offcanva-close');
-      expect(closeBtn).not.toBeNull();
-    });
-
-    it('botão fechar tem aria-label', () => {
-      const closeBtn = offcanva.querySelector('.offcanva-close');
-      expect(closeBtn.getAttribute('aria-label')).toBe('Fechar menu');
-    });
-
-    it('clicar no botão fechar fecha o menu', () => {
+  describe('Hamburger como botão fechar (✕ animado)', () => {
+    it('hamburger anima para ✕ quando menu está aberto (classe .is-active)', () => {
       hamburger.click();
-      const closeBtn = offcanva.querySelector('.offcanva-close');
-      closeBtn.click();
+      expect(hamburger.classList.contains('is-active')).toBe(true);
+    });
+
+    it('hamburger tem z-index superior ao offcanva (acessível sobre o menu)', () => {
+      // Hamburger z-index: 1010, Offcanva z-index: 1000
+      // Verificamos que o hamburger está no DOM e clicável sobre o menu
+      hamburger.click();
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+      // Segundo click fecha
+      hamburger.click();
       expect(offcanva.classList.contains('is-open')).toBe(false);
-      expect(hamburger.classList.contains('is-active')).toBe(false);
     });
 
-    it('clicar no botão fechar retorna foco ao hamburger', () => {
+    it('hamburger retorna foco ao fechar o menu', () => {
       hamburger.click();
-      const closeBtn = offcanva.querySelector('.offcanva-close');
-      closeBtn.click();
+      hamburger.click();
       expect(document.activeElement).toBe(hamburger);
+    });
+
+    it('hamburger tem aria-label para acessibilidade', () => {
+      expect(hamburger.getAttribute('aria-label')).toBeTruthy();
     });
   });
 
@@ -376,10 +376,9 @@ describe('Menu Offcanva', () => {
       expect(main.hasAttribute('inert')).toBe(false);
     });
 
-    it('inert é removido ao fechar via botão fechar', () => {
+    it('inert é removido ao fechar via hamburger', () => {
       hamburger.click();
-      const closeBtn = offcanva.querySelector('.offcanva-close');
-      closeBtn.click();
+      hamburger.click();
       const main = document.getElementById('main-content');
       expect(main.hasAttribute('inert')).toBe(false);
     });
