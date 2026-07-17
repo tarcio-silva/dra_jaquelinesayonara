@@ -174,13 +174,13 @@
   position: absolute;
   top: 16px;
   right: 16px;
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
-  font-size: 3.2rem;
+  font-size: 4rem;
   cursor: pointer;
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -189,7 +189,7 @@
 }
 
 .lightbox-close:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .lightbox-close:focus-visible {
@@ -202,13 +202,13 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
-  font-size: 4.8rem;
+  font-size: 6rem;
   cursor: pointer;
-  width: 56px;
-  height: 56px;
+  width: 72px;
+  height: 72px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,12 +216,12 @@
   transition: background 0.2s;
 }
 
-.lightbox-prev { left: 12px; }
-.lightbox-next { right: 12px; }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
 
 .lightbox-prev:hover,
 .lightbox-next:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .lightbox-prev:focus-visible,
@@ -270,11 +270,17 @@
 @media screen and (max-width: 767px) {
   .lightbox-prev,
   .lightbox-next {
-    font-size: 3.6rem;
-    width: 44px;
-    height: 44px;
+    font-size: 4.8rem;
+    width: 56px;
+    height: 56px;
   }
 
   .lightbox-prev { left: 8px; }
   .lightbox-next { right: 8px; }
+
+  .lightbox-close {
+    font-size: 3.6rem;
+    width: 48px;
+    height: 48px;
+  }
 }
