@@ -114,14 +114,14 @@
 
 ---
 
-### 2.4 OG Images Específicas por Tratamento ⚠️
+### 2.4 OG Images Específicas por Tratamento ✅
 
-**Status:** Parcialmente concluído
+**Status:** Concluído
 
-- [x] Cada página já aponta para imagem específica (`/assets/img/care/{slug}.webp`)
-- [ ] Criar imagens OG otimizadas 1200×630 (requer designer)
-
-**Nota:** As imagens atuais (11-17KB, thumbnails) funcionam para compartilhamento social mas não são ideais. Imagens 1200×630 produzem melhor preview nas redes sociais.
+- [x] Cada página aponta para imagem OG específica (`/assets/img/og/care/{slug}.png`)
+- [x] Imagens OG 1200×630 em PNG para todas as 7 páginas + índice
+- [x] Imagens do site atualizadas em WebP (quality 82) em `/assets/img/care/`
+- [x] og:image, twitter:image e Schema.org image atualizados
 
 ---
 
@@ -232,7 +232,8 @@ Recomendação: Manter vanilla HTML + build scripts enquanto o projeto tiver ≤
 
 ## Próximos Passos
 
-1. **Merge das branches** na ordem: `multipage-tratamentos` → `improvement-phase1` → `phase2` → `phase4` → `main`
+1. ~~**Merge das branches** na ordem: `multipage-tratamentos` → `improvement-phase1` → `phase2` → `phase4` → `main`~~ ✅ Consolidado na `develop`
 2. **Fase 3:** Criar contas GTM/GA4 e implementar tracking
-3. **OG Images:** Produzir imagens 1200×630 para tratamentos
+3. ~~**OG Images:** Produzir imagens 1200×630 para tratamentos~~ ✅ Concluído
 4. **Monitorar:** Lighthouse CI nos próximos PRs
+5. **Resultados:** Seção convertida em carousel com filtros, lightbox navegável e CTA contextual (ver `RESULTS_IMPROVEMENT_GUIDE.md`)
