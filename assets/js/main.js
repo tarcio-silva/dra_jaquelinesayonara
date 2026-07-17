@@ -94,12 +94,26 @@ const lightbox = document.getElementById("lightbox");
 if (lightbox) {
   const lightboxImg = lightbox.querySelector("img");
   const lightboxClose = lightbox.querySelector(".lightbox-close");
+  const lightboxPrev = lightbox.querySelector(".lightbox-prev");
+  const lightboxNext = lightbox.querySelector(".lightbox-next");
+  const lightboxCounter = lightbox.querySelector(".lightbox-counter");
+  const resultItems = document.querySelectorAll(".result-item");
+  let currentIndex = 0;
   let lastFocusedElement = null;
 
-  function openLightbox(img) {
-    lastFocusedElement = document.activeElement;
+  function updateLightboxImage() {
+    const img = resultItems[currentIndex].querySelector("img");
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
+    if (lightboxCounter) {
+      lightboxCounter.textContent = `${currentIndex + 1} / ${resultItems.length}`;
+    }
+  }
+
+  function openLightbox(index) {
+    lastFocusedElement = document.activeElement;
+    currentIndex = index;
+    updateLightboxImage();
     lightbox.classList.add("active");
     document.body.style.overflow = "hidden";
     if (lightboxClose) lightboxClose.focus();
@@ -111,34 +125,73 @@ if (lightbox) {
     if (lastFocusedElement) lastFocusedElement.focus();
   }
 
+  function navigate(direction) {
+    currentIndex = (currentIndex + direction + resultItems.length) % resultItems.length;
+    updateLightboxImage();
+  }
+
   // Click e keyboard nos result items
-  document.querySelectorAll(".result-item").forEach(item => {
-    const img = item.querySelector("img");
-    item.addEventListener("click", () => openLightbox(img));
+  resultItems.forEach((item, index) => {
+    item.addEventListener("click", () => openLightbox(index));
     item.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        openLightbox(img);
+        openLightbox(index);
       }
     });
   });
+
+  // Botões prev/next
+  if (lightboxPrev) lightboxPrev.addEventListener("click", () => navigate(-1));
+  if (lightboxNext) lightboxNext.addEventListener("click", () => navigate(1));
 
   // Fechar lightbox
   if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) closeLightbox();
   });
+
+  // Keyboard navigation
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lightbox.classList.contains("active")) {
-      closeLightbox();
-    }
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") navigate(-1);
+    if (e.key === "ArrowRight") navigate(1);
   });
 
   // Focus trap dentro do lightbox
   lightbox.addEventListener("keydown", (e) => {
-    if (e.key === "Tab" && lightbox.classList.contains("active")) {
+    if (e.key !== "Tab" || !lightbox.classList.contains("active")) return;
+    const focusables = lightbox.querySelectorAll('button:not([disabled])');
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
       e.preventDefault();
-      if (lightboxClose) lightboxClose.focus();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Swipe em mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const SWIPE_THRESHOLD = 50;
+
+  lightbox.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) navigate(1);   // swipe left → próxima
+      else navigate(-1);            // swipe right → anterior
     }
   });
 }
