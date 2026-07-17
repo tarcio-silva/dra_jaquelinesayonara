@@ -97,16 +97,31 @@ if (lightbox) {
   const lightboxPrev = lightbox.querySelector(".lightbox-prev");
   const lightboxNext = lightbox.querySelector(".lightbox-next");
   const lightboxCounter = lightbox.querySelector(".lightbox-counter");
+  const lightboxCTA = lightbox.querySelector(".lightbox-cta");
   const resultItems = document.querySelectorAll(".result-item");
   let currentIndex = 0;
   let lastFocusedElement = null;
 
+  function getVisibleItems() {
+    return [...resultItems].filter(item => !item.classList.contains("hidden"));
+  }
+
   function updateLightboxImage() {
-    const img = resultItems[currentIndex].querySelector("img");
+    const visibleItems = getVisibleItems();
+    const item = visibleItems[currentIndex];
+    if (!item) return;
+    const img = item.querySelector("img");
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
     if (lightboxCounter) {
-      lightboxCounter.textContent = `${currentIndex + 1} / ${resultItems.length}`;
+      lightboxCounter.textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+    }
+    // CTA contextual
+    if (lightboxCTA) {
+      const ctaText = item.dataset.ctaText || "Quero transformar meu sorriso";
+      const ctaLink = item.dataset.ctaLink || "https://wa.me/+5583994058749/?text=Gostaria%20de%20transformar%20meu%20sorriso";
+      lightboxCTA.textContent = ctaText;
+      lightboxCTA.href = ctaLink;
     }
   }
 
@@ -126,17 +141,24 @@ if (lightbox) {
   }
 
   function navigate(direction) {
-    currentIndex = (currentIndex + direction + resultItems.length) % resultItems.length;
+    const visibleItems = getVisibleItems();
+    currentIndex = (currentIndex + direction + visibleItems.length) % visibleItems.length;
     updateLightboxImage();
   }
 
   // Click e keyboard nos result items
-  resultItems.forEach((item, index) => {
-    item.addEventListener("click", () => openLightbox(index));
+  resultItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const visibleItems = getVisibleItems();
+      const index = visibleItems.indexOf(item);
+      if (index !== -1) openLightbox(index);
+    });
     item.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        openLightbox(index);
+        const visibleItems = getVisibleItems();
+        const index = visibleItems.indexOf(item);
+        if (index !== -1) openLightbox(index);
       }
     });
   });
@@ -162,7 +184,7 @@ if (lightbox) {
   // Focus trap dentro do lightbox
   lightbox.addEventListener("keydown", (e) => {
     if (e.key !== "Tab" || !lightbox.classList.contains("active")) return;
-    const focusables = lightbox.querySelectorAll('button:not([disabled])');
+    const focusables = lightbox.querySelectorAll('button:not([disabled]), a[href]');
     if (focusables.length === 0) return;
     const first = focusables[0];
     const last = focusables[focusables.length - 1];
@@ -193,6 +215,30 @@ if (lightbox) {
       if (diff > 0) navigate(1);   // swipe left → próxima
       else navigate(-1);            // swipe right → anterior
     }
+  });
+}
+
+
+// --- Filtros de resultados (Fase 4) ---
+const filterBtns = document.querySelectorAll(".filter-btn");
+const filterableItems = document.querySelectorAll(".result-item[data-category]");
+
+if (filterBtns.length > 0 && filterableItems.length > 0) {
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      filterableItems.forEach(item => {
+        if (filter === "all" || item.dataset.category === filter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+    });
   });
 }
 
