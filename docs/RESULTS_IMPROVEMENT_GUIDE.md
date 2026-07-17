@@ -1,18 +1,36 @@
 # Guia de Melhorias — Seção de Resultados
 
 > Criado em: 16/07/2026  
+> Última atualização: 16/07/2026  
 > Branch: `develop`  
 > Seção: `#results` (index.html)
 
 ---
 
+## Status Geral
+
+| Fase | Status | Commit |
+|------|--------|--------|
+| Fase 1 — Quick Wins | ✅ Concluída | `22d0714` |
+| Fase 2 — Navegação no Lightbox | ✅ Concluída | `22d0714` |
+| Fase 3 — Slider Antes/Depois | ⏸ Aguardando fotos separadas | — |
+| Fase 4 — Filtros por Tratamento | ✅ Concluída | `7ba2784` |
+| Fase 5 — CTA Contextual | ✅ Concluída | `7ba2784` |
+| Carousel (extra) | ✅ Concluída | `74b9712` + `1642f55` |
+
+---
+
 ## Estado Atual
 
-- 6 fotos de antes/depois (clareamento ×2, facetas ×2, restauração ×1, prótese ×1)
-- Grid responsivo: 2 colunas (mobile) → 3 colunas (desktop)
-- Lightbox acessível com `role="dialog"`, focus trap, keyboard navigation
-- Labels com nome do tratamento sobre gradiente
-- CTA "Quero transformar meu sorriso" (WhatsApp)
+- 10 fotos de antes/depois com logo central (padrão odontológico)
+- **Carousel horizontal** com scroll-snap (2 mobile → 3 tablet → 4 desktop)
+- Autoplay a cada 4s (pausa na interação, respeita prefers-reduced-motion)
+- Setas prev/next + dots indicadores de página
+- Filtros por tratamento (Todos, Clareamento, Facetas, Limpeza, Prótese, Restauração)
+- Labels descritivos (Clareamento dental, Facetas em resina, etc.)
+- Contador social proof: "✨ +200 sorrisos transformados"
+- Lightbox acessível com navegação prev/next, counter, swipe mobile
+- CTA contextual no lightbox (mensagem WhatsApp por tratamento)
 - Hover: zoom 1.05 + label fade-in (apenas em dispositivos com hover)
 
 ---

@@ -94,12 +94,41 @@ const lightbox = document.getElementById("lightbox");
 if (lightbox) {
   const lightboxImg = lightbox.querySelector("img");
   const lightboxClose = lightbox.querySelector(".lightbox-close");
+  const lightboxPrev = lightbox.querySelector(".lightbox-prev");
+  const lightboxNext = lightbox.querySelector(".lightbox-next");
+  const lightboxCounter = lightbox.querySelector(".lightbox-counter");
+  const lightboxCTA = lightbox.querySelector(".lightbox-cta");
+  const resultItems = document.querySelectorAll(".result-item");
+  let currentIndex = 0;
   let lastFocusedElement = null;
 
-  function openLightbox(img) {
-    lastFocusedElement = document.activeElement;
+  function getVisibleItems() {
+    return [...resultItems].filter(item => !item.classList.contains("hidden"));
+  }
+
+  function updateLightboxImage() {
+    const visibleItems = getVisibleItems();
+    const item = visibleItems[currentIndex];
+    if (!item) return;
+    const img = item.querySelector("img");
     lightboxImg.src = img.src;
     lightboxImg.alt = img.alt;
+    if (lightboxCounter) {
+      lightboxCounter.textContent = `${currentIndex + 1} / ${visibleItems.length}`;
+    }
+    // CTA contextual
+    if (lightboxCTA) {
+      const ctaText = item.dataset.ctaText || "Quero transformar meu sorriso";
+      const ctaLink = item.dataset.ctaLink || "https://wa.me/+5583994058749/?text=Gostaria%20de%20transformar%20meu%20sorriso";
+      lightboxCTA.textContent = ctaText;
+      lightboxCTA.href = ctaLink;
+    }
+  }
+
+  function openLightbox(index) {
+    lastFocusedElement = document.activeElement;
+    currentIndex = index;
+    updateLightboxImage();
     lightbox.classList.add("active");
     document.body.style.overflow = "hidden";
     if (lightboxClose) lightboxClose.focus();
@@ -111,36 +140,249 @@ if (lightbox) {
     if (lastFocusedElement) lastFocusedElement.focus();
   }
 
+  function navigate(direction) {
+    const visibleItems = getVisibleItems();
+    currentIndex = (currentIndex + direction + visibleItems.length) % visibleItems.length;
+    updateLightboxImage();
+  }
+
   // Click e keyboard nos result items
-  document.querySelectorAll(".result-item").forEach(item => {
-    const img = item.querySelector("img");
-    item.addEventListener("click", () => openLightbox(img));
+  resultItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const visibleItems = getVisibleItems();
+      const index = visibleItems.indexOf(item);
+      if (index !== -1) openLightbox(index);
+    });
     item.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        openLightbox(img);
+        const visibleItems = getVisibleItems();
+        const index = visibleItems.indexOf(item);
+        if (index !== -1) openLightbox(index);
       }
     });
   });
+
+  // Botões prev/next
+  if (lightboxPrev) lightboxPrev.addEventListener("click", () => navigate(-1));
+  if (lightboxNext) lightboxNext.addEventListener("click", () => navigate(1));
 
   // Fechar lightbox
   if (lightboxClose) lightboxClose.addEventListener("click", closeLightbox);
   lightbox.addEventListener("click", (e) => {
     if (e.target === lightbox) closeLightbox();
   });
+
+  // Keyboard navigation
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && lightbox.classList.contains("active")) {
-      closeLightbox();
-    }
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") navigate(-1);
+    if (e.key === "ArrowRight") navigate(1);
   });
 
   // Focus trap dentro do lightbox
   lightbox.addEventListener("keydown", (e) => {
-    if (e.key === "Tab" && lightbox.classList.contains("active")) {
+    if (e.key !== "Tab" || !lightbox.classList.contains("active")) return;
+    const focusables = lightbox.querySelectorAll('button:not([disabled]), a[href]');
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    if (e.shiftKey && document.activeElement === first) {
       e.preventDefault();
-      if (lightboxClose) lightboxClose.focus();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
+
+  // Swipe em mobile
+  let touchStartX = 0;
+  let touchEndX = 0;
+  const SWIPE_THRESHOLD = 50;
+
+  lightbox.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    const diff = touchStartX - touchEndX;
+
+    if (Math.abs(diff) > SWIPE_THRESHOLD) {
+      if (diff > 0) navigate(1);   // swipe left → próxima
+      else navigate(-1);            // swipe right → anterior
+    }
+  });
+}
+
+
+// --- Filtros de resultados (Fase 4) ---
+const filterBtns = document.querySelectorAll(".filter-btn");
+const filterableItems = document.querySelectorAll(".result-item[data-category]");
+
+if (filterBtns.length > 0 && filterableItems.length > 0) {
+  filterBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const filter = btn.dataset.filter;
+
+      filterBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      filterableItems.forEach(item => {
+        if (filter === "all" || item.dataset.category === filter) {
+          item.classList.remove("hidden");
+        } else {
+          item.classList.add("hidden");
+        }
+      });
+
+      // Reset carousel scroll and update dots
+      const carousel = document.querySelector(".results-carousel");
+      if (carousel) carousel.scrollTo({ left: 0, behavior: "smooth" });
+      updateCarouselDots();
+    });
+  });
+}
+
+
+// --- Carousel de resultados ---
+const carousel = document.querySelector(".results-carousel");
+const carouselPrev = document.querySelector(".carousel-prev");
+const carouselNext = document.querySelector(".carousel-next");
+const carouselDotsContainer = document.querySelector(".carousel-dots");
+
+if (carousel && carouselPrev && carouselNext && carouselDotsContainer) {
+  function getVisibleCarouselItems() {
+    return [...carousel.querySelectorAll(".result-item:not(.hidden)")];
+  }
+
+  function getItemsPerView() {
+    const containerWidth = carousel.clientWidth;
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return 1;
+    const itemWidth = items[0].offsetWidth + 16; // gap
+    return Math.round(containerWidth / itemWidth) || 1;
+  }
+
+  function getTotalPages() {
+    const items = getVisibleCarouselItems();
+    const perView = getItemsPerView();
+    return Math.ceil(items.length / perView);
+  }
+
+  function getCurrentPage() {
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return 0;
+    const itemWidth = items[0].offsetWidth + 16;
+    return Math.round(carousel.scrollLeft / (itemWidth * getItemsPerView()));
+  }
+
+  function scrollToPage(page) {
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return;
+    const itemWidth = items[0].offsetWidth + 16;
+    const perView = getItemsPerView();
+    const scrollTarget = page * perView * itemWidth;
+    carousel.scrollTo({ left: scrollTarget, behavior: "smooth" });
+  }
+
+  function updateCarouselDots() {
+    const totalPages = getTotalPages();
+    carouselDotsContainer.innerHTML = "";
+
+    for (let i = 0; i < totalPages; i++) {
+      const dot = document.createElement("button");
+      dot.classList.add("carousel-dot");
+      dot.setAttribute("aria-label", `Página ${i + 1}`);
+      dot.setAttribute("role", "tab");
+      if (i === getCurrentPage()) dot.classList.add("active");
+      dot.addEventListener("click", () => scrollToPage(i));
+      carouselDotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateCarouselState() {
+    const page = getCurrentPage();
+    const totalPages = getTotalPages();
+    carouselPrev.disabled = page <= 0;
+    carouselNext.disabled = page >= totalPages - 1;
+
+    // Update active dot
+    const dots = carouselDotsContainer.querySelectorAll(".carousel-dot");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === page);
+    });
+  }
+
+  carouselPrev.addEventListener("click", () => {
+    const page = getCurrentPage();
+    if (page > 0) scrollToPage(page - 1);
+  });
+
+  carouselNext.addEventListener("click", () => {
+    const page = getCurrentPage();
+    if (page < getTotalPages() - 1) scrollToPage(page + 1);
+  });
+
+  carousel.addEventListener("scroll", () => {
+    updateCarouselState();
+  }, { passive: true });
+
+  // Init
+  updateCarouselDots();
+  updateCarouselState();
+
+  // Re-calc on resize
+  window.addEventListener("resize", () => {
+    updateCarouselDots();
+    updateCarouselState();
+  });
+
+  // Autoplay
+  let autoplayInterval = null;
+  const AUTOPLAY_DELAY = 4000;
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayInterval = setInterval(() => {
+      const page = getCurrentPage();
+      const totalPages = getTotalPages();
+      if (page >= totalPages - 1) {
+        carousel.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollToPage(page + 1);
+      }
+    }, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+  }
+
+  // Pausar ao interagir, retomar após 8s
+  let resumeTimeout = null;
+
+  function pauseAndResume() {
+    stopAutoplay();
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(startAutoplay, 8000);
+  }
+
+  carousel.addEventListener("pointerdown", pauseAndResume);
+  carousel.addEventListener("touchstart", pauseAndResume, { passive: true });
+  carouselPrev.addEventListener("click", pauseAndResume);
+  carouselNext.addEventListener("click", pauseAndResume);
+
+  // Pausar se prefers-reduced-motion
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    startAutoplay();
+  }
 }
 
 

@@ -21,7 +21,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 | Header/Hero | — | Layout split: foto da Dra. (42%) + logo, slogan, badge avaliações, CTA e horários |
 | Sobre | `#about` | Apresentação profissional com foto, CRO e botão de ação |
 | Tratamentos | `#care` | Grid de 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
-| Resultados | `#results` | Grid de antes/depois com lightbox acessível (click, Enter/Space, Escape, focus trap) |
+| Resultados | `#results` | Carousel de antes/depois com filtros, lightbox acessível e CTA contextual |
 | Planos | `#plans` | Cards dos convênios aceitos (Clin e Unidentis) com links externos |
 | Avaliações | — | 5 reviews reais do Google em cards responsivos (grid 1/2/3 colunas) |
 | CTA Final | — | Call-to-action "Pronto para transformar seu sorriso?" com botão WhatsApp |
@@ -34,7 +34,8 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 - Menu off-canvas animado com focus trap (mobile) + navbar glassmorphism com indicador de seção ativa (desktop)
 - Dark mode com toggle acessível (`role="switch"`, `aria-checked`) — visível no desktop e mobile (offcanva)
 - Fade-in on scroll (Intersection Observer)
-- Lightbox acessível para resultados (`role="dialog"`, `aria-modal`, botão fechar, focus trap, keyboard navigation)
+- Lightbox acessível para resultados (`role="dialog"`, `aria-modal`, botão fechar, focus trap, keyboard navigation, setas prev/next, swipe mobile)
+- Carousel de resultados com scroll-snap, autoplay (4s), filtros por tratamento e CTA contextual
 - Avaliações estáticas (5 reviews reais do Google, sem dependência de API)
 - Vídeo do consultório (autoplay, muted, loop; pausa automática em `prefers-reduced-motion`)
 - Botão flutuante de WhatsApp
@@ -300,6 +301,9 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 ## Documentação Complementar
 
 - [`OPTIMIZATION_GUIDE.md`](./docs/OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
+- [`IMPROVEMENT_PLAN.md`](./docs/IMPROVEMENT_PLAN.md) — Plano de melhorias (Fases 1-4)
+- [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/RESULTS_IMPROVEMENT_GUIDE.md) — Melhorias da seção de resultados
+- [`RESULTS_TEMPLATE_GUIDE.md`](./docs/RESULTS_TEMPLATE_GUIDE.md) — Template Canva para fotos antes/depois
 - [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
 - [`DESIGN_GUIDE.md`](./docs/DESIGN_GUIDE.md) — Guia de design e referências visuais
 - [`REFACTORING_GUIDE.md`](./docs/REFACTORING_GUIDE.md) — Histórico de refatorações e melhorias
