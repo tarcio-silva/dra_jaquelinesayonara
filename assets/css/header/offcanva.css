@@ -43,6 +43,7 @@
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: top;
   border: 3px solid var(--logo-pallete-velvety-cherry);
 }
 
@@ -116,14 +117,13 @@
 
 .offcanva-nav--social {
   width: 100%;
-  padding: 16px 24px 0;
 }
 
 .offcanva-nav--social ul {
   display: flex;
   justify-content: center;
   gap: 24px;
-  padding: 0;
+  padding: 8px 0;
   list-style: none;
 }
 
@@ -131,6 +131,7 @@
   color: var(--logo-pallete-velvety-cherry);
   padding: 8px;
   display: flex;
+  align-items: center;
 }
 
 /* --- Dark mode toggle --- */
