@@ -5,6 +5,7 @@
 
 /**
  * Cria a fixture do menu offcanva (hamburger + nav mobile)
+ * Inclui: backdrop, botão fechar, CTA WhatsApp, indicador de seção ativa mobile
  */
 export function createMenuFixture() {
   document.body.innerHTML = `
@@ -14,14 +15,24 @@ export function createMenuFixture() {
         <span class="hamburger-box"><span class="hamburger-inner"></span></span>
       </button>
       <nav class="offcanva" id="offcanva" role="navigation" aria-label="Menu principal"
-           aria-hidden="true" style="left: -120%;">
-        <img src="/assets/img/favicon.webp" alt="Logo" width="96" height="96">
+           aria-hidden="true">
+        <button class="offcanva-close" aria-label="Fechar menu" type="button">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="offcanva-identity">
+          <img src="/assets/img/about/dra-jaqueline.webp" alt="Dra. Jaqueline Sayonara" width="72" height="72" class="offcanva-avatar">
+          <span class="offcanva-name">Dra. Jaqueline Sayonara</span>
+          <span class="offcanva-cro">CRO-PB 9833</span>
+        </div>
         <nav class="offcanva-nav">
           <ul>
             <li><a class="offcanva-nav--link" href="#">Home</a></li>
             <li><a class="offcanva-nav--link" href="#about">Sobre</a></li>
             <li><a class="offcanva-nav--link" href="#care">Tratamentos</a></li>
             <li><a class="offcanva-nav--link" href="#results">Resultados</a></li>
+            <li><a class="offcanva-nav--link" href="#plans">Planos</a></li>
             <li><a class="offcanva-nav--link" href="#location">Localização</a></li>
           </ul>
         </nav>
@@ -30,9 +41,22 @@ export function createMenuFixture() {
             <input class="dark-mode-toggle-mobile" type="checkbox" role="switch" aria-checked="false">
             <span class="slider round"></span>
           </label>
+          <span class="offcanva-dark-mode-label">Modo escuro</span>
         </div>
+        <a class="offcanva-cta" href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20consulta"
+           target="_blank" rel="noopener noreferrer">
+          Agendar consulta
+        </a>
       </nav>
+      <div class="offcanva-backdrop" id="offcanva-backdrop" aria-hidden="true"></div>
     </header>
+    <main id="main-content">
+      <section id="about">Sobre</section>
+      <section id="care">Tratamentos</section>
+      <section id="results">Resultados</section>
+      <section id="plans">Planos</section>
+      <section id="location">Localização</section>
+    </main>
   `;
 }
 

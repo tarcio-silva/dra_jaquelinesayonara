@@ -15,13 +15,14 @@ async function loadMainJs() {
 }
 
 describe('Menu Offcanva', () => {
-  let hamburger, offcanva;
+  let hamburger, offcanva, backdrop;
 
   beforeEach(async () => {
     createMenuFixture();
     await loadMainJs();
     hamburger = document.getElementById('hamburger-button');
     offcanva = document.getElementById('offcanva');
+    backdrop = document.getElementById('offcanva-backdrop');
   });
 
   describe('toggleNav() — abrir', () => {
@@ -40,9 +41,9 @@ describe('Menu Offcanva', () => {
       expect(offcanva.getAttribute('aria-hidden')).toBe('false');
     });
 
-    it('move offcanva para left: 0', () => {
+    it('adiciona classe .is-open ao offcanva', () => {
       hamburger.click();
-      expect(offcanva.style.left).toBe('0px');
+      expect(offcanva.classList.contains('is-open')).toBe(true);
     });
 
     it('bloqueia scroll do body', () => {
@@ -76,10 +77,10 @@ describe('Menu Offcanva', () => {
       expect(offcanva.getAttribute('aria-hidden')).toBe('true');
     });
 
-    it('restaura left: -120%', () => {
+    it('remove classe .is-open do offcanva', () => {
       hamburger.click();
       hamburger.click();
-      expect(offcanva.style.left).toBe('-120%');
+      expect(offcanva.classList.contains('is-open')).toBe(false);
     });
 
     it('restaura scroll do body', () => {
@@ -100,6 +101,7 @@ describe('Menu Offcanva', () => {
       hamburger.click();
       pressEscape(document);
       expect(hamburger.classList.contains('is-active')).toBe(false);
+      expect(offcanva.classList.contains('is-open')).toBe(false);
     });
 
     it('Escape não faz nada quando menu está fechado', () => {
@@ -115,6 +117,7 @@ describe('Menu Offcanva', () => {
       const navLink = offcanva.querySelector('.offcanva-nav--link');
       navLink.click();
       expect(hamburger.classList.contains('is-active')).toBe(false);
+      expect(offcanva.classList.contains('is-open')).toBe(false);
     });
   });
 
@@ -128,9 +131,6 @@ describe('Menu Offcanva', () => {
       const event = new KeyboardEvent('keydown', { key: 'Tab', bubbles: true });
       offcanva.dispatchEvent(event);
 
-      // O focus trap previne o default e foca o primeiro
-      // Nota: happy-dom pode não simular focus perfeitamente
-      // mas o event listener deve ser chamado
       expect(event.defaultPrevented || document.activeElement === focusables[0]).toBe(true);
     });
 
@@ -144,6 +144,248 @@ describe('Menu Offcanva', () => {
       offcanva.dispatchEvent(event);
 
       expect(event.defaultPrevented || document.activeElement === focusables[focusables.length - 1]).toBe(true);
+    });
+  });
+
+  describe('Backdrop overlay', () => {
+    it('backdrop recebe classe .is-visible ao abrir o menu', () => {
+      hamburger.click();
+      expect(backdrop.classList.contains('is-visible')).toBe(true);
+    });
+
+    it('backdrop define aria-hidden="false" ao abrir', () => {
+      hamburger.click();
+      expect(backdrop.getAttribute('aria-hidden')).toBe('false');
+    });
+
+    it('backdrop perde classe .is-visible ao fechar o menu', () => {
+      hamburger.click();
+      hamburger.click();
+      expect(backdrop.classList.contains('is-visible')).toBe(false);
+    });
+
+    it('backdrop define aria-hidden="true" ao fechar', () => {
+      hamburger.click();
+      hamburger.click();
+      expect(backdrop.getAttribute('aria-hidden')).toBe('true');
+    });
+
+    it('clicar no backdrop fecha o menu', () => {
+      hamburger.click();
+      backdrop.click();
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+      expect(hamburger.classList.contains('is-active')).toBe(false);
+    });
+
+    it('clicar no backdrop retorna foco ao hamburger', () => {
+      hamburger.click();
+      backdrop.click();
+      expect(document.activeElement).toBe(hamburger);
+    });
+  });
+
+  describe('Swipe-to-close', () => {
+    function createTouchEvent(type, clientX) {
+      return new TouchEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        touches: type === 'touchend' ? [] : [{ clientX, clientY: 0, identifier: 0 }],
+        changedTouches: [{ clientX, clientY: 0, identifier: 0 }],
+      });
+    }
+
+    it('swipe left (> threshold) fecha o menu', () => {
+      hamburger.click();
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 50)); // diff = -150, > threshold (80)
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+      expect(hamburger.classList.contains('is-active')).toBe(false);
+    });
+
+    it('swipe curto (< threshold) não fecha o menu', () => {
+      hamburger.click();
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 170)); // diff = -30, < threshold (80)
+
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+    });
+
+    it('swipe right não fecha o menu', () => {
+      hamburger.click();
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 50));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 200)); // swipe right
+
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+    });
+
+    it('swipe não faz nada quando menu está fechado', () => {
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 50));
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+    });
+  });
+
+  describe('Botão fechar explícito', () => {
+    it('botão fechar existe no offcanva', () => {
+      const closeBtn = offcanva.querySelector('.offcanva-close');
+      expect(closeBtn).not.toBeNull();
+    });
+
+    it('botão fechar tem aria-label', () => {
+      const closeBtn = offcanva.querySelector('.offcanva-close');
+      expect(closeBtn.getAttribute('aria-label')).toBe('Fechar menu');
+    });
+
+    it('clicar no botão fechar fecha o menu', () => {
+      hamburger.click();
+      const closeBtn = offcanva.querySelector('.offcanva-close');
+      closeBtn.click();
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+      expect(hamburger.classList.contains('is-active')).toBe(false);
+    });
+
+    it('clicar no botão fechar retorna foco ao hamburger', () => {
+      hamburger.click();
+      const closeBtn = offcanva.querySelector('.offcanva-close');
+      closeBtn.click();
+      expect(document.activeElement).toBe(hamburger);
+    });
+  });
+
+  describe('CTA WhatsApp no offcanva', () => {
+    it('CTA existe no offcanva', () => {
+      const cta = offcanva.querySelector('.offcanva-cta');
+      expect(cta).not.toBeNull();
+    });
+
+    it('CTA tem href para WhatsApp', () => {
+      const cta = offcanva.querySelector('.offcanva-cta');
+      expect(cta.getAttribute('href')).toContain('wa.me');
+    });
+
+    it('CTA tem target="_blank"', () => {
+      const cta = offcanva.querySelector('.offcanva-cta');
+      expect(cta.getAttribute('target')).toBe('_blank');
+    });
+
+    it('CTA tem rel="noopener noreferrer"', () => {
+      const cta = offcanva.querySelector('.offcanva-cta');
+      expect(cta.getAttribute('rel')).toBe('noopener noreferrer');
+    });
+
+    it('CTA contém texto de ação', () => {
+      const cta = offcanva.querySelector('.offcanva-cta');
+      expect(cta.textContent.trim()).toBeTruthy();
+    });
+  });
+
+  describe('Indicador de seção ativa mobile', () => {
+    it('link da seção visível recebe classe .active', () => {
+      hamburger.click();
+
+      // Simular IntersectionObserver trigger para seção #about
+      const aboutSection = document.getElementById('about');
+      const entry = { target: aboutSection, isIntersecting: true };
+
+      // Acionar o observer callback manualmente
+      const observers = window.__intersectionObservers || [];
+      observers.forEach(obs => {
+        if (obs.callback) obs.callback([entry]);
+      });
+
+      const aboutLink = offcanva.querySelector('.offcanva-nav--link[href="#about"]');
+      expect(aboutLink.classList.contains('active')).toBe(true);
+    });
+
+    it('outros links perdem classe .active quando nova seção fica visível', () => {
+      hamburger.click();
+
+      // Simular seção #about ativa
+      const aboutSection = document.getElementById('about');
+      const careSection = document.getElementById('care');
+
+      const observers = window.__intersectionObservers || [];
+      observers.forEach(obs => {
+        if (obs.callback) {
+          obs.callback([{ target: aboutSection, isIntersecting: true }]);
+          obs.callback([{ target: careSection, isIntersecting: true }]);
+        }
+      });
+
+      const aboutLink = offcanva.querySelector('.offcanva-nav--link[href="#about"]');
+      const careLink = offcanva.querySelector('.offcanva-nav--link[href="#care"]');
+
+      expect(careLink.classList.contains('active')).toBe(true);
+      expect(aboutLink.classList.contains('active')).toBe(false);
+    });
+  });
+
+  describe('Animação stagger com prefers-reduced-motion', () => {
+    it('links do menu existem dentro de .offcanva-nav li', () => {
+      const items = offcanva.querySelectorAll('.offcanva-nav li');
+      expect(items.length).toBeGreaterThan(0);
+    });
+
+    it('menu aplica classe .is-open que ativa stagger via CSS', () => {
+      hamburger.click();
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+      // A animação stagger é controlada via CSS (transition-delay em .is-open li)
+      // O teste verifica que a classe que ativa o stagger é aplicada
+    });
+
+    it('prefers-reduced-motion é respeitado (classe verificável via CSS)', () => {
+      // O CSS usa @media (prefers-reduced-motion: reduce) para desabilitar
+      // animações. O JS não precisa intervir — apenas verificamos que o
+      // mecanismo de classe existe para o CSS atuar.
+      hamburger.click();
+      const items = offcanva.querySelectorAll('.offcanva-nav li');
+      items.forEach(item => {
+        // Items devem estar no DOM para CSS aplicar (ou não) animação
+        expect(item.closest('.is-open')).not.toBeNull();
+      });
+    });
+  });
+
+  describe('Atributo inert', () => {
+    it('main-content recebe atributo inert ao abrir menu', () => {
+      hamburger.click();
+      const main = document.getElementById('main-content');
+      expect(main.hasAttribute('inert')).toBe(true);
+    });
+
+    it('main-content perde atributo inert ao fechar menu', () => {
+      hamburger.click();
+      hamburger.click();
+      const main = document.getElementById('main-content');
+      expect(main.hasAttribute('inert')).toBe(false);
+    });
+
+    it('inert é removido ao fechar com Escape', () => {
+      hamburger.click();
+      pressEscape(document);
+      const main = document.getElementById('main-content');
+      expect(main.hasAttribute('inert')).toBe(false);
+    });
+
+    it('inert é removido ao fechar via backdrop', () => {
+      hamburger.click();
+      backdrop.click();
+      const main = document.getElementById('main-content');
+      expect(main.hasAttribute('inert')).toBe(false);
+    });
+
+    it('inert é removido ao fechar via botão fechar', () => {
+      hamburger.click();
+      const closeBtn = offcanva.querySelector('.offcanva-close');
+      closeBtn.click();
+      const main = document.getElementById('main-content');
+      expect(main.hasAttribute('inert')).toBe(false);
     });
   });
 });
