@@ -238,7 +238,107 @@ if (filterBtns.length > 0 && filterableItems.length > 0) {
           item.classList.add("hidden");
         }
       });
+
+      // Reset carousel scroll and update dots
+      const carousel = document.querySelector(".results-carousel");
+      if (carousel) carousel.scrollTo({ left: 0, behavior: "smooth" });
+      updateCarouselDots();
     });
+  });
+}
+
+
+// --- Carousel de resultados ---
+const carousel = document.querySelector(".results-carousel");
+const carouselPrev = document.querySelector(".carousel-prev");
+const carouselNext = document.querySelector(".carousel-next");
+const carouselDotsContainer = document.querySelector(".carousel-dots");
+
+if (carousel && carouselPrev && carouselNext && carouselDotsContainer) {
+  function getVisibleCarouselItems() {
+    return [...carousel.querySelectorAll(".result-item:not(.hidden)")];
+  }
+
+  function getItemsPerView() {
+    const containerWidth = carousel.clientWidth;
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return 1;
+    const itemWidth = items[0].offsetWidth + 16; // gap
+    return Math.round(containerWidth / itemWidth) || 1;
+  }
+
+  function getTotalPages() {
+    const items = getVisibleCarouselItems();
+    const perView = getItemsPerView();
+    return Math.ceil(items.length / perView);
+  }
+
+  function getCurrentPage() {
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return 0;
+    const itemWidth = items[0].offsetWidth + 16;
+    return Math.round(carousel.scrollLeft / (itemWidth * getItemsPerView()));
+  }
+
+  function scrollToPage(page) {
+    const items = getVisibleCarouselItems();
+    if (items.length === 0) return;
+    const itemWidth = items[0].offsetWidth + 16;
+    const perView = getItemsPerView();
+    const scrollTarget = page * perView * itemWidth;
+    carousel.scrollTo({ left: scrollTarget, behavior: "smooth" });
+  }
+
+  function updateCarouselDots() {
+    const totalPages = getTotalPages();
+    carouselDotsContainer.innerHTML = "";
+
+    for (let i = 0; i < totalPages; i++) {
+      const dot = document.createElement("button");
+      dot.classList.add("carousel-dot");
+      dot.setAttribute("aria-label", `Página ${i + 1}`);
+      dot.setAttribute("role", "tab");
+      if (i === getCurrentPage()) dot.classList.add("active");
+      dot.addEventListener("click", () => scrollToPage(i));
+      carouselDotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateCarouselState() {
+    const page = getCurrentPage();
+    const totalPages = getTotalPages();
+    carouselPrev.disabled = page <= 0;
+    carouselNext.disabled = page >= totalPages - 1;
+
+    // Update active dot
+    const dots = carouselDotsContainer.querySelectorAll(".carousel-dot");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === page);
+    });
+  }
+
+  carouselPrev.addEventListener("click", () => {
+    const page = getCurrentPage();
+    if (page > 0) scrollToPage(page - 1);
+  });
+
+  carouselNext.addEventListener("click", () => {
+    const page = getCurrentPage();
+    if (page < getTotalPages() - 1) scrollToPage(page + 1);
+  });
+
+  carousel.addEventListener("scroll", () => {
+    updateCarouselState();
+  }, { passive: true });
+
+  // Init
+  updateCarouselDots();
+  updateCarouselState();
+
+  // Re-calc on resize
+  window.addEventListener("resize", () => {
+    updateCarouselDots();
+    updateCarouselState();
   });
 }
 
