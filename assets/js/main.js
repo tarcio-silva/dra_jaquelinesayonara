@@ -340,6 +340,49 @@ if (carousel && carouselPrev && carouselNext && carouselDotsContainer) {
     updateCarouselDots();
     updateCarouselState();
   });
+
+  // Autoplay
+  let autoplayInterval = null;
+  const AUTOPLAY_DELAY = 4000;
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayInterval = setInterval(() => {
+      const page = getCurrentPage();
+      const totalPages = getTotalPages();
+      if (page >= totalPages - 1) {
+        carousel.scrollTo({ left: 0, behavior: "smooth" });
+      } else {
+        scrollToPage(page + 1);
+      }
+    }, AUTOPLAY_DELAY);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+    }
+  }
+
+  // Pausar ao interagir, retomar após 8s
+  let resumeTimeout = null;
+
+  function pauseAndResume() {
+    stopAutoplay();
+    clearTimeout(resumeTimeout);
+    resumeTimeout = setTimeout(startAutoplay, 8000);
+  }
+
+  carousel.addEventListener("pointerdown", pauseAndResume);
+  carousel.addEventListener("touchstart", pauseAndResume, { passive: true });
+  carouselPrev.addEventListener("click", pauseAndResume);
+  carouselNext.addEventListener("click", pauseAndResume);
+
+  // Pausar se prefers-reduced-motion
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    startAutoplay();
+  }
 }
 
 
