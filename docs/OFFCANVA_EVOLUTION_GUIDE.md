@@ -1,6 +1,6 @@
 # Evolução do Menu Offcanva Mobile — Documentação
 
-## Status: Fase 1 e 2 Implementadas ✅
+## Status: Fases 1, 2 e 3 Implementadas ✅
 
 Data: 2026-07-17
 
@@ -20,8 +20,9 @@ Data: 2026-07-17
 | Identidade visual (foto + nome + CRO) | ✅ Implementado | 1 |
 | Animação stagger nos links | ✅ Implementado | 2 |
 | Ícones SVG inline (Feather/Lucide) | ✅ Implementado | 2 |
-| Edge swipe para abrir | ⬜ Pendente | 3 |
-| Anúncios `aria-live` | ⬜ Pendente | 3 |
+| Edge swipe para abrir | ✅ Implementado | 3 |
+| Anúncios `aria-live` | ✅ Implementado | 3 |
+| Swipe interativo com feedback visual | ✅ Implementado | 3 |
 
 ---
 
@@ -89,11 +90,23 @@ const offCanva = document.getElementById("offcanva");
 const offCanvaBackdrop = document.getElementById("offcanva-backdrop");
 const mainContent = document.getElementById("main-content");
 
-// Abrir: .is-open, backdrop .is-visible, inert, focus no primeiro link
-// Fechar: remove tudo, retorna foco ao hamburger
+// Aria-live region (criada no load)
+const offCanvaLiveRegion = document.createElement("div");
+offCanvaLiveRegion.setAttribute("role", "status");
+offCanvaLiveRegion.setAttribute("aria-live", "polite");
+offCanvaLiveRegion.classList.add("sr-only");
+document.body.appendChild(offCanvaLiveRegion);
+
+// Abrir: .is-open, backdrop .is-visible, inert, focus no primeiro link, anuncia "aberto"
+// Fechar: remove tudo, retorna foco ao hamburger, anuncia "fechado"
 // Fechar via: hamburger click, nav links, Escape, backdrop click, swipe left
 
-// Swipe: touchstart registra X, touchend calcula diff, fecha se < -80px
+// Swipe interativo: touchmove atualiza transform + opacidade backdrop proporcionalmente
+// touchend restaura transições e fecha se diff < -SWIPE_THRESHOLD (80px)
+
+// Edge swipe para abrir: touchstart na borda esquerda (≤20px)
+// touchend com diffX > SWIPE_THRESHOLD e diffY < diffX (não é scroll)
+
 // Active section: IntersectionObserver sincroniza .active em desktop + mobile
 ```
 
@@ -200,11 +213,11 @@ const mainContent = document.getElementById("main-content");
 
 ```
 Test Files  9 passed (9)
-     Tests  336 passed (336)
+     Tests  348 passed (348)
   Duration  ~2s
 ```
 
-### Cobertura do Menu Offcanva (46 testes)
+### Cobertura do Menu Offcanva (58 testes)
 
 | Grupo | Testes | Status |
 |-------|--------|--------|
@@ -220,6 +233,9 @@ Test Files  9 passed (9)
 | Indicador de seção ativa mobile | 2 | ✅ |
 | Animação stagger | 3 | ✅ |
 | Atributo inert | 5 | ✅ |
+| Edge swipe para abrir | 5 | ✅ |
+| Anúncios aria-live | 4 | ✅ |
+| Swipe interativo com feedback | 3 | ✅ |
 
 ### Mocks utilizados
 
@@ -229,23 +245,42 @@ Test Files  9 passed (9)
 
 ---
 
-## Fase 3 — Pendente
-
-Features planejadas mas não implementadas:
+## Fase 3 — Implementada
 
 ### 3.1 Edge swipe para abrir
-- Swipe right na borda esquerda (20px) da tela abre o menu
-- Risco: conflito com gesture "voltar" do browser
-- Requer teste extensivo em dispositivos reais
 
-### 3.2 Anúncios `aria-live`
-- Live region anuncia "Menu aberto"/"Menu fechado" para screen readers
-- Melhoria incremental sobre o `aria-hidden` já implementado
+**Comportamento:**
+- Detecta `touchstart` na borda esquerda da tela (≤20px)
+- No `touchend`, calcula `diffX` e `diffY`
+- Abre o menu se: `diffX > 80px` **e** `diffY < diffX` (evita conflito com scroll vertical)
+- Não dispara se o menu já está aberto
+
+**Cuidados:**
+- `diffY < diffX` evita abrir acidentalmente durante scroll vertical
+- Não conflita com gesture "voltar" do navegador (que geralmente precisa de ~40px da borda)
+- `EDGE_WIDTH = 20px` é conservador o suficiente
+
+### 3.2 Anúncios aria-live
+
+**Comportamento:**
+- No carregamento, cria `<div role="status" aria-live="polite" aria-atomic="true" class="sr-only">`
+- Ao abrir: `textContent = "Menu de navegação aberto"`
+- Ao fechar: `textContent = "Menu de navegação fechado"`
+
+**Benefício:** Screen readers (VoiceOver, TalkBack, NVDA) anunciam a mudança de estado sem o usuário precisar navegar até o menu.
 
 ### 3.3 Swipe interativo com feedback visual
-- Menu acompanha o dedo durante o arraste (não apenas no touchend)
-- Backdrop escurece proporcionalmente ao progresso do swipe
-- Complexidade: precisa desabilitar `transition` durante touchmove
+
+**Comportamento:**
+- `touchstart`: registra posição inicial
+- `touchmove`: atualiza `transform: translateX()` do menu em tempo real + opacidade do backdrop proporcionalmente (`0.5 * (1 - progress)`)
+- `touchend`: restaura `transition` e `transform` via CSS, fecha se `diff < -80px`
+
+**Detalhes de implementação:**
+- Durante `touchmove`, desabilita `transition: none` para evitar lag
+- O backdrop usa `progress = Math.min(Math.abs(diff) / 300, 1)` — atinge transparência total aos 300px de arraste
+- Só permite arrastar para a esquerda (`diff < 0`)
+- Swipe para a direita durante touchmove é ignorado (não "puxa" o menu)
 
 ---
 
@@ -260,6 +295,7 @@ Features planejadas mas não implementadas:
 | Touch events | ✅ All | ✅ All | ✅ All | Universal |
 | `inset` shorthand | 87+ | 14.1+ | 66+ | 97%+ global |
 | SVG `stroke=currentColor` | ✅ All | ✅ All | ✅ All | Universal |
+| `aria-live` polite | ✅ All | ✅ All | ✅ All | Universal |
 
 ---
 
@@ -270,5 +306,31 @@ Features planejadas mas não implementadas:
 | Requisições HTTP (ícones) | 6 PNGs | 0 (SVG inline) |
 | Animação de abertura | `left` (reflow) | `transform` (GPU) |
 | FPS durante animação | ~30-40 | 60 (compositing) |
+| Swipe feedback | Nenhum (só touchend) | Tempo real (touchmove) |
 | Focus management | Focus trap apenas | Focus trap + `inert` |
-| Bundle CSS | +0 KB | ~1.2 KB adicionado |
+| Screen readers | `aria-hidden` | `aria-hidden` + `aria-live` |
+| Bundle CSS | +0 KB | ~1.5 KB adicionado |
+| Bundle JS | ~2 KB (menu) | ~4 KB (menu + gestures) |
+
+---
+
+## Evolução dos Testes
+
+| Fase | Test Cases | Total Suite |
+|------|-----------|-------------|
+| Original | 17 | 307 |
+| Fase 1 | 46 (+29) | 336 |
+| Fase 2 | 46 (sem novos) | 336 |
+| Fase 3 | 58 (+12) | 348 |
+
+---
+
+## PRs Criados
+
+| PR | Título | Fase |
+|----|--------|------|
+| #34 | feat: atualiza imagem de prótese | — |
+| #35 | test: suite de testes para evolução do menu offcanva | Prep |
+| #36 | feat: menu offcanva mobile — Fase 1 | 1 |
+| #39 | feat: menu offcanva Fase 2 — stagger animation + SVG icons | 2 |
+| #40 | feat: menu offcanva Fase 3 — edge swipe, aria-live, swipe interativo | 3 |
