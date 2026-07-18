@@ -4,6 +4,14 @@ const offCanva = document.getElementById("offcanva");
 const offCanvaBackdrop = document.getElementById("offcanva-backdrop");
 const mainContent = document.getElementById("main-content");
 
+// Aria-live region para anúncios de screen readers
+const offCanvaLiveRegion = document.createElement("div");
+offCanvaLiveRegion.setAttribute("role", "status");
+offCanvaLiveRegion.setAttribute("aria-live", "polite");
+offCanvaLiveRegion.setAttribute("aria-atomic", "true");
+offCanvaLiveRegion.classList.add("sr-only");
+document.body.appendChild(offCanvaLiveRegion);
+
 if (hamburgerButton && offCanva) {
   hamburgerButton.addEventListener("click", toggleNav);
 
@@ -24,23 +32,88 @@ if (hamburgerButton && offCanva) {
     offCanvaBackdrop.addEventListener("click", toggleNav);
   }
 
-  // Swipe-to-close
+  // --- Swipe interativo com feedback visual ---
   let swipeStartX = 0;
+  let swipeCurrentX = 0;
+  let isSwiping = false;
   const SWIPE_THRESHOLD = 80;
 
   offCanva.addEventListener("touchstart", (e) => {
     swipeStartX = e.touches[0].clientX;
+    swipeCurrentX = swipeStartX;
+    isSwiping = true;
   }, { passive: true });
 
-  offCanva.addEventListener("touchend", (e) => {
-    if (!offCanva.classList.contains("is-open")) return;
-    const swipeEndX = e.changedTouches[0].clientX;
-    const diff = swipeEndX - swipeStartX;
+  offCanva.addEventListener("touchmove", (e) => {
+    if (!isSwiping || !offCanva.classList.contains("is-open")) return;
+    swipeCurrentX = e.touches[0].clientX;
+    const diff = swipeCurrentX - swipeStartX;
 
-    // Só fechar com swipe para a esquerda (diff negativo)
-    if (diff < -SWIPE_THRESHOLD) {
+    // Só permitir arrastar para a esquerda (fechar)
+    if (diff < 0) {
+      const translateX = Math.max(diff, -window.innerWidth);
+      offCanva.style.transition = "none";
+      offCanva.style.transform = `translateX(${translateX}px)`;
+
+      // Atualizar opacidade do backdrop proporcionalmente
+      if (offCanvaBackdrop) {
+        const progress = Math.min(Math.abs(diff) / 300, 1);
+        offCanvaBackdrop.style.transition = "none";
+        offCanvaBackdrop.style.background = `rgba(0, 0, 0, ${0.5 * (1 - progress)})`;
+      }
+    }
+  }, { passive: true });
+
+  offCanva.addEventListener("touchend", () => {
+    if (!isSwiping) return;
+    isSwiping = false;
+
+    const diff = swipeCurrentX - swipeStartX;
+
+    // Restaurar transições
+    offCanva.style.transition = "";
+    offCanva.style.transform = "";
+    if (offCanvaBackdrop) {
+      offCanvaBackdrop.style.transition = "";
+      offCanvaBackdrop.style.background = "";
+    }
+
+    // Fechar se passou do threshold
+    if (diff < -SWIPE_THRESHOLD && offCanva.classList.contains("is-open")) {
       toggleNav();
     }
+  }, { passive: true });
+
+  // --- Edge swipe para abrir (borda esquerda 20px) ---
+  const EDGE_WIDTH = 20;
+  let edgeStartX = 0;
+  let edgeStartY = 0;
+  let isEdgeSwiping = false;
+
+  document.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    if (touch.clientX <= EDGE_WIDTH && !offCanva.classList.contains("is-open")) {
+      edgeStartX = touch.clientX;
+      edgeStartY = touch.clientY;
+      isEdgeSwiping = true;
+    }
+  }, { passive: true });
+
+  document.addEventListener("touchend", (e) => {
+    if (!isEdgeSwiping) return;
+    isEdgeSwiping = false;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const diffX = touchEndX - edgeStartX;
+    const diffY = Math.abs(touchEndY - edgeStartY);
+
+    // Abrir se swipe horizontal > threshold e não é scroll vertical
+    if (diffX > SWIPE_THRESHOLD && diffY < diffX) {
+      toggleNav();
+    }
+
+    edgeStartX = 0;
   }, { passive: true });
 }
 
@@ -65,6 +138,9 @@ function toggleNav() {
     // Inert
     if (mainContent) mainContent.removeAttribute("inert");
 
+    // Aria-live
+    offCanvaLiveRegion.textContent = "Menu de navegação fechado";
+
     hamburgerButton.focus();
   } else {
     // Abrir
@@ -82,6 +158,9 @@ function toggleNav() {
 
     // Inert
     if (mainContent) mainContent.setAttribute("inert", "");
+
+    // Aria-live
+    offCanvaLiveRegion.textContent = "Menu de navegação aberto";
 
     // Mover foco para o primeiro link
     const firstLink = offCanva.querySelector("a");
