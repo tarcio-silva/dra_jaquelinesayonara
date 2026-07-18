@@ -200,6 +200,7 @@ describe('Menu Offcanva', () => {
       expect(offcanva.classList.contains('is-open')).toBe(true);
 
       offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 50));
       offcanva.dispatchEvent(createTouchEvent('touchend', 50)); // diff = -150, > threshold (80)
 
       expect(offcanva.classList.contains('is-open')).toBe(false);
@@ -210,6 +211,7 @@ describe('Menu Offcanva', () => {
       hamburger.click();
 
       offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 170));
       offcanva.dispatchEvent(createTouchEvent('touchend', 170)); // diff = -30, < threshold (80)
 
       expect(offcanva.classList.contains('is-open')).toBe(true);
@@ -219,6 +221,7 @@ describe('Menu Offcanva', () => {
       hamburger.click();
 
       offcanva.dispatchEvent(createTouchEvent('touchstart', 50));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 200));
       offcanva.dispatchEvent(createTouchEvent('touchend', 200)); // swipe right
 
       expect(offcanva.classList.contains('is-open')).toBe(true);
@@ -381,6 +384,130 @@ describe('Menu Offcanva', () => {
       hamburger.click();
       const main = document.getElementById('main-content');
       expect(main.hasAttribute('inert')).toBe(false);
+    });
+  });
+
+  describe('Edge swipe para abrir', () => {
+    function createTouchEvent(type, clientX, clientY = 0) {
+      return new TouchEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        touches: type === 'touchend' ? [] : [{ clientX, clientY, identifier: 0 }],
+        changedTouches: [{ clientX, clientY, identifier: 0 }],
+      });
+    }
+
+    it('swipe right na borda esquerda (≤20px) abre o menu', () => {
+      // touchstart na borda esquerda (x=10)
+      document.dispatchEvent(createTouchEvent('touchstart', 10, 100));
+      // touchend com swipe > threshold (x=150)
+      document.dispatchEvent(createTouchEvent('touchend', 150, 100));
+
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+      expect(hamburger.classList.contains('is-active')).toBe(true);
+    });
+
+    it('swipe curto na borda esquerda não abre o menu', () => {
+      document.dispatchEvent(createTouchEvent('touchstart', 10, 100));
+      document.dispatchEvent(createTouchEvent('touchend', 50, 100)); // diff = 40, < threshold
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+    });
+
+    it('swipe fora da borda esquerda (>20px) não abre o menu', () => {
+      document.dispatchEvent(createTouchEvent('touchstart', 50, 100));
+      document.dispatchEvent(createTouchEvent('touchend', 200, 100));
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+    });
+
+    it('swipe vertical na borda esquerda não abre o menu', () => {
+      document.dispatchEvent(createTouchEvent('touchstart', 10, 100));
+      // diffX = 90, diffY = 150 → diffY > diffX, é scroll vertical
+      document.dispatchEvent(createTouchEvent('touchend', 100, 250));
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
+    });
+
+    it('edge swipe não abre se menu já está aberto', () => {
+      hamburger.click(); // abrir
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+
+      // Simular edge swipe (não deve fechar/reabrir)
+      document.dispatchEvent(createTouchEvent('touchstart', 10, 100));
+      document.dispatchEvent(createTouchEvent('touchend', 150, 100));
+
+      // Menu deve continuar aberto (sem toggle)
+      expect(offcanva.classList.contains('is-open')).toBe(true);
+    });
+  });
+
+  describe('Anúncios aria-live', () => {
+    it('cria live region com role="status" no body', () => {
+      const liveRegion = document.querySelector('[role="status"][aria-live="polite"]');
+      expect(liveRegion).not.toBeNull();
+    });
+
+    it('live region tem classe sr-only (visually hidden)', () => {
+      const liveRegion = document.querySelector('[role="status"][aria-live="polite"]');
+      expect(liveRegion.classList.contains('sr-only')).toBe(true);
+    });
+
+    it('anuncia "Menu de navegação aberto" ao abrir', () => {
+      hamburger.click();
+      const liveRegion = document.querySelector('[role="status"][aria-live="polite"]');
+      expect(liveRegion.textContent).toContain('aberto');
+    });
+
+    it('anuncia "Menu de navegação fechado" ao fechar', () => {
+      hamburger.click();
+      hamburger.click();
+      const liveRegion = document.querySelector('[role="status"][aria-live="polite"]');
+      expect(liveRegion.textContent).toContain('fechado');
+    });
+  });
+
+  describe('Swipe interativo com feedback visual', () => {
+    function createTouchEvent(type, clientX) {
+      return new TouchEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        touches: type === 'touchend' ? [] : [{ clientX, clientY: 0, identifier: 0 }],
+        changedTouches: [{ clientX, clientY: 0, identifier: 0 }],
+      });
+    }
+
+    it('touchmove para esquerda atualiza transform do offcanva', () => {
+      hamburger.click();
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 100));
+
+      // O transform deve ter um valor negativo (arrastando para esquerda)
+      expect(offcanva.style.transform).toContain('translateX');
+      expect(offcanva.style.transition).toBe('none');
+    });
+
+    it('touchend restaura transition e transform', () => {
+      hamburger.click();
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 180));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 180));
+
+      // Transições restauradas (string vazia = usa CSS)
+      expect(offcanva.style.transition).toBe('');
+      expect(offcanva.style.transform).toBe('');
+    });
+
+    it('swipe interativo fecha se passa do threshold', () => {
+      hamburger.click();
+
+      offcanva.dispatchEvent(createTouchEvent('touchstart', 200));
+      offcanva.dispatchEvent(createTouchEvent('touchmove', 50));
+      offcanva.dispatchEvent(createTouchEvent('touchend', 50)); // diff = -150
+
+      expect(offcanva.classList.contains('is-open')).toBe(false);
     });
   });
 });
