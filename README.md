@@ -31,7 +31,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 ### Funcionalidades
 
 - Layout responsivo (mobile-first, breakpoint `max-width: 1199px` / `min-width: 1200px`)
-- Menu off-canvas animado com focus trap (mobile) + navbar glassmorphism com indicador de seção ativa (desktop)
+- Menu off-canvas com backdrop overlay, swipe-to-close interativo, edge swipe para abrir, focus trap, `inert`, `aria-live` announcements, stagger animation e ícones SVG inline (mobile) + navbar glassmorphism com indicador de seção ativa (desktop)
 - Dark mode com toggle acessível (`role="switch"`, `aria-checked`) — visível no desktop e mobile (offcanva)
 - Fade-in on scroll (Intersection Observer)
 - Lightbox acessível para resultados (`role="dialog"`, `aria-modal`, botão fechar, focus trap, keyboard navigation, setas prev/next, swipe mobile)
@@ -158,7 +158,7 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
 ### Resultados
 
 ```
- ✓ tests/unit/menu-offcanva.test.js       (17 testes)
+ ✓ tests/unit/menu-offcanva.test.js       (58 testes)
  ✓ tests/unit/lightbox.test.js            (15 testes)
  ✓ tests/integration/seo.test.js          (22 testes)
  ✓ tests/integration/html-validation.test.js (14 testes)
@@ -169,7 +169,7 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
  ✓ tests/integration/treatment-pages.test.js (210 testes)
 
  Test Files  9 passed
-      Tests  307 passed
+      Tests  348 passed
    Duration  ~1s
 ```
 
@@ -177,7 +177,7 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
 
 | Módulo (main.js) | Testes | Funcionalidades cobertas |
 |------------------|--------|--------------------------|
-| Menu Offcanva | 17 | toggle, aria-expanded, focus trap, Escape, nav links |
+| Menu Offcanva | 58 | toggle, aria-expanded, focus trap, backdrop, swipe interativo, edge swipe, aria-live, inert, stagger, seção ativa mobile |
 | Lightbox | 15 | open/close, keyboard (Enter/Space/Escape), backdrop, focus management |
 | SEO (integração) | 22 | meta tags, OG, Twitter, Schema.org, sitemap, robots.txt |
 | HTML (integração) | 14 | skip link, ARIA, headings, alt, rel, semântica |
@@ -262,6 +262,8 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 
 - Skip link para `#main-content`
 - Focus trap no menu offcanva (Tab/Shift+Tab circular, Escape para fechar)
+- `aria-live` region anuncia abertura/fechamento do menu para screen readers
+- `inert` no conteúdo principal quando menu aberto
 - Focus trap no lightbox (Tab preso no botão fechar)
 - `role="dialog"` + `aria-modal="true"` no lightbox
 - `role="switch"` + `aria-checked` no toggle de dark mode
@@ -310,6 +312,7 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 - [`MULTIPAGE_STRATEGY.md`](./docs/MULTIPAGE_STRATEGY.md) — Estratégia SEO multipage
 - [`IMPLEMENTATION_PLAN.md`](./docs/IMPLEMENTATION_PLAN.md) — Plano de implementação multipage
 - [`TEST_PLAN.md`](./docs/TEST_PLAN.md) — Plano de testes unitários
+- [`OFFCANVA_EVOLUTION_GUIDE.md`](./docs/OFFCANVA_EVOLUTION_GUIDE.md) — Evolução do menu offcanva mobile (Fases 1-3)
 
 ## Contato
 
