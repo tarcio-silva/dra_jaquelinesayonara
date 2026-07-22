@@ -22,6 +22,7 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 | Sobre | `#about` | Apresentação profissional com foto, CRO e botão de ação |
 | Tratamentos | `#care` | Grid de 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
 | Resultados | `#results` | Carousel de antes/depois com filtros, lightbox acessível e CTA contextual |
+| Compare | `#compare` | Slider interativo antes/depois com arraste (CSS + JS) |
 | Planos | `#plans` | Cards dos convênios aceitos (Clin e Unidentis) com links externos |
 | Avaliações | — | 5 reviews reais do Google em cards responsivos (grid 1/2/3 colunas) |
 | CTA Final | — | Call-to-action "Pronto para transformar seu sorriso?" com botão WhatsApp |
@@ -48,6 +49,9 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 - Cards de tratamento clicáveis (card inteiro como link)
 - Layout mosaico bento grid nos cards de tratamento
 - Cache imutável para assets estáticos (font, img, js, css, media)
+- Compare slider interativo antes/depois com arraste (CSS puro + JS para controle do handle)
+- Scroll progress bar (indicador visual de progresso de rolagem no topo da página)
+- Ripple effect nos CTAs (micro-interação de feedback visual ao clicar)
 
 ## Stack
 
@@ -100,6 +104,8 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
+│   │   ├── compare-slider.css # Slider interativo antes/depois
+│   │   ├── micro-interactions.css # Scroll progress bar + ripple effect
 │   │   ├── location.css       # Vídeo + mapa (split layout)
 │   │   ├── footer.css         # Footer em colunas
 │   │   └── header/            # Header, hamburger, offcanva, switch
@@ -124,6 +130,10 @@ Landing page institucional com design moderno e performance otimizada, contendo 
     ├── profilaxia/
     ├── protese-dentaria/
     └── restauracao-dentaria/
+├── atendimento/               # Páginas de área de atendimento (SEO local)
+│   ├── riachao-do-poco/       # Riachão do Poço/PB
+│   ├── pilar/                 # Pilar/PB
+│   └── caldas-brandao/        # Caldas Brandão/PB
 ```
 
 ## Como Executar

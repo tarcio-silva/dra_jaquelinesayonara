@@ -1,0 +1,54 @@
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--logo-pallete-velvety-cherry);
+  z-index: 9999;
+  width: 0%;
+  transition: width 100ms linear;
+  pointer-events: none;
+}
+
+/* Ripple effect on CTA buttons */
+.btn-cta {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-cta .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: ripple-animation 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Card hover lift enhancement */
+@media (hover: hover) {
+  .card-container {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-container:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress {
+    display: none;
+  }
+  .btn-cta .ripple {
+    display: none;
+  }
+}
