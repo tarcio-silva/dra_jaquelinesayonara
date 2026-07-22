@@ -118,6 +118,7 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
+│   │   ├── faq.css            # Seção FAQ da home
 │   │   ├── compare-slider.css # Slider interativo antes/depois
 │   │   ├── micro-interactions.css # Scroll progress bar + ripple effect
 │   │   ├── location.css       # Vídeo + mapa (split layout)
@@ -135,19 +136,23 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   ├── font/                  # Manrope variable font (WOFF2 + TTF)
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-└── tratamentos/               # Páginas individuais de tratamento
-    ├── _template.html         # Template base (placeholders)
-    ├── aparelho-ortodontico/  # (em desenvolvimento)
-    ├── clareamento-dental/
-    ├── exodontia/
-    ├── facetas-dentarias/
-    ├── profilaxia/
-    ├── protese-dentaria/
-    └── restauracao-dentaria/
-├── atendimento/               # Páginas de área de atendimento (SEO local)
-│   ├── riachao-do-poco/       # Riachão do Poço/PB
-│   ├── pilar/                 # Pilar/PB
-│   └── caldas-brandao/        # Caldas Brandão/PB
+├── tratamentos/               # Páginas individuais de tratamento
+│   ├── index.html             # Listagem com Schema.org ItemList
+│   ├── _template.html         # Template base (placeholders)
+│   ├── aparelho-ortodontico/
+│   ├── clareamento-dental/
+│   ├── exodontia/
+│   ├── facetas-dentarias/
+│   ├── profilaxia/
+│   ├── protese-dentaria/
+│   └── restauracao-dentaria/
+└── atendimento/               # Páginas de área de atendimento (SEO local)
+    ├── mari/                  # Mari/PB (~15km)
+    ├── sobrado/               # Sobrado/PB (~18km)
+    ├── cruz-do-espirito-santo/ # Cruz do Espírito Santo/PB (~12km)
+    ├── riachao-do-poco/       # Riachão do Poço/PB (~20km)
+    ├── pilar/                 # Pilar/PB (~25km)
+    └── caldas-brandao/        # Caldas Brandão/PB (~22km)
 ```
 
 ## Como Executar
