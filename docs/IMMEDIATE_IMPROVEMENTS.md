@@ -13,14 +13,14 @@
 | # | Melhoria | Impacto | Esforço | Status | Seção |
 |---|----------|---------|---------|--------|-------|
 | 1 | Página "Primeira Consulta" | 🔴 Alto | Baixo | ✅ Concluído | [→](#1-página-primeira-consulta) |
-| 2 | Páginas de área de atendimento | 🔴 Alto | Médio | 🟡 Parcial (3/6) | [→](#2-páginas-de-área-de-atendimento) |
+| 2 | Páginas de área de atendimento | 🔴 Alto | Médio | ✅ Concluído (6/6) | [→](#2-páginas-de-área-de-atendimento) |
 | 3 | Expandir areaServed no Schema.org | 🟡 Médio | Baixo | ✅ Concluído | [→](#3-expandir-areaserved-no-schemaorg) |
 | 4 | Seção FAQ na página principal | 🟡 Médio | Baixo | ✅ Concluído | [→](#4-seção-faq-na-página-principal) |
-| 5 | Slider interativo antes/depois | 🟡 Médio | Médio | ⏳ Pendente | [→](#5-slider-interativo-antesdepois) |
+| 5 | Slider interativo antes/depois | 🟡 Médio | Médio | ✅ Concluído | [→](#5-slider-interativo-antesdepois) |
 | 6 | Conteúdo otimizado para AI (GEO) | 🟡 Médio | Médio | ✅ Concluído | [→](#6-conteúdo-otimizado-para-ai-geo) |
-| 7 | Página de listagem de tratamentos | 🟢 Baixo | Baixo | ⏳ Pendente | [→](#7-página-de-listagem-de-tratamentos) |
+| 7 | Página de listagem de tratamentos | 🟢 Baixo | Baixo | ✅ Concluído | [→](#7-página-de-listagem-de-tratamentos) |
 | 8 | Breadcrumb Schema.org na home | 🟢 Baixo | Baixo | ✅ Concluído | [→](#8-breadcrumb-schemaorg-na-home) |
-| 9 | Micro-interações CSS | 🟢 Baixo | Baixo | ⏳ Pendente | [→](#9-micro-interações-css) |
+| 9 | Micro-interações CSS | 🟢 Baixo | Baixo | ✅ Concluído | [→](#9-micro-interações-css) |
 
 ---
 
@@ -393,13 +393,38 @@ Semana 1:  ✅ #3 (areaServed) + #4 (FAQ home) + #8 (Breadcrumb Schema)
 Semana 2:  ✅ #1 (Página Primeira Consulta)
 Semana 3:  ✅ #6 (Conteúdo GEO nas páginas existentes)
 Semana 4:  ✅ #2 (Páginas de área - Mari, Sobrado, Cruz do Espírito Santo)
-Semana 5:  ⏳ #5 (Slider antes/depois)
-Semana 6:  ⏳ #2 (Páginas de área - restante: Riachão do Poço, Pilar, Caldas Brandão) + #7 (Listagem) + #9 (Micro-interações)
+Semana 5:  ✅ #5 (Slider antes/depois)
+Semana 6:  ✅ #2 (Páginas de área - Riachão do Poço, Pilar, Caldas Brandão) + #7 (Listagem) + #9 (Micro-interações)
 ```
 
 ---
 
 ## Histórico de Implementação
+
+### 22/07/2026 — Semanas 5 e 6 implementadas (PLANO COMPLETO ✅)
+
+**Semana 5 — Slider Antes/Depois:**
+- Componente `compare-slider` com CSS puro + JS vanilla
+- Drag via pointer events (touch + mouse), input range como fallback acessível
+- Labels "Antes"/"Depois" visíveis, `role="img"` + `aria-label`
+- Respeita `prefers-reduced-motion`
+- Seção inserida entre Resultados e Planos na home
+- CSS em `/assets/css/compare-slider.css`
+
+**Semana 6 — Páginas de área + Listagem + Micro-interações:**
+- `/atendimento/riachao-do-poco/` — 20km, ~20min, PB-041 via Sobrado
+- `/atendimento/pilar/` — 25km, ~25min, PB-041/PB-030
+- `/atendimento/caldas-brandao/` — 22km, ~22min, PB-054/PB-041
+- Cada página com conteúdo único, Schema.org, direções, links internos
+- `/tratamentos/index.html` melhorada com descrições em cada card + ItemList Schema.org
+- Micro-interações: scroll progress bar (3px fixa no topo), ripple effect nos CTAs
+- CSS em `/assets/css/micro-interactions.css`
+- URLs adicionadas ao sitemap.xml
+
+**Páginas indexáveis adicionadas:** 3 (cidades restantes)
+**Total de páginas indexáveis:** ~17
+
+---
 
 ### 21/07/2026 — Semanas 1 a 4 implementadas
 
@@ -438,9 +463,32 @@ Semana 6:  ⏳ #2 (Páginas de área - restante: Riachão do Poço, Pilar, Calda
 
 | Métrica | Antes | Atual (jul/2026) | Meta (3 meses) |
 |---------|-------|-------------------|-----------------|
-| Páginas indexadas | ~10 | ~14 | 18-20 |
+| Páginas indexadas | ~10 | ~17 | 18-20 |
 | Palavras-chave ranqueadas | ~5-10 | aguardando indexação | 30-50 |
 | Impressões Google (Search Console) | baseline | aguardando dados | +100% |
 | Cliques orgânicos | baseline | aguardando dados | +50% |
-| Rich snippets ativos | 1 (Dentist) | 3 (Dentist, FAQ, Breadcrumb) | 4+ (+ ItemList) |
+| Rich snippets ativos | 1 (Dentist) | 4 (Dentist, FAQ, Breadcrumb, ItemList) | 4+ |
 | Citações em AI (ChatGPT/Perplexity) | 0 | aguardando dados | 2-3 buscas locais |
+
+---
+
+## Contexto Competitivo (21/07/2026)
+
+> Análise completa em [`IMPROVEMENT_PLAN.md`](./IMPROVEMENT_PLAN.md#análise-competitiva-21072026)
+
+**Concorrente direto:** Dr. Raphael Galvão (drraphaelgalvao.com.br) — mesma rua em Sapé.
+
+### Nosso site vs. Dr. Raphael
+
+| Critério | Resultado |
+|----------|-----------|
+| Conteúdo por tratamento | 🏆 Nós (10-20x mais conteúdo) |
+| Schema.org | 🏆 Nós (5+ tipos vs. básico) |
+| SEO local (cidades) | 🏆 Nós (3 páginas, ele 0) |
+| Performance | 🏆 Nós (97 vs. ~75 estimado) |
+| Acessibilidade | 🏆 Nós (100/100) |
+| Avaliações Google | ❌ Ele (100+ vs. 7) |
+| Tracking de conversão | ❌ Ele (utm params nos CTAs) |
+| Nº de serviços | ❌ Ele (8 vs. 7) |
+
+**Prioridade derivada:** Coletar avaliações Google é a ação de maior impacto imediato para competir no Local Pack. Detalhes no IMPROVEMENT_PLAN.md Fase 5.

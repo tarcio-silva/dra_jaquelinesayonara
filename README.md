@@ -6,7 +6,17 @@ Site de divulgação de serviços odontológicos da **Dra. Jaqueline Sayonara**,
 
 ## Sobre o Projeto
 
-Landing page institucional com design moderno e performance otimizada, contendo informações sobre a profissional, tratamentos oferecidos, galeria de resultados, planos odontológicos aceitos, vídeo do consultório, localização e avaliações reais de pacientes.
+Site institucional multipage com design moderno e performance otimizada. Inclui landing page principal, 7 páginas de tratamento, 6 páginas de área de atendimento (SEO local), página "Primeira Consulta" e listagem de tratamentos. Contém informações sobre a profissional, tratamentos oferecidos, galeria de resultados com slider interativo, planos odontológicos aceitos, vídeo do consultório, localização, FAQ e avaliações reais de pacientes.
+
+### Páginas Indexáveis (~17)
+
+| Tipo | Quantidade | Exemplos |
+|------|:----------:|---------|
+| Home | 1 | `/` |
+| Primeira Consulta | 1 | `/primeira-consulta/` |
+| Tratamentos (listagem) | 1 | `/tratamentos/` |
+| Tratamentos (individual) | 7 | `/tratamentos/clareamento-dental/` |
+| Atendimento (cidades) | 6 | `/atendimento/mari/`, `/atendimento/pilar/` |
 
 ### Lighthouse Scores
 
@@ -22,11 +32,13 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 | Sobre | `#about` | Apresentação profissional com foto, CRO e botão de ação |
 | Tratamentos | `#care` | Grid de 7 cards: aparelho, clareamento, exodontia, facetas, profilaxia, prótese, restauração |
 | Resultados | `#results` | Carousel de antes/depois com filtros, lightbox acessível e CTA contextual |
+| Compare | `#compare` | Slider interativo antes/depois com arraste (CSS + JS) |
 | Planos | `#plans` | Cards dos convênios aceitos (Clin e Unidentis) com links externos |
 | Avaliações | — | 5 reviews reais do Google em cards responsivos (grid 1/2/3 colunas) |
+| FAQ | `#faq` | 6 perguntas frequentes com Schema.org FAQPage (rich snippets) |
 | CTA Final | — | Call-to-action "Pronto para transformar seu sorriso?" com botão WhatsApp |
 | Localização | `#location` | Vídeo do consultório + Google Maps lado a lado |
-| Footer | — | Contato, responsável técnico, redes sociais |
+| Footer | — | Contato, responsável técnico, cidades atendidas, redes sociais |
 
 ### Funcionalidades
 
@@ -48,6 +60,9 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 - Cards de tratamento clicáveis (card inteiro como link)
 - Layout mosaico bento grid nos cards de tratamento
 - Cache imutável para assets estáticos (font, img, js, css, media)
+- Compare slider interativo antes/depois com arraste (CSS puro + JS para controle do handle)
+- Scroll progress bar (indicador visual de progresso de rolagem no topo da página)
+- Ripple effect nos CTAs (micro-interação de feedback visual ao clicar)
 
 ## Stack
 
@@ -79,7 +94,10 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   ├── OPTIMIZATION_GUIDE.md  # Guia de otimização Lighthouse
 │   ├── DOMAIN_SETUP.md        # Configuração do domínio
 │   ├── DESIGN_GUIDE.md        # Guia de design e referências
+│   ├── IMMEDIATE_IMPROVEMENTS.md # Plano de melhorias imediatas (✅ completo)
 │   └── REFACTORING_GUIDE.md   # Histórico de refatorações
+├── primeira-consulta/         # Página "Primeira Consulta"
+│   └── index.html
 ├── tests/                     # Testes unitários e de integração
 │   ├── setup.js               # Setup global (mocks, cleanup)
 │   ├── mocks/                 # Mocks (IntersectionObserver, matchMedia)
@@ -100,30 +118,41 @@ Landing page institucional com design moderno e performance otimizada, contendo 
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
+│   │   ├── faq.css            # Seção FAQ da home
+│   │   ├── compare-slider.css # Slider interativo antes/depois
+│   │   ├── micro-interactions.css # Scroll progress bar + ripple effect
 │   │   ├── location.css       # Vídeo + mapa (split layout)
 │   │   ├── footer.css         # Footer em colunas
 │   │   └── header/            # Header, hamburger, offcanva, switch
 │   ├── js/
-│   │   └── main.js            # Menu (focus trap), lightbox (a11y), dark mode, observers
+│   │   └── main.js            # Menu (focus trap), lightbox (a11y), dark mode, observers, slider, micro-interactions
 │   ├── img/
 │   │   ├── about/             # Foto da profissional
 │   │   ├── care/              # Imagens dos tratamentos
 │   │   ├── header/            # Banner principal
 │   │   ├── icons/             # Ícones do menu mobile
 │   │   ├── plans/             # Logos dos planos (Clin, Unidentis)
-│   │   └── results/           # Fotos antes/depois
+│   │   └── results/           # Fotos antes/depois + slider
 │   ├── font/                  # Manrope variable font (WOFF2 + TTF)
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-└── tratamentos/               # Páginas individuais de tratamento
-    ├── _template.html         # Template base (placeholders)
-    ├── aparelho-ortodontico/  # (em desenvolvimento)
-    ├── clareamento-dental/
-    ├── exodontia/
-    ├── facetas-dentarias/
-    ├── profilaxia/
-    ├── protese-dentaria/
-    └── restauracao-dentaria/
+├── tratamentos/               # Páginas individuais de tratamento
+│   ├── index.html             # Listagem com Schema.org ItemList
+│   ├── _template.html         # Template base (placeholders)
+│   ├── aparelho-ortodontico/
+│   ├── clareamento-dental/
+│   ├── exodontia/
+│   ├── facetas-dentarias/
+│   ├── profilaxia/
+│   ├── protese-dentaria/
+│   └── restauracao-dentaria/
+└── atendimento/               # Páginas de área de atendimento (SEO local)
+    ├── mari/                  # Mari/PB (~15km)
+    ├── sobrado/               # Sobrado/PB (~18km)
+    ├── cruz-do-espirito-santo/ # Cruz do Espírito Santo/PB (~12km)
+    ├── riachao-do-poco/       # Riachão do Poço/PB (~20km)
+    ├── pilar/                 # Pilar/PB (~25km)
+    └── caldas-brandao/        # Caldas Brandão/PB (~22km)
 ```
 
 ## Como Executar
@@ -161,7 +190,7 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
  ✓ tests/unit/menu-offcanva.test.js       (58 testes)
  ✓ tests/unit/lightbox.test.js            (15 testes)
  ✓ tests/integration/seo.test.js          (22 testes)
- ✓ tests/integration/html-validation.test.js (14 testes)
+ ✓ tests/integration/html-validation.test.js (19 testes)
  ✓ tests/unit/dark-mode.test.js           (10 testes)
  ✓ tests/unit/fade-in.test.js             (6 testes)
  ✓ tests/unit/active-section.test.js      (5 testes)
@@ -180,7 +209,7 @@ Suíte de testes automatizados com **Vitest** + **happy-dom**, cobrindo funciona
 | Menu Offcanva | 58 | toggle, aria-expanded, focus trap, backdrop, swipe interativo, edge swipe, aria-live, inert, stagger, seção ativa mobile |
 | Lightbox | 15 | open/close, keyboard (Enter/Space/Escape), backdrop, focus management |
 | SEO (integração) | 22 | meta tags, OG, Twitter, Schema.org, sitemap, robots.txt |
-| HTML (integração) | 14 | skip link, ARIA, headings, alt, rel, semântica |
+| HTML (integração) | 19 | skip link, ARIA, headings, alt, rel, semântica |
 | Dark Mode | 10 | toggle, aria-checked, sincronização desktop ↔ mobile, persistência localStorage |
 | Fade-in | 6 | IntersectionObserver, .visible, unobserve |
 | Active Section | 5 | threshold 0.3, .active, remoção de outros |
@@ -276,13 +305,18 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 ## SEO
 
 - Canonical URL: `https://www.drajaquelinesayonara.com.br/`
-- Schema.org JSON-LD: `Dentist` com aggregateRating (5.0/5, 7 reviews), geo, areaServed, sameAs
+- Schema.org JSON-LD: `Dentist` com aggregateRating (5.0/5, 7 reviews), geo, areaServed (7 cidades), sameAs
+- Schema.org `FAQPage` na home (6 perguntas — rich snippets)
+- Schema.org `BreadcrumbList` na home e páginas internas
+- Schema.org `ItemList` na listagem de tratamentos
+- Schema.org `MedicalProcedure` enriquecido nas páginas de tratamento (GEO)
 - Open Graph completo (title, description, image, url, type, locale, site_name)
 - Twitter Cards (summary_large_image com title, description, image)
 - Meta description otimizada (152 chars)
 - Keywords relevantes sem typos
-- Sitemap XML com lastmod atualizado
+- Sitemap XML com 17 URLs e lastmod atualizado
 - Redirect 301 de domínio legado
+- 6 páginas de SEO local (cidades no raio de 30km)
 
 ## Convênios Aceitos
 
@@ -304,6 +338,7 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 
 - [`OPTIMIZATION_GUIDE.md`](./docs/OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
 - [`IMPROVEMENT_PLAN.md`](./docs/IMPROVEMENT_PLAN.md) — Plano de melhorias (Fases 1-4)
+- [`IMMEDIATE_IMPROVEMENTS.md`](./docs/IMMEDIATE_IMPROVEMENTS.md) — Melhorias imediatas (9 itens, ✅ completo)
 - [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/RESULTS_IMPROVEMENT_GUIDE.md) — Melhorias da seção de resultados
 - [`RESULTS_TEMPLATE_GUIDE.md`](./docs/RESULTS_TEMPLATE_GUIDE.md) — Template Canva para fotos antes/depois
 - [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
