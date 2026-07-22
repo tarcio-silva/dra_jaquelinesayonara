@@ -611,3 +611,89 @@ if (lazyVideos.length > 0) {
     }
   });
 }
+
+
+// === Compare Slider (Before/After) ===
+(function initCompareSliders() {
+  const sliders = document.querySelectorAll('.compare-slider');
+  sliders.forEach(slider => {
+    const range = slider.querySelector('.compare-range');
+    const before = slider.querySelector('.compare-before');
+    const handle = slider.querySelector('.compare-handle');
+    if (!range || !before || !handle) return;
+
+    function updateSlider(value) {
+      const pct = value + '%';
+      before.style.clipPath = `inset(0 ${100 - value}% 0 0)`;
+      handle.style.left = pct;
+    }
+
+    range.addEventListener('input', () => updateSlider(range.value));
+
+    // Touch/pointer support for better mobile UX
+    let isDragging = false;
+    function getPosition(e) {
+      const rect = slider.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      return Math.max(0, Math.min(100, ((clientX - rect.left) / rect.width) * 100));
+    }
+
+    slider.addEventListener('pointerdown', (e) => {
+      if (e.target === range) return;
+      isDragging = true;
+      slider.setPointerCapture(e.pointerId);
+      updateSlider(getPosition(e));
+      range.value = getPosition(e);
+    });
+
+    slider.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const pos = getPosition(e);
+      updateSlider(pos);
+      range.value = pos;
+    });
+
+    slider.addEventListener('pointerup', () => { isDragging = false; });
+    slider.addEventListener('pointercancel', () => { isDragging = false; });
+  });
+})();
+
+
+// === Scroll Progress Bar ===
+(function initScrollProgress() {
+  const bar = document.querySelector('.scroll-progress');
+  if (!bar) return;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (docHeight <= 0) return;
+    const progress = (scrollTop / docHeight) * 100;
+    bar.style.width = progress + '%';
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+})();
+
+// === Ripple Effect on CTA Buttons ===
+(function initRipple() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-cta');
+    if (!btn) return;
+    const ripple = document.createElement('span');
+    ripple.classList.add('ripple');
+    const rect = btn.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+    btn.appendChild(ripple);
+    ripple.addEventListener('animationend', () => ripple.remove());
+  });
+})();

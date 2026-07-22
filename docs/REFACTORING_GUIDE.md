@@ -291,6 +291,47 @@ p {
 
 ---
 
+## 📅 Implementações — 22/07/2026
+
+### Páginas de Área de Atendimento (SEO Local)
+
+Criadas 3 páginas de cidade para ampliar alcance regional:
+
+- `/atendimento/riachao-do-poco/` — Riachão do Poço/PB
+- `/atendimento/pilar/` — Pilar/PB
+- `/atendimento/caldas-brandao/` — Caldas Brandão/PB
+
+Cada página inclui: meta tags completas (OG, Twitter Cards), Schema.org `Dentist` com `areaServed`, conteúdo otimizado para busca local, canonical URL e breadcrumbs.
+
+### Compare Slider (Antes/Depois Interativo)
+
+Seção `#compare` na home com slider de arraste:
+
+- **CSS:** `assets/css/compare-slider.css` — Layout do slider com clip-path/overflow controlado
+- **JS:** Lógica de arraste (mouse + touch) no `main.js`
+- **HTML:** Nova seção no `index.html` entre Resultados e Planos
+
+### Micro-interações
+
+Duas micro-interações para feedback visual:
+
+- **Scroll Progress Bar:** `div.scroll-progress` fixo no topo, largura proporcional ao scroll da página
+- **Ripple Effect:** Animação de ondulação nos CTAs ao clicar
+- **CSS:** `assets/css/micro-interactions.css`
+- **JS:** Event listeners no `main.js`
+
+### Melhorias na Página Índice de Tratamentos
+
+- Adicionadas descrições nos cards do `/tratamentos/index.html`
+- Schema.org `ItemList` enriquecido com `description` em cada item
+
+### Sitemap Atualizado
+
+- 3 novas URLs de cidades adicionadas ao `sitemap.xml`
+- Total de URLs: 12 (home + índice tratamentos + 7 tratamentos + 3 cidades)
+
+---
+
 ## Ferramentas de Validação Recomendadas
 
 - **Lighthouse** (Chrome DevTools) — Performance, SEO, Acessibilidade
