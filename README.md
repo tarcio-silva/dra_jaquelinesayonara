@@ -87,15 +87,25 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 ├── sitemap.xml                # URL canônica com www
 ├── docs/                      # Documentação do projeto
 │   ├── adr/                   # Architecture Decision Records
-│   ├── RESTRUCTURE.md         # Histórico de reorganização
-│   ├── IMPLEMENTATION_PLAN.md # Plano de implementação multipage
-│   ├── TEST_PLAN.md           # Plano de testes unitários
-│   ├── MULTIPAGE_STRATEGY.md  # Estratégia SEO multipage
-│   ├── OPTIMIZATION_GUIDE.md  # Guia de otimização Lighthouse
-│   ├── DOMAIN_SETUP.md        # Configuração do domínio
-│   ├── DESIGN_GUIDE.md        # Guia de design e referências
-│   ├── IMMEDIATE_IMPROVEMENTS.md # Plano de melhorias imediatas (✅ completo)
-│   └── REFACTORING_GUIDE.md   # Histórico de refatorações
+│   ├── completed/             # Implementações concluídas
+│   │   ├── IMMEDIATE_IMPROVEMENTS.md
+│   │   ├── IMMEDIATE_STRATEGY.md
+│   │   ├── IMPROVEMENT_PLAN.md
+│   │   ├── IMPLEMENTATION_PLAN.md
+│   │   ├── MULTIPAGE_STRATEGY.md
+│   │   ├── OFFCANVA_EVOLUTION_GUIDE.md
+│   │   ├── OPTIMIZATION_GUIDE.md
+│   │   ├── REFACTORING_GUIDE.md
+│   │   ├── RESTRUCTURE.md
+│   │   ├── RESULTS_IMPROVEMENT_GUIDE.md
+│   │   └── TEST_PLAN.md
+│   ├── future/                # Melhorias pendentes (dependências externas)
+│   │   ├── FUTURE_IMPROVEMENTS.md
+│   │   └── FUTURE_STRATEGY.md
+│   └── reference/             # Guias de referência permanente
+│       ├── DESIGN_GUIDE.md
+│       ├── DOMAIN_SETUP.md
+│       └── RESULTS_TEMPLATE_GUIDE.md
 ├── primeira-consulta/         # Página "Primeira Consulta"
 │   └── index.html
 ├── tests/                     # Testes unitários e de integração
@@ -118,6 +128,7 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   │   ├── plans.css          # Seção Planos Odontológicos
 │   │   ├── rating.css         # Avaliações (cards em grid)
 │   │   ├── cta-final.css      # Seção CTA final
+│   │   ├── faq.css            # Seção FAQ da home
 │   │   ├── compare-slider.css # Slider interativo antes/depois
 │   │   ├── micro-interactions.css # Scroll progress bar + ripple effect
 │   │   ├── location.css       # Vídeo + mapa (split layout)
@@ -135,19 +146,23 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   ├── font/                  # Manrope variable font (WOFF2 + TTF)
 │   └── media/
 │       └── location.mp4       # Vídeo do consultório
-└── tratamentos/               # Páginas individuais de tratamento
-    ├── _template.html         # Template base (placeholders)
-    ├── aparelho-ortodontico/  # (em desenvolvimento)
-    ├── clareamento-dental/
-    ├── exodontia/
-    ├── facetas-dentarias/
-    ├── profilaxia/
-    ├── protese-dentaria/
-    └── restauracao-dentaria/
-├── atendimento/               # Páginas de área de atendimento (SEO local)
-│   ├── riachao-do-poco/       # Riachão do Poço/PB
-│   ├── pilar/                 # Pilar/PB
-│   └── caldas-brandao/        # Caldas Brandão/PB
+├── tratamentos/               # Páginas individuais de tratamento
+│   ├── index.html             # Listagem com Schema.org ItemList
+│   ├── _template.html         # Template base (placeholders)
+│   ├── aparelho-ortodontico/
+│   ├── clareamento-dental/
+│   ├── exodontia/
+│   ├── facetas-dentarias/
+│   ├── profilaxia/
+│   ├── protese-dentaria/
+│   └── restauracao-dentaria/
+└── atendimento/               # Páginas de área de atendimento (SEO local)
+    ├── mari/                  # Mari/PB (~15km)
+    ├── sobrado/               # Sobrado/PB (~18km)
+    ├── cruz-do-espirito-santo/ # Cruz do Espírito Santo/PB (~12km)
+    ├── riachao-do-poco/       # Riachão do Poço/PB (~20km)
+    ├── pilar/                 # Pilar/PB (~25km)
+    └── caldas-brandao/        # Caldas Brandão/PB (~22km)
 ```
 
 ## Como Executar
@@ -245,7 +260,7 @@ npm run test:watch      # Modo watch (re-roda ao salvar)
 npm run test:coverage   # Gera relatório de cobertura (v8)
 ```
 
-Consulte [`TEST_PLAN.md`](./docs/TEST_PLAN.md) para o plano completo com todos os test cases detalhados.
+Consulte [`TEST_PLAN.md`](./docs/completed/TEST_PLAN.md) para o plano completo com todos os test cases detalhados.
 
 ## Deploy
 
@@ -257,7 +272,7 @@ O `vercel.json` configura:
 
 ### Configuração do Domínio
 
-Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de configuração do domínio `drajaquelinesayonara.com.br` na Vercel e no registrador DNS.
+Consulte [`DOMAIN_SETUP.md`](./docs/reference/DOMAIN_SETUP.md) para instruções de configuração do domínio `drajaquelinesayonara.com.br` na Vercel e no registrador DNS.
 
 ## Design System
 
@@ -331,18 +346,37 @@ Consulte [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) para instruções de config
 
 ## Documentação Complementar
 
-- [`OPTIMIZATION_GUIDE.md`](./docs/OPTIMIZATION_GUIDE.md) — Guia de otimização (24 tasks, resultados Lighthouse)
-- [`IMPROVEMENT_PLAN.md`](./docs/IMPROVEMENT_PLAN.md) — Plano de melhorias (Fases 1-4)
-- [`IMMEDIATE_IMPROVEMENTS.md`](./docs/IMMEDIATE_IMPROVEMENTS.md) — Melhorias imediatas (9 itens, ✅ completo)
-- [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/RESULTS_IMPROVEMENT_GUIDE.md) — Melhorias da seção de resultados
-- [`RESULTS_TEMPLATE_GUIDE.md`](./docs/RESULTS_TEMPLATE_GUIDE.md) — Template Canva para fotos antes/depois
-- [`DOMAIN_SETUP.md`](./docs/DOMAIN_SETUP.md) — Configuração do domínio (Vercel + DNS)
-- [`DESIGN_GUIDE.md`](./docs/DESIGN_GUIDE.md) — Guia de design e referências visuais
-- [`REFACTORING_GUIDE.md`](./docs/REFACTORING_GUIDE.md) — Histórico de refatorações e melhorias
-- [`MULTIPAGE_STRATEGY.md`](./docs/MULTIPAGE_STRATEGY.md) — Estratégia SEO multipage
-- [`IMPLEMENTATION_PLAN.md`](./docs/IMPLEMENTATION_PLAN.md) — Plano de implementação multipage
-- [`TEST_PLAN.md`](./docs/TEST_PLAN.md) — Plano de testes unitários
-- [`OFFCANVA_EVOLUTION_GUIDE.md`](./docs/OFFCANVA_EVOLUTION_GUIDE.md) — Evolução do menu offcanva mobile (Fases 1-3)
+### ✅ Implementações Concluídas
+
+| Documento | Descrição | Status |
+|-----------|-----------|--------|
+| [`IMMEDIATE_IMPROVEMENTS.md`](./docs/completed/IMMEDIATE_IMPROVEMENTS.md) | Melhorias imediatas sem dependências (9 itens) | ✅ 9/9 completo |
+| [`IMPROVEMENT_PLAN.md`](./docs/completed/IMPROVEMENT_PLAN.md) | Plano de melhorias em 4 fases | ✅ 3/4 fases (Fase 3 aguarda contas externas) |
+| [`OPTIMIZATION_GUIDE.md`](./docs/completed/OPTIMIZATION_GUIDE.md) | Guia de otimização Lighthouse (24 tasks) | ✅ Score 97/100/100 |
+| [`MULTIPAGE_STRATEGY.md`](./docs/completed/MULTIPAGE_STRATEGY.md) | Estratégia SEO multipage | ✅ 17 páginas implementadas |
+| [`IMPLEMENTATION_PLAN.md`](./docs/completed/IMPLEMENTATION_PLAN.md) | Plano de implementação multipage | ✅ Concluído |
+| [`OFFCANVA_EVOLUTION_GUIDE.md`](./docs/completed/OFFCANVA_EVOLUTION_GUIDE.md) | Evolução do menu offcanva (Fases 1-3) | ✅ Concluído |
+| [`IMMEDIATE_STRATEGY.md`](./docs/completed/IMMEDIATE_STRATEGY.md) | Guia técnico passo-a-passo (IMMEDIATE_IMPROVEMENTS) | ✅ Referência técnica |
+| [`REFACTORING_GUIDE.md`](./docs/completed/REFACTORING_GUIDE.md) | Histórico de refatorações e melhorias | ✅ Atualizado |
+| [`RESTRUCTURE.md`](./docs/completed/RESTRUCTURE.md) | Histórico de reorganização do projeto | ✅ Concluído |
+| [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/completed/RESULTS_IMPROVEMENT_GUIDE.md) | Melhorias da seção de resultados | ✅ Concluído |
+| [`TEST_PLAN.md`](./docs/completed/TEST_PLAN.md) | Plano de testes unitários (348 testes) | ✅ Concluído |
+
+### ⏳ Melhorias Futuras (Pendentes)
+
+| Documento | Descrição | Dependência |
+|-----------|-----------|-------------|
+| [`FUTURE_IMPROVEMENTS.md`](./docs/future/FUTURE_IMPROVEMENTS.md) | Melhorias com dependências externas (12 itens) | Serviços/APIs/Processos |
+| [`FUTURE_STRATEGY.md`](./docs/future/FUTURE_STRATEGY.md) | Guia operacional para melhorias futuras | Acompanha FUTURE_IMPROVEMENTS |
+| [`IMPROVEMENT_PLAN.md`](./docs/completed/IMPROVEMENT_PLAN.md) — Fase 3 | Analytics e conversão | Google Analytics, contas externas |
+
+### 📐 Referências de Design e Configuração
+
+| Documento | Descrição |
+|-----------|-----------|
+| [`DESIGN_GUIDE.md`](./docs/reference/DESIGN_GUIDE.md) | Guia de design e referências visuais |
+| [`DOMAIN_SETUP.md`](./docs/reference/DOMAIN_SETUP.md) | Configuração do domínio (Vercel + DNS) |
+| [`RESULTS_TEMPLATE_GUIDE.md`](./docs/reference/RESULTS_TEMPLATE_GUIDE.md) | Template Canva para fotos antes/depois |
 
 ## Contato
 
