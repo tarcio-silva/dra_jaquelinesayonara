@@ -4,23 +4,23 @@
 
 **Custo:** R$ 0  
 **Stack:** HTML/CSS/JS vanilla (mesma do projeto)  
-**Última atualização:** Julho 2026
+**Última atualização:** 21 de Julho 2026
 
 ---
 
 ## Resumo
 
-| # | Melhoria | Impacto | Esforço | Seção |
-|---|----------|---------|---------|-------|
-| 1 | Página "Primeira Consulta" | 🔴 Alto | Baixo | [→](#1-página-primeira-consulta) |
-| 2 | Páginas de área de atendimento | 🔴 Alto | Médio | [→](#2-páginas-de-área-de-atendimento) |
-| 3 | Expandir areaServed no Schema.org | 🟡 Médio | Baixo | [→](#3-expandir-areaserved-no-schemaorg) |
-| 4 | Seção FAQ na página principal | 🟡 Médio | Baixo | [→](#4-seção-faq-na-página-principal) |
-| 5 | Slider interativo antes/depois | 🟡 Médio | Médio | [→](#5-slider-interativo-antesdepois) |
-| 6 | Conteúdo otimizado para AI (GEO) | 🟡 Médio | Médio | [→](#6-conteúdo-otimizado-para-ai-geo) |
-| 7 | Página de listagem de tratamentos | 🟢 Baixo | Baixo | [→](#7-página-de-listagem-de-tratamentos) |
-| 8 | Breadcrumb Schema.org na home | 🟢 Baixo | Baixo | [→](#8-breadcrumb-schemaorg-na-home) |
-| 9 | Micro-interações CSS | 🟢 Baixo | Baixo | [→](#9-micro-interações-css) |
+| # | Melhoria | Impacto | Esforço | Status | Seção |
+|---|----------|---------|---------|--------|-------|
+| 1 | Página "Primeira Consulta" | 🔴 Alto | Baixo | ✅ Concluído | [→](#1-página-primeira-consulta) |
+| 2 | Páginas de área de atendimento | 🔴 Alto | Médio | 🟡 Parcial (3/6) | [→](#2-páginas-de-área-de-atendimento) |
+| 3 | Expandir areaServed no Schema.org | 🟡 Médio | Baixo | ✅ Concluído | [→](#3-expandir-areaserved-no-schemaorg) |
+| 4 | Seção FAQ na página principal | 🟡 Médio | Baixo | ✅ Concluído | [→](#4-seção-faq-na-página-principal) |
+| 5 | Slider interativo antes/depois | 🟡 Médio | Médio | ⏳ Pendente | [→](#5-slider-interativo-antesdepois) |
+| 6 | Conteúdo otimizado para AI (GEO) | 🟡 Médio | Médio | ✅ Concluído | [→](#6-conteúdo-otimizado-para-ai-geo) |
+| 7 | Página de listagem de tratamentos | 🟢 Baixo | Baixo | ⏳ Pendente | [→](#7-página-de-listagem-de-tratamentos) |
+| 8 | Breadcrumb Schema.org na home | 🟢 Baixo | Baixo | ✅ Concluído | [→](#8-breadcrumb-schemaorg-na-home) |
+| 9 | Micro-interações CSS | 🟢 Baixo | Baixo | ⏳ Pendente | [→](#9-micro-interações-css) |
 
 ---
 
@@ -389,23 +389,58 @@ Efeito de onda ao clicar — melhora feedback tátil em mobile.
 ## Ordem de Implementação Recomendada
 
 ```
-Semana 1:  #3 (areaServed) + #4 (FAQ home) + #8 (Breadcrumb Schema)
-Semana 2:  #1 (Página Primeira Consulta)
-Semana 3:  #6 (Conteúdo GEO nas páginas existentes)
-Semana 4:  #2 (Páginas de área - 2-3 cidades)
-Semana 5:  #5 (Slider antes/depois)
-Semana 6:  #2 (Páginas de área - restante) + #7 (Listagem) + #9 (Micro-interações)
+Semana 1:  ✅ #3 (areaServed) + #4 (FAQ home) + #8 (Breadcrumb Schema)
+Semana 2:  ✅ #1 (Página Primeira Consulta)
+Semana 3:  ✅ #6 (Conteúdo GEO nas páginas existentes)
+Semana 4:  ✅ #2 (Páginas de área - Mari, Sobrado, Cruz do Espírito Santo)
+Semana 5:  ⏳ #5 (Slider antes/depois)
+Semana 6:  ⏳ #2 (Páginas de área - restante: Riachão do Poço, Pilar, Caldas Brandão) + #7 (Listagem) + #9 (Micro-interações)
 ```
+
+---
+
+## Histórico de Implementação
+
+### 21/07/2026 — Semanas 1 a 4 implementadas
+
+**Semana 1 — Schema.org + FAQ + Breadcrumb:**
+- `areaServed` expandido para 7 cidades no JSON-LD da home
+- Seção FAQ com 6 perguntas + FAQPage Schema.org (rich snippets)
+- BreadcrumbList Schema.org na home
+
+**Semana 2 — Página Primeira Consulta:**
+- `/primeira-consulta/index.html` criada com conteúdo completo
+- Schema.org MedicalWebPage + BreadcrumbList + FAQPage
+- Imagem profissional da Dra. em atendimento (WebP, 56KB)
+- Link interno no CTA final da home
+- URL adicionada ao sitemap.xml
+
+**Semana 3 — Conteúdo GEO (7 páginas de tratamento):**
+- Parágrafo `.treatment-summary` citável em cada página
+- MedicalProcedure enriquecido com `howPerformed`, `preparation`, `followup`
+- Tabela comparativa em cada página (fácil de parsear por AI)
+- CSS para `.treatment-summary` e `table` (light/dark mode)
+
+**Semana 4 — Páginas de área (3 cidades):**
+- `/atendimento/mari/` — 15km, ~15min
+- `/atendimento/sobrado/` — 18km, ~20min
+- `/atendimento/cruz-do-espirito-santo/` — 12km, ~12min
+- Cada página com conteúdo único, Schema.org, direções, links internos para tratamentos
+- Footer da home atualizado com coluna "Atendemos em"
+- URLs adicionadas ao sitemap.xml
+
+**Páginas indexáveis adicionadas:** 4 (primeira-consulta + 3 cidades)  
+**Total estimado de páginas indexáveis:** ~14 (era ~10)
 
 ---
 
 ## Métricas de Sucesso
 
-| Métrica | Antes | Meta (3 meses) |
-|---------|-------|-----------------|
-| Páginas indexadas | ~10 | 18-20 |
-| Palavras-chave ranqueadas | ~5-10 | 30-50 |
-| Impressões Google (Search Console) | baseline | +100% |
-| Cliques orgânicos | baseline | +50% |
-| Rich snippets ativos | 1 (Dentist) | 4+ (FAQ, Breadcrumb, ItemList) |
-| Citações em AI (ChatGPT/Perplexity) | 0 | 2-3 buscas locais |
+| Métrica | Antes | Atual (jul/2026) | Meta (3 meses) |
+|---------|-------|-------------------|-----------------|
+| Páginas indexadas | ~10 | ~14 | 18-20 |
+| Palavras-chave ranqueadas | ~5-10 | aguardando indexação | 30-50 |
+| Impressões Google (Search Console) | baseline | aguardando dados | +100% |
+| Cliques orgânicos | baseline | aguardando dados | +50% |
+| Rich snippets ativos | 1 (Dentist) | 3 (Dentist, FAQ, Breadcrumb) | 4+ (+ ItemList) |
+| Citações em AI (ChatGPT/Perplexity) | 0 | aguardando dados | 2-3 buscas locais |
