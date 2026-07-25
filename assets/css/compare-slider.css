@@ -1,0 +1,148 @@
+/* Compare Slider - Before/After */
+.compare-slider {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 4/3;
+  max-width: 600px;
+  margin: 0 auto;
+  box-shadow: var(--shadow-md);
+  touch-action: none;
+  user-select: none;
+}
+
+.compare-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+.compare-before {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  clip-path: inset(0 50% 0 0);
+  z-index: 2;
+}
+
+.compare-before img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-after {
+  position: absolute;
+  inset: 0;
+}
+
+.compare-after img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: var(--logo-pallete-light);
+  z-index: 5;
+  transform: translateX(-50%);
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  cursor: col-resize;
+}
+
+.compare-handle::before,
+.compare-handle::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+}
+
+.compare-handle::before {
+  top: 50%;
+  margin-top: -20px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid var(--logo-pallete-light);
+}
+
+.compare-handle::after {
+  top: 50%;
+  margin-top: 4px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid var(--logo-pallete-light);
+}
+
+.compare-handle-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--logo-pallete-light);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+}
+
+.compare-handle-circle svg {
+  width: 24px;
+  height: 24px;
+  fill: var(--logo-pallete-velvety-cherry);
+}
+
+.compare-label {
+  position: absolute;
+  bottom: 12px;
+  padding: 4px 12px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 20px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.compare-label--before {
+  left: 12px;
+}
+
+.compare-label--after {
+  right: 12px;
+}
+
+.compare-range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: col-resize;
+  z-index: 10;
+  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compare-handle,
+  .compare-before {
+    transition: none !important;
+  }
+}
