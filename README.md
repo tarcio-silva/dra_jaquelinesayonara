@@ -8,7 +8,7 @@ Site de divulgação de serviços odontológicos da **Dra. Jaqueline Sayonara**,
 
 Site institucional multipage com design moderno e performance otimizada. Inclui landing page principal, 7 páginas de tratamento, 6 páginas de área de atendimento (SEO local), página "Primeira Consulta" e listagem de tratamentos. Contém informações sobre a profissional, tratamentos oferecidos, galeria de resultados com slider interativo, planos odontológicos aceitos, vídeo do consultório, localização, FAQ e avaliações reais de pacientes.
 
-### Páginas Indexáveis (~17)
+### Páginas Indexáveis (16)
 
 | Tipo | Quantidade | Exemplos |
 |------|:----------:|---------|
@@ -70,42 +70,38 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 |-----------|-----|
 | HTML5 | Estrutura semântica |
 | CSS3 | Custom properties, CSS Grid, clamp(), @media (hover: hover) |
-| JavaScript (vanilla) | Lógica do cliente (zero dependências) |
-| LightningCSS 1.28.2 | Bundling e minificação CSS |
+| JavaScript (vanilla) | Lógica do cliente (zero dependências runtime) |
+| LightningCSS 1.28.2 | Bundling e minificação CSS (2 bundles: home + treatment) |
 | Vitest 2 + happy-dom | Testes unitários e de integração |
-| Vercel | Deploy (domínio custom + redirect 301 + cache headers) |
+| Husky 9 + lint-staged 15 | Pre-commit hooks (auto build CSS, check image size) |
+| Vercel | Deploy (domínio custom + redirects 301 + cache headers) |
 | Manrope | Fonte variável self-hosted (WOFF2 + TTF fallback) |
 
 ## Estrutura de Arquivos
 
 ```
 ├── index.html                 # Página principal (CSS inline para performance)
-├── build-css.sh               # Script de build CSS
+├── build-css.sh               # Script de build CSS (shell)
+├── scripts/                   # Scripts Node.js do build pipeline
+│   ├── build.js               # Build principal (usado pelo Vercel)
+│   └── check-image-size.js    # Lint-staged: valida tamanho de imagens
 ├── vitest.config.js           # Configuração dos testes
-├── vercel.json                # Cache headers + redirect 301
+├── vercel.json                # Redirects 301 + cache headers
 ├── robots.txt                 # Crawl rules + sitemap URL (www)
-├── sitemap.xml                # URL canônica com www
+├── sitemap.xml                # 16 URLs canônicas com www
 ├── docs/                      # Documentação do projeto
 │   ├── adr/                   # Architecture Decision Records
-│   ├── completed/             # Implementações concluídas
-│   │   ├── IMMEDIATE_IMPROVEMENTS.md
-│   │   ├── IMMEDIATE_STRATEGY.md
-│   │   ├── IMPROVEMENT_PLAN.md
-│   │   ├── IMPLEMENTATION_PLAN.md
-│   │   ├── MULTIPAGE_STRATEGY.md
-│   │   ├── OFFCANVA_EVOLUTION_GUIDE.md
-│   │   ├── OPTIMIZATION_GUIDE.md
-│   │   ├── REFACTORING_GUIDE.md
-│   │   ├── RESTRUCTURE.md
-│   │   ├── RESULTS_IMPROVEMENT_GUIDE.md
-│   │   └── TEST_PLAN.md
-│   ├── future/                # Melhorias pendentes (dependências externas)
-│   │   ├── FUTURE_IMPROVEMENTS.md
-│   │   └── FUTURE_STRATEGY.md
-│   └── reference/             # Guias de referência permanente
-│       ├── DESIGN_GUIDE.md
-│       ├── DOMAIN_SETUP.md
-│       └── RESULTS_TEMPLATE_GUIDE.md
+│   ├── melhorias/             # Documentos de melhorias do projeto
+│   │   ├── concluidas/        # Implementações concluídas
+│   │   └── pendentes/         # Melhorias futuras (dependências externas)
+│   ├── reference/             # Guias de referência permanente
+│   │   ├── DESIGN_GUIDE.md
+│   │   ├── DOMAIN_SETUP.md
+│   │   └── RESULTS_TEMPLATE_GUIDE.md
+│   └── tecnica/               # Documentação técnica do projeto
+│       ├── ARQUITETURA.md     # Arquitetura, stack, build, deploy
+│       ├── COMPONENTES.md     # Componentes interativos documentados
+│       └── GUIA_DESENVOLVIMENTO.md  # Setup, convenções, checklists
 ├── primeira-consulta/         # Página "Primeira Consulta"
 │   └── index.html
 ├── tests/                     # Testes unitários e de integração
@@ -117,8 +113,10 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   └── integration/           # Testes de HTML, SEO, acessibilidade
 ├── assets/
 │   ├── css/
-│   │   ├── styles.css         # Entry point (importa módulos)
-│   │   ├── styles.min.css     # Bundle minificado (produção)
+│   │   ├── styles.css         # Entry point home (importa módulos)
+│   │   ├── styles.min.css     # Bundle minificado home (produção)
+│   │   ├── styles-treatment.css   # Entry point tratamentos (tree-shaked)
+│   │   ├── styles-treatment.min.css # Bundle minificado tratamentos
 │   │   ├── globalStyle.css    # Variáveis, tipografia, utilitários, hero-rating
 │   │   ├── dark-theme.css     # Tema escuro (variáveis + overrides)
 │   │   ├── treatment.css      # Estilos das páginas de tratamento
@@ -140,7 +138,7 @@ Site institucional multipage com design moderno e performance otimizada. Inclui 
 │   │   ├── about/             # Foto da profissional
 │   │   ├── care/              # Imagens dos tratamentos
 │   │   ├── header/            # Banner principal
-│   │   ├── icons/             # Ícones do menu mobile
+│   │   ├── icons/             # Ícones PNG legados (menu agora usa SVG inline)
 │   │   ├── plans/             # Logos dos planos (Clin, Unidentis)
 │   │   └── results/           # Fotos antes/depois + slider
 │   ├── font/                  # Manrope variable font (WOFF2 + TTF)
@@ -260,15 +258,18 @@ npm run test:watch      # Modo watch (re-roda ao salvar)
 npm run test:coverage   # Gera relatório de cobertura (v8)
 ```
 
-Consulte [`TEST_PLAN.md`](./docs/completed/TEST_PLAN.md) para o plano completo com todos os test cases detalhados.
+Consulte [`TEST_PLAN.md`](./docs/melhorias/concluidas/TEST_PLAN.md) para o plano completo com todos os test cases detalhados.
 
 ## Deploy
 
 Deploy automático na **Vercel** a cada push na branch `main`.
 
 O `vercel.json` configura:
+- **Build:** `npm run build` (scripts/build.js)
 - **Redirect 301:** Tráfego de `*.vercel.app` → `www.drajaquelinesayonara.com.br`
+- **Redirect 301:** Naked domain `drajaquelinesayonara.com.br` → `www.drajaquelinesayonara.com.br`
 - **Cache imutável** (1 ano) para: `/assets/css/`, `/assets/font/`, `/assets/img/`, `/assets/js/`, `/assets/media/`
+- **Cache páginas tratamentos** (1 dia client, 7 dias CDN com stale-while-revalidate)
 
 ### Configuração do Domínio
 
@@ -324,7 +325,7 @@ Consulte [`DOMAIN_SETUP.md`](./docs/reference/DOMAIN_SETUP.md) para instruções
 - Twitter Cards (summary_large_image com title, description, image)
 - Meta description otimizada (152 chars)
 - Keywords relevantes sem typos
-- Sitemap XML com 17 URLs e lastmod atualizado
+- Sitemap XML com 16 URLs e lastmod atualizado
 - Redirect 301 de domínio legado
 - 6 páginas de SEO local (cidades no raio de 30km)
 
@@ -340,35 +341,44 @@ Consulte [`DOMAIN_SETUP.md`](./docs/reference/DOMAIN_SETUP.md) para instruções
 | Branch | Descrição |
 |--------|-----------|
 | `main` | Produção — deploy automático via Vercel |
-| `develop` | Branch de trabalho/desenvolvimento |
+| `develop` | Integração/staging |
+| `feat/*` | Branches de trabalho (ex: `feat/immediate-improvements-week5-6`) |
 
-**Fluxo:** Trabalho na `develop` → merge/PR para `main` quando pronto para produção.
+**Fluxo:** `feat/*` → `develop` → `main` (deploy produção).
 
 ## Documentação Complementar
+
+### 📘 Documentação Técnica
+
+| Documento | Descrição |
+|-----------|-----------|
+| [`ARQUITETURA.md`](./docs/tecnica/ARQUITETURA.md) | Arquitetura do projeto, stack, build pipeline, deploy |
+| [`COMPONENTES.md`](./docs/tecnica/COMPONENTES.md) | Componentes interativos (offcanva, lightbox, carousel, etc.) |
+| [`GUIA_DESENVOLVIMENTO.md`](./docs/tecnica/GUIA_DESENVOLVIMENTO.md) | Setup, convenções, checklists de a11y e SEO |
 
 ### ✅ Implementações Concluídas
 
 | Documento | Descrição | Status |
 |-----------|-----------|--------|
-| [`IMMEDIATE_IMPROVEMENTS.md`](./docs/completed/IMMEDIATE_IMPROVEMENTS.md) | Melhorias imediatas sem dependências (9 itens) | ✅ 9/9 completo |
-| [`IMPROVEMENT_PLAN.md`](./docs/completed/IMPROVEMENT_PLAN.md) | Plano de melhorias em 4 fases | ✅ 3/4 fases (Fase 3 aguarda contas externas) |
-| [`OPTIMIZATION_GUIDE.md`](./docs/completed/OPTIMIZATION_GUIDE.md) | Guia de otimização Lighthouse (24 tasks) | ✅ Score 97/100/100 |
-| [`MULTIPAGE_STRATEGY.md`](./docs/completed/MULTIPAGE_STRATEGY.md) | Estratégia SEO multipage | ✅ 17 páginas implementadas |
-| [`IMPLEMENTATION_PLAN.md`](./docs/completed/IMPLEMENTATION_PLAN.md) | Plano de implementação multipage | ✅ Concluído |
-| [`OFFCANVA_EVOLUTION_GUIDE.md`](./docs/completed/OFFCANVA_EVOLUTION_GUIDE.md) | Evolução do menu offcanva (Fases 1-3) | ✅ Concluído |
-| [`IMMEDIATE_STRATEGY.md`](./docs/completed/IMMEDIATE_STRATEGY.md) | Guia técnico passo-a-passo (IMMEDIATE_IMPROVEMENTS) | ✅ Referência técnica |
-| [`REFACTORING_GUIDE.md`](./docs/completed/REFACTORING_GUIDE.md) | Histórico de refatorações e melhorias | ✅ Atualizado |
-| [`RESTRUCTURE.md`](./docs/completed/RESTRUCTURE.md) | Histórico de reorganização do projeto | ✅ Concluído |
-| [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/completed/RESULTS_IMPROVEMENT_GUIDE.md) | Melhorias da seção de resultados | ✅ Concluído |
-| [`TEST_PLAN.md`](./docs/completed/TEST_PLAN.md) | Plano de testes unitários (348 testes) | ✅ Concluído |
+| [`IMMEDIATE_IMPROVEMENTS.md`](./docs/melhorias/concluidas/IMMEDIATE_IMPROVEMENTS.md) | Melhorias imediatas sem dependências (9 itens) | ✅ 9/9 completo |
+| [`IMPROVEMENT_PLAN.md`](./docs/melhorias/concluidas/IMPROVEMENT_PLAN.md) | Plano de melhorias em 4 fases | ✅ 3/4 fases (Fase 3 aguarda contas externas) |
+| [`OPTIMIZATION_GUIDE.md`](./docs/melhorias/concluidas/OPTIMIZATION_GUIDE.md) | Guia de otimização Lighthouse (24 tasks) | ✅ Score 97/100/100 |
+| [`MULTIPAGE_STRATEGY.md`](./docs/melhorias/concluidas/MULTIPAGE_STRATEGY.md) | Estratégia SEO multipage | ✅ 17 páginas implementadas |
+| [`IMPLEMENTATION_PLAN.md`](./docs/melhorias/concluidas/IMPLEMENTATION_PLAN.md) | Plano de implementação multipage | ✅ Concluído |
+| [`OFFCANVA_EVOLUTION_GUIDE.md`](./docs/melhorias/concluidas/OFFCANVA_EVOLUTION_GUIDE.md) | Evolução do menu offcanva (Fases 1-3) | ✅ Concluído |
+| [`IMMEDIATE_STRATEGY.md`](./docs/melhorias/concluidas/IMMEDIATE_STRATEGY.md) | Guia técnico passo-a-passo (IMMEDIATE_IMPROVEMENTS) | ✅ Referência técnica |
+| [`REFACTORING_GUIDE.md`](./docs/melhorias/concluidas/REFACTORING_GUIDE.md) | Histórico de refatorações e melhorias | ✅ Atualizado |
+| [`RESTRUCTURE.md`](./docs/melhorias/concluidas/RESTRUCTURE.md) | Histórico de reorganização do projeto | ✅ Concluído |
+| [`RESULTS_IMPROVEMENT_GUIDE.md`](./docs/melhorias/concluidas/RESULTS_IMPROVEMENT_GUIDE.md) | Melhorias da seção de resultados | ✅ Concluído |
+| [`TEST_PLAN.md`](./docs/melhorias/concluidas/TEST_PLAN.md) | Plano de testes unitários (348 testes) | ✅ Concluído |
 
 ### ⏳ Melhorias Futuras (Pendentes)
 
 | Documento | Descrição | Dependência |
 |-----------|-----------|-------------|
-| [`FUTURE_IMPROVEMENTS.md`](./docs/future/FUTURE_IMPROVEMENTS.md) | Melhorias com dependências externas (12 itens) | Serviços/APIs/Processos |
-| [`FUTURE_STRATEGY.md`](./docs/future/FUTURE_STRATEGY.md) | Guia operacional para melhorias futuras | Acompanha FUTURE_IMPROVEMENTS |
-| [`IMPROVEMENT_PLAN.md`](./docs/completed/IMPROVEMENT_PLAN.md) — Fase 3 | Analytics e conversão | Google Analytics, contas externas |
+| [`FUTURE_IMPROVEMENTS.md`](./docs/melhorias/pendentes/FUTURE_IMPROVEMENTS.md) | Melhorias com dependências externas (12 itens) | Serviços/APIs/Processos |
+| [`FUTURE_STRATEGY.md`](./docs/melhorias/pendentes/FUTURE_STRATEGY.md) | Guia operacional para melhorias futuras | Acompanha FUTURE_IMPROVEMENTS |
+| [`IMPROVEMENT_PLAN.md`](./docs/melhorias/concluidas/IMPROVEMENT_PLAN.md) — Fase 3 | Analytics e conversão | Google Analytics, contas externas |
 
 ### 📐 Referências de Design e Configuração
 
