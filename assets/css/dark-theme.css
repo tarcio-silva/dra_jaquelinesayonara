@@ -32,6 +32,26 @@
   color: var(--color-text);
 }
 
+/* Dropdown de navegação (Atendimento) */
+.dark-theme .header-dropdown-toggle {
+  color: var(--color-text);
+}
+
+.dark-theme .header-dropdown-menu {
+  background: var(--color-surface);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-md);
+}
+
+.dark-theme .header-dropdown-menu a {
+  color: var(--color-text);
+}
+
+.dark-theme .header-dropdown-menu a:hover,
+.dark-theme .header-dropdown-menu a:focus-visible {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
 .dark-theme .offcanva {
   background-color: var(--color-surface);
 }

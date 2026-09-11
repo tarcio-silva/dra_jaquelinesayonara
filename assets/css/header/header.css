@@ -88,9 +88,99 @@ header {
   font-weight: 500;
   white-space: nowrap;
 }
-.header-link.active > span {
+.header-link.active > span,
+.header-link[aria-current="page"] > span {
   background-color: rgba(162, 83, 86, 0.1);
   color: var(--logo-pallete-velvety-cherry);
+}
+
+/* --- Dropdown (desktop): Atendimento ▾ --- */
+.header-dropdown {
+  position: relative;
+}
+
+/* O toggle é um <button> — resetar aparência para casar com .header-link */
+.header-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--logo-pallete-velvety-cherry);
+  cursor: pointer;
+}
+
+.header-dropdown-toggle .chevron {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header-dropdown-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Painel do dropdown */
+.header-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  min-width: 220px;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+  background: var(--color-surface, #fff);
+  border: 1px solid rgba(162, 83, 86, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(162, 83, 86, 0.12));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 110;
+}
+
+/* Abre por JS (aria-expanded) e, como fallback sem JS, por hover/focus-within */
+.header-dropdown-toggle[aria-expanded="true"] + .header-dropdown-menu,
+.header-dropdown:hover .header-dropdown-menu,
+.header-dropdown:focus-within .header-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.header-dropdown-menu li {
+  margin: 0;
+}
+
+.header-dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--logo-pallete-velvety-cherry);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.header-dropdown-menu a:hover,
+.header-dropdown-menu a:focus-visible {
+  background-color: rgba(162, 83, 86, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-dropdown-menu,
+  .header-dropdown-toggle .chevron {
+    transition: none;
+  }
 }
 
 /* Hero */

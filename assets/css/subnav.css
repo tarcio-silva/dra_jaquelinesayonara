@@ -1,0 +1,79 @@
+/* --- Sub-navegação (apenas na home) ---
+ * Barra secundária sticky abaixo do header, com as seções da página.
+ * O scroll-spy (main.js) marca .subnav-link.active conforme a seção visível.
+ */
+
+.subnav {
+  position: sticky;
+  top: 64px; /* altura do header desktop */
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(162, 83, 86, 0.08);
+}
+
+.subnav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 0 auto;
+  padding: 8px 16px;
+  max-width: 1200px;
+}
+
+.subnav-link {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--logo-pallete-velvety-cherry);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.subnav-link:hover,
+.subnav-link:focus-visible {
+  background-color: rgba(162, 83, 86, 0.1);
+}
+
+.subnav-link.active {
+  background-color: rgba(162, 83, 86, 0.1);
+  color: var(--logo-pallete-velvety-cherry);
+  font-weight: 700;
+}
+
+/* Mobile: header tem 52px; esconder a subnav em telas pequenas
+   (a navegação por seção no mobile já é servida pelo offcanva). */
+@media only screen and (max-width: 1199px) {
+  .subnav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subnav-link {
+    transition: none;
+  }
+}
+
+
+/* --- Dark mode (co-localizado com a subnav; só entra no bundle home) --- */
+.dark-theme .subnav {
+  background: rgba(26, 18, 24, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .subnav-link {
+  color: var(--color-text);
+}
+
+.dark-theme .subnav-link:hover,
+.dark-theme .subnav-link:focus-visible,
+.dark-theme .subnav-link.active {
+  background-color: rgba(255, 255, 255, 0.06);
+}

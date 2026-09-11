@@ -188,13 +188,18 @@ function trapFocusInOffcanva(e) {
 }
 
 
-// --- Active section indicator (desktop + mobile) ---
+// --- Active section indicator (desktop header + subnav home + mobile) ---
 const sections = document.querySelectorAll("section[id]");
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Desktop
-      document.querySelectorAll(".header-link").forEach(l => l.classList.remove("active"));
+      // Sub-navegação da home
+      document.querySelectorAll(".subnav-link").forEach(l => l.classList.remove("active"));
+      const activeSubnav = document.querySelector(`.subnav-link[href="#${entry.target.id}"]`);
+      if (activeSubnav) activeSubnav.classList.add("active");
+
+      // Desktop header (âncoras, quando existirem)
+      document.querySelectorAll('.header-link[href^="#"]').forEach(l => l.classList.remove("active"));
       const activeDesktop = document.querySelector(`.header-link[href="#${entry.target.id}"]`);
       if (activeDesktop) activeDesktop.classList.add("active");
 
@@ -206,6 +211,55 @@ const navObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 sections.forEach(s => navObserver.observe(s));
+
+
+// --- Dropdown de navegação (desktop): Atendimento ▾ ---
+// Progressive enhancement: sem JS, o dropdown abre via :hover/:focus-within (CSS).
+// Com JS, adiciona controle por clique/teclado e aria-expanded.
+document.querySelectorAll(".header-dropdown").forEach((dropdown) => {
+  const toggle = dropdown.querySelector(".header-dropdown-toggle");
+  const menu = dropdown.querySelector(".header-dropdown-menu");
+  if (!toggle || !menu) return;
+
+  function openDropdown() {
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function isOpen() {
+    return toggle.getAttribute("aria-expanded") === "true";
+  }
+
+  toggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    isOpen() ? closeDropdown() : openDropdown();
+  });
+
+  // Fechar ao clicar fora
+  document.addEventListener("click", (e) => {
+    if (!dropdown.contains(e.target)) closeDropdown();
+  });
+
+  // Esc fecha e devolve o foco ao toggle
+  dropdown.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) {
+      closeDropdown();
+      toggle.focus();
+    }
+  });
+
+  // Tab a partir do último item fecha o dropdown (não prende o foco)
+  const items = menu.querySelectorAll("a");
+  const lastItem = items[items.length - 1];
+  if (lastItem) {
+    lastItem.addEventListener("keydown", (e) => {
+      if (e.key === "Tab" && !e.shiftKey) closeDropdown();
+    });
+  }
+});
 
 
 // --- Fade-in on scroll ---
