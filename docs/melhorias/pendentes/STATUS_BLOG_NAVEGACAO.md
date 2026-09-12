@@ -1,12 +1,56 @@
 # Status da sessão — Blog + Reformulação de Navegação
 
-> **Branch:** `feat/blog-e-navegacao`
-> **Última atualização:** 2026-09-05
+> **Branch:** `feat/blog-e-navegacao` (PR #58 aberto para `main`)
+> **Última atualização:** 2026-09-12
 > **Specs:** `SPEC_BLOG.md`, `SPEC_NAVEGACAO.md` (com adendo §13 do refino de layout)
 
 ---
 
-## Onde paramos
+## Onde paramos (sessão 2026-09-12)
+
+Blog e navegação **concluídos, testados e pushados**. `npm run build` OK (21 arquivos);
+`npm test` **693/693** (11 files). Branch em sincronia com o remoto; PR #58 atualizado.
+Nada em andamento — ponto de parada limpo.
+
+### Feito nesta sessão (resumo)
+- **Blog (SPEC_BLOG T1–T7):** listagem `/blog/`, template de artigo, 3 artigos novos
+  (clareamento, limpeza, gengivite) + pipeline/sitemap. Revisão T7 pegou 1 erro (1ª seção
+  comentada) — corrigido.
+- **Navegação (SPEC_NAVEGACAO N3/N4/N6/N7):** menu novo (Opção 1) propagado a 20 páginas + 2
+  templates; estado ativo por página; 1 H1/página; rótulo padronizado **"Início"** (some "Home"
+  do site). Revisão pegou 1 erro (aria-current duplicado nas cidades) — corrigido.
+  Fix: `atendimento/*` e `primeira-consulta/` estavam fora do pipeline de CSS (dropdown sem
+  estilo) — incluídas.
+- **Imagens → WebP:** blog heros (dedicados), og/care (7), results (2), logo-clin (AVIF→WebP
+  via Pillow); icons legado removidos. ~15 MB → ~600 KB. 100% raster em WebP.
+- **Referências bibliográficas:** os **4 artigos** do blog (incl. prótese) com citações no
+  texto + seção "Referências" (CSS `.treatment-references`). Fontes fornecidas pela Dra.,
+  registradas em `docs/melhorias/pendentes/referencias-blog/*.txt`.
+- **Fix h3:** `.treatment-content h3` não tinha regra (font-size minúsculo) — corrigido
+  (`clamp(1.8rem,2.2vw,2.1rem)`), afeta blog + páginas de tratamento.
+
+### Pendências / próximos passos
+- [ ] **Merge do PR #58** para `main` (dispara deploy Vercel de produção). Decidir se via
+      `develop` (o `conventions.md` §7 cita `feat/* → develop → main`) ou direto — o PR hoje
+      aponta para `main`.
+- [ ] **Validação visual no browser** (não dá para fazer pelo agente): dropdown "Atendimento"
+      estilizado nas páginas de atendimento; heros novos do blog; slider antes/depois; logo Clin;
+      tamanho dos h3; seção de referências. Rodar Lighthouse (meta ≥95 / a11y 100) e axe.
+- [ ] **Débito — dropdown desktop sem fallback sem-JS** (`:focus-within`); §13 aceitou
+      click-only, footer/breadcrumb dão rota alternativa às cidades.
+- [ ] **Débito — footer com ano hardcoded "2025 ©"** (SPEC_BLOG EC-05).
+- [ ] **Commits herdados do artigo de prótese** (autor `you@example.com` / msg em inglês) —
+      reescrever antes do merge para main, se desejado.
+- [ ] Blog: **T2 restante** — não há; T4 completo. Futuro: mais artigos usando `blog/_template.html`.
+
+### Aprendizados registrados nos skills (.kiro)
+- bugs-recorrentes: BUG-010 (regex `<style>` + comentário apaga head), BUG-011 (página fora do
+  pipeline com CSS desatualizado), BUG-012 (AVIF disfarçado de `.png` / imagem com conteúdo só
+  no alpha). decisoes-tecnicas: DEC-014/015/016.
+
+---
+
+## Onde paramos (sessão 2026-09-05 — histórico)
 
 Reformulação da navegação (Opção A + refino Opção 1) **implementada e validada na home**.
 Falta propagar às demais páginas e então executar o blog.
