@@ -295,6 +295,14 @@ describe.each(articleSlugs)('Blog — artigo (%s)', (slug) => {
       expect(html).toContain('não substitui uma consulta');
     });
 
+    it('se houver seção de Referências, está bem-formada (ol com entradas + h2)', () => {
+      const refs = doc.querySelector('.treatment-references');
+      if (refs) {
+        expect(refs.querySelector('h2')).not.toBeNull();
+        expect(refs.querySelectorAll('ol li').length).toBeGreaterThanOrEqual(1);
+      }
+    });
+
     it('"Leia também" com 3 cards, sem link para si mesmo', () => {
       const related = doc.querySelector('.related-treatments');
       expect(related).not.toBeNull();
