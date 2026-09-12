@@ -51,17 +51,26 @@ Falta propagar às demais páginas e então executar o blog.
       desktop×mobile, sem âncora no menu primário, dropdown a11y, `.active` por página.
 
 ### Correções pontuais solicitadas
-- [ ] **Padronizar o rótulo "Início" → "Home" em todo o site.** Decisão de nomenclatura:
-      unificar para **"Home"** (ou "Início") de forma consistente em todas as páginas
-      (menu, subnav, aria-labels, offcanva). Definir o termo único e aplicar em massa.
-      > Nota: nesta sessão a home usa "Início" (subnav + aria-label do logo). Padronizar.
-- [ ] **Verificar o link "Blog" quebrado.** O menu aponta para `/blog/`, mas a **listagem
-      `/blog/` ainda NÃO existe** (só o artigo `/blog/protese-dentaria-autoestima-saude/`).
-      Enquanto a listagem não for criada (SPEC_BLOG T1), o link "Blog" leva a 404.
-      → Criar `blog/index.html` (SPEC_BLOG T1) OU apontar temporariamente o link para o artigo.
+- [ ] **Padronizar o rótulo "Início" → "Home" em todo o site.** DECIDIDO (2026-09-11): termo
+      único = **"Início"** (PT-BR, coerente com o site). ⚠️ A aplicação em massa acontece na
+      **N4** (junto da propagação do menu novo), não isoladamente — hoje as páginas ainda usam
+      "Home"; trocar só uma criaria inconsistência. Ver DEC-014.
+- [x] **Link "Blog" quebrado — RESOLVIDO (2026-09-11).** Criada a listagem `/blog/`
+      (SPEC_BLOG T1): `blog/index.html` (bundle treatment, 1 card do artigo atual, Schema
+      Blog+ItemList+BreadcrumbList, 1 H1). Pipeline (`update-inline-css.sh` + `scripts/build.js`)
+      passou a conhecer `blog/`. `sitemap.xml` ganhou `/blog/` + o artigo (deixa de ser órfão).
+      Novo teste `tests/integration/blog.test.js` (19 casos). Build OK (11 arquivos); 367/367
+      testes verdes. Menu da listagem = ANTIGO (troca vem na N4). Ver DEC-014.
 
 ### Blog (após navegação)
-- [ ] T1 Fundação (listagem + template) · T2 Pipeline · T4 3 artigos · T5 Sitemap · T6 Testes · T7 Review.
+- [x] T1 Fundação (listagem) — RESOLVIDO 2026-09-11 (`blog/index.html`). Falta o
+      `blog/_template.html` (parte de T1/T2) para os próximos artigos.
+- [x] T2 Pipeline — parte feita: `update-inline-css.sh` + `build.js` conhecem `blog/`
+      (bundle treatment). Falta só o `_template.html`.
+- [x] T5 Sitemap — `/blog/` + artigo atual adicionados ao `sitemap.xml`.
+- [x] T6 Testes — cobertura da listagem em `tests/integration/blog.test.js` (19). Suite
+      completo (artigos) quando T4 existir.
+- [ ] T4 3 artigos · T7 Review (após conteúdo).
 
 ### Débito conhecido
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).

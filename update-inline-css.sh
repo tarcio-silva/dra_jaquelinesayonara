@@ -49,6 +49,18 @@ for dir in "$SCRIPT_DIR"/tratamentos/*/; do
   fi
 done
 
+# Adicionar listagem do blog
+if [ -f "$SCRIPT_DIR/blog/index.html" ]; then
+  HTML_FILES+=("$SCRIPT_DIR/blog/index.html")
+fi
+
+# Adicionar artigos de blog individuais
+for dir in "$SCRIPT_DIR"/blog/*/; do
+  if [ -f "${dir}index.html" ]; then
+    HTML_FILES+=("${dir}index.html")
+  fi
+done
+
 echo "📝 Atualizando ${#HTML_FILES[@]} arquivo(s)..."
 echo ""
 
@@ -70,8 +82,10 @@ for filepath in html_files:
     with open(filepath, 'r') as f:
         content = f.read()
 
-    # Determinar qual bundle usar
-    is_treatment = '/tratamentos/' in filepath
+    # Determinar qual bundle usar.
+    # Páginas de tratamento E de blog usam o bundle treatment (compartilham
+    # os componentes .treatment-*, .related-card/.related-grid, .breadcrumb).
+    is_treatment = '/tratamentos/' in filepath or '/blog/' in filepath
     css = css_treatment_content if is_treatment else css_home_content
     style_block = '<style>' + css + '</style>'
 
