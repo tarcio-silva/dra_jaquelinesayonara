@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<!--
+  TEMPLATE DE ARTIGO DE BLOG - NAO PUBLICAR ESTE ARQUIVO.
+  Como usar (ver docs/melhorias/pendentes/SPEC_BLOG.md §6 e skill repo-site):
+  1. cp blog/_template.html blog/<slug>/index.html
+  2. Substituir TODOS os placeholders {{...}} (lista no fim do arquivo).
+  3. Escrever o conteudo do artigo em .treatment-content (3-5 h2, tabela/lista, FAQ).
+  4. Ajustar os cards de "Leia tambem" (1 tratamento vinculado + 2 artigos/servicos).
+  5. Rodar: ./update-inline-css.sh  (preenche o CSS inline com o bundle treatment)
+  6. Adicionar a URL ao sitemap.xml e um card em blog/index.html.
+  7. npm test  (o suite valida a11y, SEO, JSON-LD, 1 H1).
+  REGRA CRITICA: apenas 1 H1 por pagina (no hero). NAO adicionar h1 sr-only
+  no header (isso e o EC-01 do SPEC - o template de tratamento faz isso e viola a regra).
+  NOTA: o bloco de CSS inline abaixo comeca vazio de proposito; o passo 5 o preenche.
+  Nunca escreva a tag de estilo literal dentro deste comentario (quebra o pipeline).
+-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,33 +24,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Blog da Dra. Jaqueline Sayonara: artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso, em linguagem simples e acolhedora.">
-    <meta name="keywords" content="blog odontologia, saúde bucal, dentista sapé pb, cuidados com os dentes, dra jaqueline sayonara">
+    <meta name="description" content="Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.">
+    <meta name="keywords" content="limpeza dental, profilaxia, de quanto em quanto tempo fazer limpeza, limpeza dental dói, tártaro, dentista sapé pb">
     <meta name="author" content="Dra Jaqueline Sayonara">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Blog de Saúde Bucal | Dra. Jaqueline Sayonara">
-    <meta property="og:description" content="Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso, escritos pela Dra. Jaqueline Sayonara em Sapé/PB.">
-    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/protese.png">
-    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Limpeza Dental: Por Que Fazer e Com Que Frequência">
+    <meta property="og:description" content="Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar do procedimento.">
+    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
+    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/">
+    <meta property="og:type" content="article">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dra. Jaqueline Sayonara">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog de Saúde Bucal | Dra. Jaqueline Sayonara">
-    <meta name="twitter:description" content="Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso.">
-    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/protese.png">
+    <meta name="twitter:title" content="Limpeza Dental: Por Que Fazer e Com Que Frequência">
+    <meta name="twitter:description" content="Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar.">
+    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
 
-    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/">
+    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/">
     <link rel="preload" href="/assets/font/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="shortcut icon" href="/assets/img/favicon.webp" type="image/x-icon">
 
-    <title>Blog de Saúde Bucal | Dra. Jaqueline Sayonara</title>
+    <title>Limpeza Dental: Por Que Fazer e Com Que Frequência</title>
 
-    <!-- CSS inline (bundle treatment - preenchido pelo update-inline-css.sh) -->
+    <!-- CSS inline (bundle treatment - preenchido por ./update-inline-css.sh) -->
     <style>/*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -50,10 +66,14 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Blog",
-          "name": "Blog de Saúde Bucal — Dra. Jaqueline Sayonara",
-          "description": "Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso.",
-          "url": "https://www.drajaquelinesayonara.com.br/blog/",
+          "@type": "BlogPosting",
+          "headline": "Limpeza Dental: Por Que Fazer e Com Que Frequência",
+          "description": "Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.",
+          "image": "https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png",
+          "author": {
+            "@type": "Person",
+            "name": "Dra. Jaqueline Sayonara"
+          },
           "publisher": {
             "@type": "Organization",
             "name": "Dra. Jaqueline Sayonara",
@@ -61,30 +81,13 @@
               "@type": "ImageObject",
               "url": "https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp"
             }
+          },
+          "datePublished": "2026-09-11",
+          "dateModified": "2026-09-11",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/"
           }
-        },
-        {
-          "@type": "ItemList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "url": "https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/",
-              "name": "Limpeza Dental: Por Que Fazer e Com Que Frequência"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "url": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/",
-              "name": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados"
-            },
-            {
-              "@type": "ListItem",
-              "position": 3,
-              "url": "https://www.drajaquelinesayonara.com.br/blog/protese-dentaria-autoestima-saude/",
-              "name": "Prótese Dentária, Autoestima e Saúde"
-            }
-          ]
         },
         {
           "@type": "BreadcrumbList",
@@ -100,6 +103,49 @@
               "position": 2,
               "name": "Blog",
               "item": "https://www.drajaquelinesayonara.com.br/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Limpeza Dental: Por Que Fazer e Com Que Frequência",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "De quanto em quanto tempo devo fazer limpeza dental?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza profissional substitui a escovação em casa?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental clareia os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento."
+              }
             }
           ]
         }
@@ -216,60 +262,160 @@
         <nav class="breadcrumb" aria-label="Navegação estrutural">
             <ol>
                 <li><a href="/">Home</a></li>
-                <li aria-current="page">Blog</li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">Limpeza Dental: Por Que Fazer e Com Que Frequência</li>
             </ol>
         </nav>
 
-        <!-- Hero -->
+        <!-- Hero (UNICO H1 da pagina) -->
         <section class="treatment-hero fade-in">
             <div>
                 <div>
-                    <h1>Blog de Saúde Bucal</h1>
-                    <p class="treatment-subtitle">Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso — em linguagem simples e acolhedora, escritos pela Dra. Jaqueline Sayonara em Sapé/PB.</p>
+                    <h1>Limpeza Dental: Por Que Fazer e Com Que Frequência</h1>
+                    <p class="treatment-subtitle">Entenda por que a limpeza profissional é importante, com que frequência fazer e o que esperar do procedimento — com informação clara.</p>
+                    <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20limpeza%20dental" class="btn-cta">
+                        Agendar consulta
+                    </a>
                 </div>
+                <img src="/assets/img/care/profilaxia.webp"
+                     alt="Limpeza dental (profilaxia) - Dra. Jaqueline Sayonara em Sapé/PB"
+                     width="600" height="400"
+                     loading="eager">
             </div>
         </section>
 
-        <!-- Grid de artigos -->
+        <!-- Conteudo principal -->
+        <section class="treatment-content">
+            <div>
+                <p class="treatment-summary">A limpeza dental profissional (profilaxia) vai muito além de deixar o sorriso mais limpo: ela ajuda a prevenir cáries, gengivite e mau hálito. Mas de quanto em quanto tempo fazer? Dói? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples o que é a profilaxia e por que ela faz parte da rotina de quem cuida da saúde bucal.</p>
+
+                <!--
+                  CONTEUDO DO ARTIGO - substituir                 <h2>O que é a limpeza dental (profilaxia)?</h2>
+                <p>A limpeza dental profissional, chamada de profilaxia, é o procedimento em que o dentista remove a placa bacteriana e o tártaro que se acumulam nos dentes e perto da gengiva — inclusive em pontos que a escova e o fio dental não alcançam sozinhos. Ao final, é comum fazer um polimento que deixa a superfície do dente mais lisa.</p>
+                <p>Mesmo com uma boa higiene em casa, parte da placa endurece e vira tártaro, que só é removido por instrumentos apropriados no consultório. Por isso a limpeza caseira e a profissional se complementam: uma não substitui a outra.</p>
+
+                <h2>Por que a limpeza dental é importante?</h2>
+                <p>Ir além da estética de um sorriso mais limpo, a profilaxia ajuda a prevenir problemas comuns:</p>
+                <ul>
+                    <li><strong>Cáries:</strong> a remoção da placa reduz o acúmulo de bactérias que atacam o esmalte.</li>
+                    <li><strong>Gengivite:</strong> o tártaro perto da gengiva favorece a inflamação; removê-lo ajuda a manter a gengiva saudável.</li>
+                    <li><strong>Mau hálito:</strong> boa parte do mau hálito tem origem no acúmulo de placa e resíduos.</li>
+                    <li><strong>Diagnóstico precoce:</strong> na consulta, o dentista aproveita para observar sinais iniciais de problemas e orientar.</li>
+                </ul>
+
+                <h2>De quanto em quanto tempo fazer limpeza?</h2>
+                <p>A recomendação mais comum é a cada seis meses, mas esse intervalo é uma referência, não uma regra fixa. A frequência ideal depende do seu caso: pessoas com tendência a acúmulo de tártaro, que usam aparelho ortodôntico, fumam ou têm histórico de doença na gengiva podem se beneficiar de intervalos mais curtos. Quem tem boa higiene e baixa formação de tártaro pode seguir o intervalo padrão. Quem define isso é o dentista, na avaliação.</p>
+
+                <h3>Sinais de que pode estar na hora</h3>
+                <ul>
+                    <li>Gengiva que sangra ao escovar ou usar fio dental.</li>
+                    <li>Sensação de "aspereza" ou acúmulo perto da gengiva.</li>
+                    <li>Mau hálito persistente.</li>
+                    <li>Faz mais de seis meses desde a última limpeza.</li>
+                </ul>
+
+                <h2>A limpeza dental dói? O que esperar</h2>
+                <p>Na maioria dos casos a limpeza não dói. Pode haver uma leve sensibilidade, especialmente se a gengiva já estiver inflamada ou houver bastante tártaro acumulado. Quando a gengiva está saudável, o procedimento tende a ser tranquilo e rápido. Se você sente muita sensibilidade, avise o dentista para que o atendimento seja ajustado.</p>
+                <p>Depois da limpeza, manter a rotina em casa é o que preserva o resultado: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e comparecer às consultas de acompanhamento.</p> por 3-5 secoes h2
+                  (com h3 quando necessario, sem pular nivel). Incluir 1 tabela comparativa
+                  OU lista de beneficios quando fizer sentido. Tom acolhedor, PT-BR, sem
+                  promessa de resultado/preco fixo (etica CFO).
+                -->
+                                <h2>O que é a limpeza dental (profilaxia)?</h2>
+                <p>A limpeza dental profissional, chamada de profilaxia, é o procedimento em que o dentista remove a placa bacteriana e o tártaro que se acumulam nos dentes e perto da gengiva — inclusive em pontos que a escova e o fio dental não alcançam sozinhos. Ao final, é comum fazer um polimento que deixa a superfície do dente mais lisa.</p>
+                <p>Mesmo com uma boa higiene em casa, parte da placa endurece e vira tártaro, que só é removido por instrumentos apropriados no consultório. Por isso a limpeza caseira e a profissional se complementam: uma não substitui a outra.</p>
+
+                <h2>Por que a limpeza dental é importante?</h2>
+                <p>Ir além da estética de um sorriso mais limpo, a profilaxia ajuda a prevenir problemas comuns:</p>
+                <ul>
+                    <li><strong>Cáries:</strong> a remoção da placa reduz o acúmulo de bactérias que atacam o esmalte.</li>
+                    <li><strong>Gengivite:</strong> o tártaro perto da gengiva favorece a inflamação; removê-lo ajuda a manter a gengiva saudável.</li>
+                    <li><strong>Mau hálito:</strong> boa parte do mau hálito tem origem no acúmulo de placa e resíduos.</li>
+                    <li><strong>Diagnóstico precoce:</strong> na consulta, o dentista aproveita para observar sinais iniciais de problemas e orientar.</li>
+                </ul>
+
+                <h2>De quanto em quanto tempo fazer limpeza?</h2>
+                <p>A recomendação mais comum é a cada seis meses, mas esse intervalo é uma referência, não uma regra fixa. A frequência ideal depende do seu caso: pessoas com tendência a acúmulo de tártaro, que usam aparelho ortodôntico, fumam ou têm histórico de doença na gengiva podem se beneficiar de intervalos mais curtos. Quem tem boa higiene e baixa formação de tártaro pode seguir o intervalo padrão. Quem define isso é o dentista, na avaliação.</p>
+
+                <h3>Sinais de que pode estar na hora</h3>
+                <ul>
+                    <li>Gengiva que sangra ao escovar ou usar fio dental.</li>
+                    <li>Sensação de "aspereza" ou acúmulo perto da gengiva.</li>
+                    <li>Mau hálito persistente.</li>
+                    <li>Faz mais de seis meses desde a última limpeza.</li>
+                </ul>
+
+                <h2>A limpeza dental dói? O que esperar</h2>
+                <p>Na maioria dos casos a limpeza não dói. Pode haver uma leve sensibilidade, especialmente se a gengiva já estiver inflamada ou houver bastante tártaro acumulado. Quando a gengiva está saudável, o procedimento tende a ser tranquilo e rápido. Se você sente muita sensibilidade, avise o dentista para que o atendimento seja ajustado.</p>
+                <p>Depois da limpeza, manter a rotina em casa é o que preserva o resultado: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e comparecer às consultas de acompanhamento.</p>
+
+                <!-- FAQ (alimenta o FAQPage do Schema - manter em sincronia) -->
+                <div class="treatment-faq">
+                    <h2>Perguntas frequentes</h2>
+                                        <details>
+                        <summary>De quanto em quanto tempo devo fazer limpeza dental?</summary>
+                        <p>A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental dói?</summary>
+                        <p>Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza profissional substitui a escovação em casa?</summary>
+                        <p>Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental clareia os dentes?</summary>
+                        <p>A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento.</p>
+                    </details>
+                </div>
+
+                <!-- Aviso de responsabilidade -->
+                <p class="treatment-summary"><em>Este conteúdo é informativo e não substitui uma consulta odontológica. Para avaliar o seu caso, agende uma consulta.</em></p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-final fade-in">
+            <div>
+                <h2 class="section-title">Está na hora da sua limpeza?</h2>
+                <p class="cta-final-text">Agende sua profilaxia com a Dra. Jaqueline Sayonara e mantenha a saúde do seu sorriso em dia.</p>
+                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20limpeza%20dental" class="btn-cta">
+                    Falar pelo WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <!-- Leia tambem (1 tratamento vinculado + 2 relacionados; NAO linkar para si mesmo) -->
         <section class="related-treatments fade-in">
             <div>
+                <h2 class="section-title">Leia também</h2>
                 <div class="related-grid">
-                    <a href="/blog/limpeza-dental-importancia-frequencia/" class="related-card">
+                    <a href="/tratamentos/profilaxia/" class="related-card">
                         <span class="related-card-icon">🪥</span>
                         <div class="related-card-content">
-                            <h2 class="related-card-title">Limpeza Dental: Por Que Fazer e Com Que Frequência</h2>
-                            <p class="related-card-desc">Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar do procedimento.</p>
+                            <h3 class="related-card-title">Profilaxia</h3>
+                            <p class="related-card-desc">Conheça a limpeza dental profissional oferecida no consultório.</p>
                         </div>
                         <span class="related-card-arrow">→</span>
                     </a>
                     <a href="/blog/clareamento-dental-vale-a-pena/" class="related-card">
                         <span class="related-card-icon">✨</span>
                         <div class="related-card-content">
-                            <h2 class="related-card-title">Clareamento Dental Vale a Pena?</h2>
-                            <p class="related-card-desc">Tipos de clareamento, quanto tempo dura o resultado e os cuidados para clarear com segurança.</p>
+                            <h3 class="related-card-title">Clareamento Dental Vale a Pena?</h3>
+                            <p class="related-card-desc">Tipos, duração e cuidados para clarear o sorriso com segurança.</p>
                         </div>
                         <span class="related-card-arrow">→</span>
                     </a>
-                    <a href="/blog/protese-dentaria-autoestima-saude/" class="related-card">
+                    <a href="/tratamentos/restauracao-dentaria/" class="related-card">
                         <span class="related-card-icon">🦷</span>
                         <div class="related-card-content">
-                            <h2 class="related-card-title">Prótese Dentária, Autoestima e Saúde</h2>
-                            <p class="related-card-desc">Como a reposição de dentes pode transformar não apenas o sorriso, mas também a confiança e o bem-estar geral.</p>
+                            <h3 class="related-card-title">Restauração Dentária</h3>
+                            <p class="related-card-desc">Quando a cárie já se instalou: o reparo do dente com resina.</p>
                         </div>
                         <span class="related-card-arrow">→</span>
                     </a>
                 </div>
-            </div>
-        </section>
-
-        <!-- CTA Final -->
-        <section class="cta-final fade-in">
-            <div>
-                <h2 class="section-title">Ficou com alguma dúvida?</h2>
-                <p class="cta-final-text">Fale com a Dra. Jaqueline Sayonara pelo WhatsApp e agende sua avaliação.</p>
-                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
-                    Agendar pelo WhatsApp
-                </a>
             </div>
         </section>
     </main>
@@ -319,3 +465,114 @@
 </body>
 
 </html>
+
+<!--
+  PLACEHOLDERS a substituir ao criar um artigo:
+  limpeza-dental-importancia-frequencia                  slug da pasta (ex.: clareamento-dental-vale-a-pena)
+  Limpeza Dental: Por Que Fazer e Com Que Frequência            title (<= 60 chars) - ex.: "Titulo do Artigo | Dra. Jaqueline Sayonara"
+  Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.      meta description (120-160 chars, com keyword + CTA)
+  limpeza dental, profilaxia, de quanto em quanto tempo fazer limpeza, limpeza dental dói, tártaro, dentista sapé pb         palavras-chave separadas por virgula
+  Limpeza Dental: Por Que Fazer e Com Que Frequência Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar do procedimento. https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png   Open Graph (imagem = URL absoluta .webp/.png)
+  Limpeza Dental: Por Que Fazer e Com Que Frequência Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar.       Twitter Cards
+  Limpeza Dental: Por Que Fazer e Com Que Frequência         titulo do artigo (usado no H1, breadcrumb e Schema)
+  Entenda por que a limpeza profissional é importante, com que frequência fazer e o que esperar do procedimento — com informação clara.      subtitulo do hero
+  A limpeza dental profissional (profilaxia) vai muito além de deixar o sorriso mais limpo: ela ajuda a prevenir cáries, gengivite e mau hálito. Mas de quanto em quanto tempo fazer? Dói? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples o que é a profilaxia e por que ela faz parte da rotina de quem cuida da saúde bucal.       paragrafo-resumo (.treatment-summary)
+  Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.   description do BlogPosting (pode repetir a meta description)
+                  <h2>O que é a limpeza dental (profilaxia)?</h2>
+                <p>A limpeza dental profissional, chamada de profilaxia, é o procedimento em que o dentista remove a placa bacteriana e o tártaro que se acumulam nos dentes e perto da gengiva — inclusive em pontos que a escova e o fio dental não alcançam sozinhos. Ao final, é comum fazer um polimento que deixa a superfície do dente mais lisa.</p>
+                <p>Mesmo com uma boa higiene em casa, parte da placa endurece e vira tártaro, que só é removido por instrumentos apropriados no consultório. Por isso a limpeza caseira e a profissional se complementam: uma não substitui a outra.</p>
+
+                <h2>Por que a limpeza dental é importante?</h2>
+                <p>Ir além da estética de um sorriso mais limpo, a profilaxia ajuda a prevenir problemas comuns:</p>
+                <ul>
+                    <li><strong>Cáries:</strong> a remoção da placa reduz o acúmulo de bactérias que atacam o esmalte.</li>
+                    <li><strong>Gengivite:</strong> o tártaro perto da gengiva favorece a inflamação; removê-lo ajuda a manter a gengiva saudável.</li>
+                    <li><strong>Mau hálito:</strong> boa parte do mau hálito tem origem no acúmulo de placa e resíduos.</li>
+                    <li><strong>Diagnóstico precoce:</strong> na consulta, o dentista aproveita para observar sinais iniciais de problemas e orientar.</li>
+                </ul>
+
+                <h2>De quanto em quanto tempo fazer limpeza?</h2>
+                <p>A recomendação mais comum é a cada seis meses, mas esse intervalo é uma referência, não uma regra fixa. A frequência ideal depende do seu caso: pessoas com tendência a acúmulo de tártaro, que usam aparelho ortodôntico, fumam ou têm histórico de doença na gengiva podem se beneficiar de intervalos mais curtos. Quem tem boa higiene e baixa formação de tártaro pode seguir o intervalo padrão. Quem define isso é o dentista, na avaliação.</p>
+
+                <h3>Sinais de que pode estar na hora</h3>
+                <ul>
+                    <li>Gengiva que sangra ao escovar ou usar fio dental.</li>
+                    <li>Sensação de "aspereza" ou acúmulo perto da gengiva.</li>
+                    <li>Mau hálito persistente.</li>
+                    <li>Faz mais de seis meses desde a última limpeza.</li>
+                </ul>
+
+                <h2>A limpeza dental dói? O que esperar</h2>
+                <p>Na maioria dos casos a limpeza não dói. Pode haver uma leve sensibilidade, especialmente se a gengiva já estiver inflamada ou houver bastante tártaro acumulado. Quando a gengiva está saudável, o procedimento tende a ser tranquilo e rápido. Se você sente muita sensibilidade, avise o dentista para que o atendimento seja ajustado.</p>
+                <p>Depois da limpeza, manter a rotina em casa é o que preserva o resultado: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e comparecer às consultas de acompanhamento.</p>          corpo do artigo (3-5 h2, tabela/lista, sem pular nivel de heading)
+  2026-09-11 2026-09-11   datas ISO (YYYY-MM-DD)
+                      <details>
+                        <summary>De quanto em quanto tempo devo fazer limpeza dental?</summary>
+                        <p>A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental dói?</summary>
+                        <p>Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza profissional substitui a escovação em casa?</summary>
+                        <p>Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental clareia os dentes?</summary>
+                        <p>A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento.</p>
+                    </details>        blocos details/summary (Pergunta) + p (Resposta), 3-4
+  {
+              "@type": "Question",
+              "name": "De quanto em quanto tempo devo fazer limpeza dental?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza profissional substitui a escovação em casa?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental clareia os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento."
+              }
+            }      itens do FAQPage no Schema, um por pergunta:
+                            {"@type":"Question","name":"...","acceptedAnswer":{"@type":"Answer","text":"..."}}
+                            (separados por virgula; DEVEM espelhar o                     <details>
+                        <summary>De quanto em quanto tempo devo fazer limpeza dental?</summary>
+                        <p>A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental dói?</summary>
+                        <p>Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza profissional substitui a escovação em casa?</summary>
+                        <p>Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental clareia os dentes?</summary>
+                        <p>A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento.</p>
+                    </details>)
+  /assets/img/care/profilaxia.webp Limpeza dental (profilaxia) - Dra. Jaqueline Sayonara em Sapé/PB            imagem hero (.webp) + alt descritivo
+  Gostaria%20de%20agendar%20uma%20limpeza%20dental         texto pre-preenchido do WhatsApp (URL-encoded)
+  Está na hora da sua limpeza? Agende sua profilaxia com a Dra. Jaqueline Sayonara e mantenha a saúde do seu sorriso em dia.             secao CTA final
+  {{RELATED_N_HREF/ICON/TITLE/DESC}}     3 cards "Leia tambem" (1 tratamento vinculado + 2)
+-->
