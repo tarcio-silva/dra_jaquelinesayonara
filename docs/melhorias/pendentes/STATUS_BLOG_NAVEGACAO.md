@@ -42,19 +42,29 @@ Falta propagar às demais páginas e então executar o blog.
 ## Pendências (próximas sessões)
 
 ### Navegação
-- [ ] **N3 — Template:** atualizar `tratamentos/_template.html` com o header novo (sem 2º H1
-      `sr-only`, ver SPEC_BLOG EC-01).
-- [ ] **N4 — Propagar** o header/menu novo para: 7 páginas de tratamento, `tratamentos/index.html`,
-      6 páginas de atendimento, `primeira-consulta/`, e as páginas de blog. Marcar `.active`
-      por página. (Hoje só a home tem o menu novo.)
-- [ ] **N6 — Testes** de navegação (`tests/integration/navigation.test.js`): itens iguais
-      desktop×mobile, sem âncora no menu primário, dropdown a11y, `.active` por página.
+- [x] **N3 — Template — RESOLVIDO (2026-09-11).** `tratamentos/_template.html` e
+      `blog/_template.html` receberam o header novo (o header canônico não tem `<h1 sr-only>`,
+      então o EC-01 dos 2 H1 foi corrigido).
+- [x] **N4 — Propagar — RESOLVIDO (2026-09-11).** Header novo aplicado a 7 páginas de
+      tratamento + `tratamentos/index.html`, 6 de atendimento, `primeira-consulta/`, blog
+      (listagem + 4 artigos) e os 2 templates. `.active`/`aria-current` por página. Rótulo
+      "Início" padronizado (breadcrumb visível + JSON-LD; "Home" some do site). Commit 4795c39.
+- [x] **N6 — Testes — RESOLVIDO (2026-09-11).** `tests/integration/navigation.test.js`
+      (paridade desktop×mobile, sem âncora no primário, dropdown a11y, `.active` por seção,
+      sub-nav só na home, breadcrumb "Início", unicidade de aria-current). Commit fb58f06/50be652.
+- [x] **N7 — Review — RESOLVIDO (2026-09-11).** Revisão semântica
+      (semantic-review/2026-09-12-161052-pr-nav.md): NEEDS_CHANGES → corrigido. ERRO: duplo
+      `aria-current="page"` nas cidades (toggle + link) — corrigido (fix 50be652), só o link da
+      cidade fica com aria-current; teste endurecido. 669 testes verdes.
+      **Débito registrado (N1, não bloqueante):** dropdown desktop abre só via JS
+      (`[aria-expanded="true"]`); sem JS as cidades ficam inacessíveis no header desktop
+      (contraria EC-01/RNF-05/CA-03). §13 aceitou click-only; footer/breadcrumb dão rota
+      alternativa. Melhoria futura: adicionar `:focus-within` como fallback de teclado.
 
 ### Correções pontuais solicitadas
-- [ ] **Padronizar o rótulo "Início" → "Home" em todo o site.** DECIDIDO (2026-09-11): termo
-      único = **"Início"** (PT-BR, coerente com o site). ⚠️ A aplicação em massa acontece na
-      **N4** (junto da propagação do menu novo), não isoladamente — hoje as páginas ainda usam
-      "Home"; trocar só uma criaria inconsistência. Ver DEC-014.
+- [x] **Padronizar o rótulo "Início" → RESOLVIDO na N4 (2026-09-11).** Termo único = **"Início"**
+      aplicado em massa (breadcrumb visível + `BreadcrumbList` do JSON-LD) em todas as páginas;
+      o site não tem mais "Home". O menu novo nem tem item "Início" (o logo leva à home).
 - [x] **Link "Blog" quebrado — RESOLVIDO (2026-09-11).** Criada a listagem `/blog/`
       (SPEC_BLOG T1): `blog/index.html` (bundle treatment, 1 card do artigo atual, Schema
       Blog+ItemList+BreadcrumbList, 1 H1). Pipeline (`update-inline-css.sh` + `scripts/build.js`)
