@@ -188,24 +188,94 @@ function trapFocusInOffcanva(e) {
 }
 
 
-// --- Active section indicator (desktop + mobile) ---
+// --- Active section indicator (desktop header + subnav home + mobile) ---
+// Uma seção fica ativa quando cruza a faixa logo abaixo do header+subnav.
+// O hero (#inicio) é a 1ª seção, então "Início" acende no topo e as demais
+// conforme o scroll.
 const sections = document.querySelectorAll("section[id]");
+const subnavLinks = document.querySelectorAll(".subnav-link");
+const headerAnchorLinks = document.querySelectorAll('.header-link[href^="#"]');
+const offcanvaAnchorLinks = document.querySelectorAll('.offcanva-nav--link[href^="#"]');
+
+function clearSectionActive() {
+  subnavLinks.forEach(l => l.classList.remove("active"));
+  headerAnchorLinks.forEach(l => l.classList.remove("active"));
+  offcanvaAnchorLinks.forEach(l => l.classList.remove("active"));
+}
+
+function setSectionActive(id) {
+  clearSectionActive();
+  const sub = document.querySelector(`.subnav-link[href="#${id}"]`);
+  if (sub) sub.classList.add("active");
+  const desk = document.querySelector(`.header-link[href="#${id}"]`);
+  if (desk) desk.classList.add("active");
+  const mob = document.querySelector(`.offcanva-nav--link[href="#${id}"]`);
+  if (mob) mob.classList.add("active");
+}
+
 const navObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Desktop
-      document.querySelectorAll(".header-link").forEach(l => l.classList.remove("active"));
-      const activeDesktop = document.querySelector(`.header-link[href="#${entry.target.id}"]`);
-      if (activeDesktop) activeDesktop.classList.add("active");
-
-      // Mobile offcanva
-      document.querySelectorAll(".offcanva-nav--link").forEach(l => l.classList.remove("active"));
-      const activeMobile = document.querySelector(`.offcanva-nav--link[href="#${entry.target.id}"]`);
-      if (activeMobile) activeMobile.classList.add("active");
+      setSectionActive(entry.target.id);
     }
   });
-}, { threshold: 0.3 });
+}, { rootMargin: "-120px 0px -55% 0px", threshold: 0 });
 sections.forEach(s => navObserver.observe(s));
+
+
+// --- Dropdown de navegação (desktop): Atendimento ▾ ---
+// Controle por clique + teclado, com aria-expanded. Click-only (sem hover),
+// para navegação previsível e sem o menu "fugir" do cursor.
+document.querySelectorAll(".header-dropdown").forEach((dropdown) => {
+  const toggle = dropdown.querySelector(".header-dropdown-toggle");
+  const menu = dropdown.querySelector(".header-dropdown-menu");
+  if (!toggle || !menu) return;
+
+  function openDropdown() {
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  function closeDropdown() {
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function isOpen() {
+    return toggle.getAttribute("aria-expanded") === "true";
+  }
+
+  toggle.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation(); // não deixar o clique borbulhar até o "clicar fora"
+    isOpen() ? closeDropdown() : openDropdown();
+  });
+
+  // Fechar ao clicar fora
+  document.addEventListener("click", (e) => {
+    if (isOpen() && !dropdown.contains(e.target)) closeDropdown();
+  });
+
+  // Esc fecha e devolve o foco ao toggle
+  dropdown.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && isOpen()) {
+      closeDropdown();
+      toggle.focus();
+    }
+  });
+
+  // Fechar ao selecionar um item (permite o link navegar normalmente)
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => closeDropdown());
+  });
+
+  // Tab a partir do último item fecha o dropdown (não prende o foco)
+  const items = menu.querySelectorAll("a");
+  const lastItem = items[items.length - 1];
+  if (lastItem) {
+    lastItem.addEventListener("keydown", (e) => {
+      if (e.key === "Tab" && !e.shiftKey) closeDropdown();
+    });
+  }
+});
 
 
 // --- Fade-in on scroll ---

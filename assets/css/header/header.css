@@ -11,9 +11,9 @@ header {
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(162, 83, 86, 0.08);
   display: flex;
-  gap: 16px;
+  gap: 24px;
   height: 64px;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0 24px;
   margin: 0;
   position: fixed;
@@ -30,10 +30,10 @@ header {
 
 .header-nav-links {
   display: none;
-  justify-content: center;
+  align-items: center;
+  margin-left: auto; /* empurra a nav para a direita, junto das ações */
   list-style: none;
-  gap: 0;
-  margin: 0;
+  gap: 4px;
   padding: 0;
 }
 
@@ -46,7 +46,7 @@ header {
 
 .nav-social {
   display: flex;
-  gap: 10px;
+  gap: 16px;
   list-style: none;
   padding: 0;
 }
@@ -88,9 +88,118 @@ header {
   font-weight: 500;
   white-space: nowrap;
 }
-.header-link.active > span {
+.header-link.active > span,
+.header-link[aria-current="page"] > span {
   background-color: rgba(162, 83, 86, 0.1);
   color: var(--logo-pallete-velvety-cherry);
+}
+
+/* --- Dropdown (desktop): Atendimento ▾ --- */
+.header-dropdown {
+  position: relative;
+}
+
+/* O toggle é um <button>: zerar aparência de botão e herdar a tipografia.
+   O alinhamento/typografia do rótulo vem do <span> interno, espelhando
+   exatamente .header-link > span (mesmo padding, fonte, peso, hover). */
+.header-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  color: var(--logo-pallete-velvety-cherry);
+  cursor: pointer;
+  line-height: inherit;
+}
+
+.header-dropdown-toggle > span {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.header-dropdown-toggle:hover > span,
+.header-dropdown-toggle[aria-expanded="true"] > span {
+  background-color: rgba(162, 83, 86, 0.1);
+  color: var(--logo-pallete-velvety-cherry);
+}
+
+.header-dropdown-toggle .chevron {
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.header-dropdown-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+/* Painel do dropdown */
+.header-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 220px;
+  padding: 8px;
+  margin: 0;
+  list-style: none;
+  background: var(--color-surface, #fff);
+  border: 1px solid rgba(162, 83, 86, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(162, 83, 86, 0.12));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  z-index: 110;
+}
+
+/* Abre apenas via JS (aria-expanded). O clique controla o estado — sem :hover,
+   que causava o menu "fugir" ao mover o cursor e conflitar com o clique. */
+.header-dropdown-toggle[aria-expanded="true"] + .header-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.header-dropdown-menu li {
+  margin: 0;
+}
+
+.header-dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--logo-pallete-velvety-cherry);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.header-dropdown-menu a:hover,
+.header-dropdown-menu a:focus-visible {
+  background-color: rgba(162, 83, 86, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-dropdown-menu,
+  .header-dropdown-toggle .chevron {
+    transition: none;
+  }
 }
 
 /* Hero */

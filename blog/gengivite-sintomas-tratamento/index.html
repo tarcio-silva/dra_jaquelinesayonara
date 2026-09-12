@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<!--
+  TEMPLATE DE ARTIGO DE BLOG - NAO PUBLICAR ESTE ARQUIVO.
+  Como usar (ver docs/melhorias/pendentes/SPEC_BLOG.md §6 e skill repo-site):
+  1. cp blog/_template.html blog/<slug>/index.html
+  2. Substituir TODOS os placeholders {{...}} (lista no fim do arquivo).
+  3. Escrever o conteudo do artigo em .treatment-content (3-5 h2, tabela/lista, FAQ).
+  4. Ajustar os cards de "Leia tambem" (1 tratamento vinculado + 2 artigos/servicos).
+  5. Rodar: ./update-inline-css.sh  (preenche o CSS inline com o bundle treatment)
+  6. Adicionar a URL ao sitemap.xml e um card em blog/index.html.
+  7. npm test  (o suite valida a11y, SEO, JSON-LD, 1 H1).
+  REGRA CRITICA: apenas 1 H1 por pagina (no hero). NAO adicionar h1 sr-only
+  no header (isso e o EC-01 do SPEC - o template de tratamento faz isso e viola a regra).
+  NOTA: o bloco de CSS inline abaixo comeca vazio de proposito; o passo 5 o preenche.
+  Nunca escreva a tag de estilo literal dentro deste comentario (quebra o pipeline).
+-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,33 +24,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="keywords" content="dentista cruz do espirito santo pb, dentista perto de cruz do espirito santo, ortodontista cruz espirito santo paraiba, clareamento dental cruz do espirito santo">
+    <meta name="description" content="Gengivite: reconheça os sintomas (sangramento, vermelhidão), entenda as causas e saiba como tratar a tempo para evitar problemas mais sérios na gengiva.">
+    <meta name="keywords" content="gengivite, sangramento na gengiva, sintomas de gengivite, como tratar gengivite, periodontite, dentista sapé pb">
     <meta name="author" content="Dra Jaqueline Sayonara">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta property="og:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
-    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Gengivite: Sintomas, Causas e Como Tratar a Tempo">
+    <meta property="og:description" content="Reconheça os sintomas da gengivite, entenda as causas e saiba como tratar a tempo.">
+    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
+    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/">
+    <meta property="og:type" content="article">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dra. Jaqueline Sayonara">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta name="twitter:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
+    <meta name="twitter:title" content="Gengivite: Sintomas, Causas e Como Tratar a Tempo">
+    <meta name="twitter:description" content="Reconheça os sintomas da gengivite, entenda as causas e saiba como tratar a tempo.">
+    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
 
-    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
+    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/">
     <link rel="preload" href="/assets/font/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="shortcut icon" href="/assets/img/favicon.webp" type="image/x-icon">
 
-    <title>Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara</title>
+    <title>Gengivite: Sintomas, Causas e Como Tratar a Tempo</title>
 
-    <!-- CSS inline (bundle treatment - preenchido pelo update-inline-css.sh) -->
+    <!-- CSS inline (bundle treatment - preenchido por ./update-inline-css.sh) -->
     <style>/*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -50,35 +66,87 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Dentist",
-          "@id": "https://www.drajaquelinesayonara.com.br/#dentist",
-          "name": "Dra. Jaqueline Sayonara",
-          "url": "https://www.drajaquelinesayonara.com.br",
-          "telephone": "+5583994058749",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rua Lourival Lacerda, 06, sl 207",
-            "addressLocality": "Sapé",
-            "addressRegion": "PB",
-            "addressCountry": "BR"
+          "@type": "BlogPosting",
+          "headline": "Gengivite: Sintomas, Causas e Como Tratar a Tempo",
+          "description": "Gengivite: reconheça os sintomas (sangramento, vermelhidão), entenda as causas e saiba como tratar a tempo para evitar problemas mais sérios na gengiva.",
+          "image": "https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png",
+          "author": {
+            "@type": "Person",
+            "name": "Dra. Jaqueline Sayonara"
           },
-          "areaServed": {
-            "@type": "City",
-            "name": "Cruz do Espírito Santo",
-            "containedInPlace": { "@type": "State", "name": "Paraíba" }
+          "publisher": {
+            "@type": "Organization",
+            "name": "Dra. Jaqueline Sayonara",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp"
+            }
           },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5.0",
-            "ratingCount": "7"
+          "datePublished": "2026-09-11",
+          "dateModified": "2026-09-11",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/"
           }
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.drajaquelinesayonara.com.br/" },
-            { "@type": "ListItem", "position": 2, "name": "Atendimento", "item": "https://www.drajaquelinesayonara.com.br/atendimento/" },
-            { "@type": "ListItem", "position": 3, "name": "Cruz do Espírito Santo", "item": "https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Início",
+              "item": "https://www.drajaquelinesayonara.com.br/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Gengivite: Sintomas, Causas e Como Tratar a Tempo",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Sangramento na gengiva ao escovar é normal?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Gengiva saudável, em geral, não sangra na escovação suave. O sangramento é um dos primeiros sinais de gengivite e merece atenção. Se acontece com frequência, vale procurar o dentista para avaliação."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Gengivite tem cura?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quando identificada cedo, a gengivite costuma ser reversível com limpeza profissional e ajuste da higiene em casa, sob orientação. O cuidado é não deixar evoluir para periodontite, que é mais séria e afeta o osso de suporte do dente."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Qual a diferença entre gengivite e periodontite?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A gengivite é a inflamação inicial da gengiva, geralmente reversível. A periodontite é o estágio mais avançado, em que a inflamação atinge as estruturas que sustentam o dente, podendo causar perda óssea. Tratar a gengivite a tempo ajuda a evitar essa evolução."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Como prevenir a gengivite?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Com higiene bucal consistente: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e manter as consultas de rotina e a limpeza profissional em dia. Controlar fatores de risco, como o tabagismo, também ajuda."
+              }
+            }
           ]
         }
       ]
@@ -119,13 +187,13 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
                             <p>Tratamentos</p>
                         </a></li>
-                    <li><a class="offcanva-nav--link" href="/blog/">
+                    <li><a class="offcanva-nav--link active" aria-current="page" href="/blog/">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                             <p>Blog</p>
                         </a></li>
                     <li>
-                        <details class="offcanva-group" open>
-                            <summary class="offcanva-nav--link active">
+                        <details class="offcanva-group">
+                            <summary class="offcanva-nav--link">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <p>Atendimento</p>
                                 <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -133,7 +201,7 @@
                             <ul>
                                 <li><a href="/atendimento/mari/">Mari</a></li>
                                 <li><a href="/atendimento/sobrado/">Sobrado</a></li>
-                                <li><a href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                                <li><a href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                                 <li><a href="/atendimento/pilar/">Pilar</a></li>
                                 <li><a href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                                 <li><a href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -172,18 +240,18 @@
                 <li><a class="header-link" href="/tratamentos/">
                         <span>Tratamentos</span>
                     </a></li>
-                <li><a class="header-link" href="/blog/">
+                <li><a class="header-link active" aria-current="page" href="/blog/">
                         <span>Blog</span>
                     </a></li>
                 <li class="header-dropdown">
-                    <button type="button" class="header-dropdown-toggle active" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
+                    <button type="button" class="header-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
                         <span>Atendimento</span>
                         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <ul class="header-dropdown-menu" id="dropdown-atendimento" role="menu">
                         <li role="none"><a role="menuitem" href="/atendimento/mari/">Mari</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/sobrado/">Sobrado</a></li>
-                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/pilar/">Pilar</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -208,79 +276,139 @@
         <nav class="breadcrumb" aria-label="Navegação estrutural">
             <ol>
                 <li><a href="/">Início</a></li>
-                <li aria-current="page">Atendimento em Cruz do Espírito Santo</li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">Gengivite: Sintomas, Causas e Como Tratar a Tempo</li>
             </ol>
         </nav>
 
-        <!-- Hero -->
+        <!-- Hero (UNICO H1 da pagina) -->
         <section class="treatment-hero fade-in">
             <div>
                 <div>
-                    <h1>Dentista para moradores de Cruz do Espírito Santo</h1>
-                    <p class="treatment-subtitle">Consultório da Dra. Jaqueline Sayonara em Sapé — a apenas 12km de Cruz do Espírito Santo. Ortodontia, estética e saúde bucal completa.</p>
-                    <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
+                    <h1>Gengivite: Sintomas, Causas e Como Tratar a Tempo</h1>
+                    <p class="treatment-subtitle">Sangramento e gengiva vermelha podem ser os primeiros sinais. Entenda os sintomas, as causas e por que tratar cedo faz toda a diferença.</p>
+                    <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20avaliar%20minha%20gengiva" class="btn-cta">
                         Agendar consulta
                     </a>
                 </div>
+                <img src="/assets/img/care/profilaxia.webp"
+                     alt="Cuidados com a gengiva e limpeza dental - Dra. Jaqueline Sayonara em Sapé/PB"
+                     width="600" height="400"
+                     loading="eager">
             </div>
         </section>
 
-        <!-- Conteúdo principal -->
+        <!-- Conteudo principal -->
         <section class="treatment-content">
             <div>
-                <p class="treatment-summary">A Dra. Jaqueline Sayonara atende pacientes de Cruz do Espírito Santo/PB em seu consultório em Sapé, localizado a apenas 12km — cerca de 12 minutos de carro. Oferecemos ortodontia, clareamento dental, facetas, próteses, restaurações e limpezas profissionais com atendimento humanizado.</p>
+                <p class="treatment-summary">A gengivite é uma das condições mais comuns da boca — e uma das mais subestimadas, porque nem sempre dói. Sangramento ao escovar e gengiva vermelha são sinais de alerta. A boa notícia: identificada cedo, costuma ser reversível. Neste artigo, a Dra. Jaqueline Sayonara explica como reconhecer, o que causa e como tratar a gengivite a tempo.</p>
 
-                <h2>Por que escolher nosso consultório?</h2>
-                <p>Para os moradores de Cruz do Espírito Santo, nosso consultório é a opção mais próxima de atendimento odontológico especializado. A Dra. Jaqueline Sayonara é especialista em Ortodontia e oferece um atendimento completo e acolhedor.</p>
+                                <h2>O que é gengivite?</h2>
+                <p>A gengivite é a inflamação da gengiva, geralmente causada pelo acúmulo de placa bacteriana na região onde o dente encontra a gengiva. É uma condição comum e, na maioria dos casos, reversível quando identificada e tratada cedo. O ponto de atenção é não deixar evoluir: sem cuidado, a inflamação pode progredir para a periodontite, que é mais séria e afeta as estruturas que sustentam o dente.</p>
+
+                <h2>Sintomas: como reconhecer a gengivite</h2>
+                <p>A gengivite nem sempre dói, o que faz muita gente demorar a perceber. Fique atento a estes sinais:</p>
                 <ul>
-                    <li><strong>Proximidade:</strong> apenas 12km — o município mais próximo de Sapé</li>
-                    <li><strong>Especialista em Ortodontia:</strong> aparelhos metálicos, estéticos e móveis</li>
-                    <li><strong>Planos aceitos:</strong> Clin e Unidentis</li>
-                    <li><strong>Facilidade de pagamento:</strong> PIX, cartão, dinheiro e parcelamento</li>
-                    <li><strong>Horários flexíveis:</strong> seg-sex 8h-18h, sáb 8h-13h</li>
+                    <li><strong>Sangramento</strong> ao escovar os dentes ou usar fio dental.</li>
+                    <li>Gengiva <strong>vermelha ou inchada</strong>, em vez do tom rosado saudável.</li>
+                    <li>Gengiva mais <strong>sensível</strong> ao toque.</li>
+                    <li><strong>Mau hálito</strong> persistente.</li>
+                    <li>Sensação de gengiva "amolecida" ou que se retrai.</li>
+                </ul>
+                <p>O sangramento ao escovar é o sinal mais clássico — e não deve ser encarado como normal. Gengiva saudável, em geral, não sangra na escovação suave.</p>
+
+                <h2>Causas mais comuns</h2>
+                <p>A causa principal é o acúmulo de placa, mas alguns fatores aumentam o risco:</p>
+                <ul>
+                    <li>Higiene bucal insuficiente ou irregular.</li>
+                    <li>Tártaro acumulado (placa endurecida) perto da gengiva.</li>
+                    <li>Tabagismo.</li>
+                    <li>Alterações hormonais (gestação, por exemplo).</li>
+                    <li>Algumas condições de saúde, como diabetes não controlado.</li>
                 </ul>
 
-                <h2>Tratamentos disponíveis</h2>
-                <p>Cuidamos do seu sorriso com uma gama completa de serviços:</p>
+                <h2>Como tratar a gengivite a tempo</h2>
+                <p>Quando identificada cedo, a gengivite costuma responder bem a medidas relativamente simples, sempre com orientação profissional:</p>
                 <ul>
-                    <li><strong><a href="/tratamentos/aparelho-ortodontico/">Aparelho Ortodôntico</a></strong> — correção do alinhamento dos dentes</li>
-                    <li><strong><a href="/tratamentos/clareamento-dental/">Clareamento Dental</a></strong> — dentes mais brancos em 1 sessão</li>
-                    <li><strong><a href="/tratamentos/facetas-dentarias/">Facetas Dentárias</a></strong> — lâminas estéticas em resina ou porcelana</li>
-                    <li><strong><a href="/tratamentos/protese-dentaria/">Prótese Dentária</a></strong> — reposição de dentes perdidos</li>
-                    <li><strong><a href="/tratamentos/restauracao-dentaria/">Restauração Dentária</a></strong> — reparo de cáries e fraturas</li>
-                    <li><strong><a href="/tratamentos/profilaxia/">Profilaxia</a></strong> — limpeza profissional</li>
-                    <li><strong><a href="/tratamentos/exodontia/">Exodontia</a></strong> — extração dentária segura</li>
+                    <li><strong>Limpeza profissional (profilaxia):</strong> remove a placa e o tártaro que a escova não alcança.</li>
+                    <li><strong>Ajuste da higiene em casa:</strong> escovação adequada e uso diário do fio dental, com orientação sobre a técnica.</li>
+                    <li><strong>Acompanhamento:</strong> retornos para verificar se a gengiva voltou ao estado saudável.</li>
+                    <li><strong>Controle dos fatores de risco:</strong> como parar de fumar e cuidar de condições de saúde associadas.</li>
                 </ul>
+                <p>O mais importante é agir cedo: a gengivite tratada a tempo costuma ser reversível, enquanto a periodontite, seu estágio mais avançado, pode levar à perda óssea e do dente.</p>
 
-                <h2>Como chegar de Cruz do Espírito Santo</h2>
-                <p>O consultório fica na <strong>Rua Lourival Lacerda, 06, sala 207 — Centro de Sapé/PB</strong>. Partindo de Cruz do Espírito Santo:</p>
-                <ul>
-                    <li>Siga pela <strong>BR-230</strong> em direção a Sapé</li>
-                    <li>Tempo estimado: <strong>12 minutos</strong> de carro</li>
-                    <li>Distância: aproximadamente <strong>12km</strong></li>
-                </ul>
-                <p><a href="https://www.google.com/maps/dir/Cruz+do+Esp%C3%ADrito+Santo,+PB/Consultório+dra+Jaqueline+Sayonara,+R.+Lourival+Lacerda,+06+-+Centro,+Sapé+-+PB" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);font-weight:600">Ver rota no Google Maps →</a></p>
+                <h3>Prevenção no dia a dia</h3>
+                <p>Prevenir é mais simples do que tratar. Escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e manter as consultas de rotina e a limpeza profissional em dia são os pilares para manter a gengiva saudável.</p>
 
-                <h2>Horários de atendimento</h2>
-                <ul>
-                    <li><strong>Segunda a sexta:</strong> 8h às 12h e 14h às 18h</li>
-                    <li><strong>Sábado:</strong> 8h às 13h</li>
-                    <li><strong>Domingo e feriados:</strong> fechado</li>
-                </ul>
+                <!-- FAQ (alimenta o FAQPage do Schema - manter em sincronia) -->
+                <div class="treatment-faq">
+                    <h2>Perguntas frequentes</h2>
+                                        <details>
+                        <summary>Sangramento na gengiva ao escovar é normal?</summary>
+                        <p>Não. Gengiva saudável, em geral, não sangra na escovação suave. O sangramento é um dos primeiros sinais de gengivite e merece atenção. Se acontece com frequência, vale procurar o dentista para avaliação.</p>
+                    </details>
+                    <details>
+                        <summary>Gengivite tem cura?</summary>
+                        <p>Quando identificada cedo, a gengivite costuma ser reversível com limpeza profissional e ajuste da higiene em casa, sob orientação. O cuidado é não deixar evoluir para periodontite, que é mais séria e afeta o osso de suporte do dente.</p>
+                    </details>
+                    <details>
+                        <summary>Qual a diferença entre gengivite e periodontite?</summary>
+                        <p>A gengivite é a inflamação inicial da gengiva, geralmente reversível. A periodontite é o estágio mais avançado, em que a inflamação atinge as estruturas que sustentam o dente, podendo causar perda óssea. Tratar a gengivite a tempo ajuda a evitar essa evolução.</p>
+                    </details>
+                    <details>
+                        <summary>Como prevenir a gengivite?</summary>
+                        <p>Com higiene bucal consistente: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e manter as consultas de rotina e a limpeza profissional em dia. Controlar fatores de risco, como o tabagismo, também ajuda.</p>
+                    </details>
+                </div>
+
+                <!-- Aviso de responsabilidade -->
+                <p class="treatment-summary"><em>Este conteúdo é informativo e não substitui uma consulta odontológica. Para avaliar o seu caso, agende uma consulta.</em></p>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta-final fade-in">
             <div>
-                <h2 class="section-title">Mora em Cruz do Espírito Santo? Agende sua consulta!</h2>
-                <p class="cta-final-text">Atendimento especializado a apenas 12 minutos de você. Agende pelo WhatsApp.</p>
-                <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
-                    Agendar pelo WhatsApp
+                <h2 class="section-title">Notou sangramento na gengiva?</h2>
+                <p class="cta-final-text">Agende uma avaliação com a Dra. Jaqueline Sayonara. Tratar a gengivite cedo faz toda a diferença.</p>
+                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20avaliar%20minha%20gengiva" class="btn-cta">
+                    Falar pelo WhatsApp
                 </a>
             </div>
         </section>
 
+        <!-- Leia tambem (1 tratamento vinculado + 2 relacionados; NAO linkar para si mesmo) -->
+        <section class="related-treatments fade-in">
+            <div>
+                <h2 class="section-title">Leia também</h2>
+                <div class="related-grid">
+                    <a href="/tratamentos/profilaxia/" class="related-card">
+                        <span class="related-card-icon">🪥</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Profilaxia</h3>
+                            <p class="related-card-desc">A limpeza profissional que ajuda a prevenir e tratar a gengivite.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/limpeza-dental-importancia-frequencia/" class="related-card">
+                        <span class="related-card-icon">🪥</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Limpeza Dental: Por Que Fazer e Com Que Frequência</h3>
+                            <p class="related-card-desc">Por que a profilaxia importa e de quanto em quanto tempo fazer.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/clareamento-dental-vale-a-pena/" class="related-card">
+                        <span class="related-card-icon">✨</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Clareamento Dental Vale a Pena?</h3>
+                            <p class="related-card-desc">Tipos, duração e cuidados para clarear o sorriso com segurança.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -328,3 +456,4 @@
 </body>
 
 </html>
+

@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<!--
+  TEMPLATE DE ARTIGO DE BLOG - NAO PUBLICAR ESTE ARQUIVO.
+  Como usar (ver docs/melhorias/pendentes/SPEC_BLOG.md §6 e skill repo-site):
+  1. cp blog/_template.html blog/<slug>/index.html
+  2. Substituir TODOS os placeholders {{...}} (lista no fim do arquivo).
+  3. Escrever o conteudo do artigo em .treatment-content (3-5 h2, tabela/lista, FAQ).
+  4. Ajustar os cards de "Leia tambem" (1 tratamento vinculado + 2 artigos/servicos).
+  5. Rodar: ./update-inline-css.sh  (preenche o CSS inline com o bundle treatment)
+  6. Adicionar a URL ao sitemap.xml e um card em blog/index.html.
+  7. npm test  (o suite valida a11y, SEO, JSON-LD, 1 H1).
+  REGRA CRITICA: apenas 1 H1 por pagina (no hero). NAO adicionar h1 sr-only
+  no header (isso e o EC-01 do SPEC - o template de tratamento faz isso e viola a regra).
+  NOTA: o bloco de CSS inline abaixo comeca vazio de proposito; o passo 5 o preenche.
+  Nunca escreva a tag de estilo literal dentro deste comentario (quebra o pipeline).
+-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,33 +24,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="keywords" content="dentista cruz do espirito santo pb, dentista perto de cruz do espirito santo, ortodontista cruz espirito santo paraiba, clareamento dental cruz do espirito santo">
+    <meta name="description" content="Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.">
+    <meta name="keywords" content="clareamento dental, clareamento dental vale a pena, clareamento dental funciona, quanto tempo dura o clareamento, dentista sapé pb">
     <meta name="author" content="Dra Jaqueline Sayonara">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta property="og:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
-    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara">
+    <meta property="og:description" content="Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado, em linguagem simples.">
+    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png">
+    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/">
+    <meta property="og:type" content="article">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dra. Jaqueline Sayonara">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta name="twitter:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
+    <meta name="twitter:title" content="Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara">
+    <meta name="twitter:description" content="Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado.">
+    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png">
 
-    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
+    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/">
     <link rel="preload" href="/assets/font/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="shortcut icon" href="/assets/img/favicon.webp" type="image/x-icon">
 
-    <title>Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara</title>
+    <title>Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara</title>
 
-    <!-- CSS inline (bundle treatment - preenchido pelo update-inline-css.sh) -->
+    <!-- CSS inline (bundle treatment - preenchido por ./update-inline-css.sh) -->
     <style>/*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -50,35 +66,87 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Dentist",
-          "@id": "https://www.drajaquelinesayonara.com.br/#dentist",
-          "name": "Dra. Jaqueline Sayonara",
-          "url": "https://www.drajaquelinesayonara.com.br",
-          "telephone": "+5583994058749",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rua Lourival Lacerda, 06, sl 207",
-            "addressLocality": "Sapé",
-            "addressRegion": "PB",
-            "addressCountry": "BR"
+          "@type": "BlogPosting",
+          "headline": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados",
+          "description": "Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.",
+          "image": "https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png",
+          "author": {
+            "@type": "Person",
+            "name": "Dra. Jaqueline Sayonara"
           },
-          "areaServed": {
-            "@type": "City",
-            "name": "Cruz do Espírito Santo",
-            "containedInPlace": { "@type": "State", "name": "Paraíba" }
+          "publisher": {
+            "@type": "Organization",
+            "name": "Dra. Jaqueline Sayonara",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp"
+            }
           },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5.0",
-            "ratingCount": "7"
+          "datePublished": "2026-09-11",
+          "dateModified": "2026-09-11",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/"
           }
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.drajaquelinesayonara.com.br/" },
-            { "@type": "ListItem", "position": 2, "name": "Atendimento", "item": "https://www.drajaquelinesayonara.com.br/atendimento/" },
-            { "@type": "ListItem", "position": 3, "name": "Cruz do Espírito Santo", "item": "https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Início",
+              "item": "https://www.drajaquelinesayonara.com.br/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "O clareamento dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quanto tempo dura o resultado do clareamento?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Clareamento caseiro é seguro?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Restaurações e próteses clareiam junto com os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor."
+              }
+            }
           ]
         }
       ]
@@ -119,13 +187,13 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
                             <p>Tratamentos</p>
                         </a></li>
-                    <li><a class="offcanva-nav--link" href="/blog/">
+                    <li><a class="offcanva-nav--link active" aria-current="page" href="/blog/">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                             <p>Blog</p>
                         </a></li>
                     <li>
-                        <details class="offcanva-group" open>
-                            <summary class="offcanva-nav--link active">
+                        <details class="offcanva-group">
+                            <summary class="offcanva-nav--link">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <p>Atendimento</p>
                                 <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -133,7 +201,7 @@
                             <ul>
                                 <li><a href="/atendimento/mari/">Mari</a></li>
                                 <li><a href="/atendimento/sobrado/">Sobrado</a></li>
-                                <li><a href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                                <li><a href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                                 <li><a href="/atendimento/pilar/">Pilar</a></li>
                                 <li><a href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                                 <li><a href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -172,18 +240,18 @@
                 <li><a class="header-link" href="/tratamentos/">
                         <span>Tratamentos</span>
                     </a></li>
-                <li><a class="header-link" href="/blog/">
+                <li><a class="header-link active" aria-current="page" href="/blog/">
                         <span>Blog</span>
                     </a></li>
                 <li class="header-dropdown">
-                    <button type="button" class="header-dropdown-toggle active" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
+                    <button type="button" class="header-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
                         <span>Atendimento</span>
                         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <ul class="header-dropdown-menu" id="dropdown-atendimento" role="menu">
                         <li role="none"><a role="menuitem" href="/atendimento/mari/">Mari</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/sobrado/">Sobrado</a></li>
-                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/pilar/">Pilar</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -208,79 +276,138 @@
         <nav class="breadcrumb" aria-label="Navegação estrutural">
             <ol>
                 <li><a href="/">Início</a></li>
-                <li aria-current="page">Atendimento em Cruz do Espírito Santo</li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados</li>
             </ol>
         </nav>
 
-        <!-- Hero -->
+        <!-- Hero (UNICO H1 da pagina) -->
         <section class="treatment-hero fade-in">
             <div>
                 <div>
-                    <h1>Dentista para moradores de Cruz do Espírito Santo</h1>
-                    <p class="treatment-subtitle">Consultório da Dra. Jaqueline Sayonara em Sapé — a apenas 12km de Cruz do Espírito Santo. Ortodontia, estética e saúde bucal completa.</p>
-                    <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
+                    <h1>Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados</h1>
+                    <p class="treatment-subtitle">Entenda os tipos de clareamento, quanto tempo o resultado dura e os cuidados necessários — para decidir com informação, no seu tempo.</p>
+                    <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20saber%20mais%20sobre%20clareamento%20dental" class="btn-cta">
                         Agendar consulta
                     </a>
                 </div>
+                <img src="/assets/img/care/clareamento.webp"
+                     alt="Clareamento dental - Dra. Jaqueline Sayonara em Sapé/PB"
+                     width="600" height="400"
+                     loading="eager">
             </div>
         </section>
 
-        <!-- Conteúdo principal -->
+        <!-- Conteudo principal -->
         <section class="treatment-content">
             <div>
-                <p class="treatment-summary">A Dra. Jaqueline Sayonara atende pacientes de Cruz do Espírito Santo/PB em seu consultório em Sapé, localizado a apenas 12km — cerca de 12 minutos de carro. Oferecemos ortodontia, clareamento dental, facetas, próteses, restaurações e limpezas profissionais com atendimento humanizado.</p>
+                <p class="treatment-summary">O clareamento dental é um dos procedimentos estéticos mais procurados, mas ainda gera dúvidas: funciona mesmo? Dói? Quanto tempo dura? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples como o clareamento funciona, os tipos disponíveis e os cuidados para um resultado seguro.</p>
 
-                <h2>Por que escolher nosso consultório?</h2>
-                <p>Para os moradores de Cruz do Espírito Santo, nosso consultório é a opção mais próxima de atendimento odontológico especializado. A Dra. Jaqueline Sayonara é especialista em Ortodontia e oferece um atendimento completo e acolhedor.</p>
-                <ul>
-                    <li><strong>Proximidade:</strong> apenas 12km — o município mais próximo de Sapé</li>
-                    <li><strong>Especialista em Ortodontia:</strong> aparelhos metálicos, estéticos e móveis</li>
-                    <li><strong>Planos aceitos:</strong> Clin e Unidentis</li>
-                    <li><strong>Facilidade de pagamento:</strong> PIX, cartão, dinheiro e parcelamento</li>
-                    <li><strong>Horários flexíveis:</strong> seg-sex 8h-18h, sáb 8h-13h</li>
-                </ul>
+                                <h2>Afinal, o clareamento dental funciona?</h2>
+                <p>Sim, o clareamento dental é um procedimento consolidado na odontologia e, quando feito com acompanhamento profissional, costuma clarear o tom dos dentes de forma perceptível. Ele age sobre as manchas e o amarelamento causados pelo tempo, por alimentos e bebidas pigmentados (café, chá, vinho) e pelo cigarro.</p>
+                <p>É importante entender que o resultado varia de pessoa para pessoa: depende da cor inicial dos dentes, do tipo de mancha e dos hábitos de cada um. Por isso, a avaliação com o dentista antes de começar é o que ajuda a alinhar expectativas realistas.</p>
 
-                <h2>Tratamentos disponíveis</h2>
-                <p>Cuidamos do seu sorriso com uma gama completa de serviços:</p>
-                <ul>
-                    <li><strong><a href="/tratamentos/aparelho-ortodontico/">Aparelho Ortodôntico</a></strong> — correção do alinhamento dos dentes</li>
-                    <li><strong><a href="/tratamentos/clareamento-dental/">Clareamento Dental</a></strong> — dentes mais brancos em 1 sessão</li>
-                    <li><strong><a href="/tratamentos/facetas-dentarias/">Facetas Dentárias</a></strong> — lâminas estéticas em resina ou porcelana</li>
-                    <li><strong><a href="/tratamentos/protese-dentaria/">Prótese Dentária</a></strong> — reposição de dentes perdidos</li>
-                    <li><strong><a href="/tratamentos/restauracao-dentaria/">Restauração Dentária</a></strong> — reparo de cáries e fraturas</li>
-                    <li><strong><a href="/tratamentos/profilaxia/">Profilaxia</a></strong> — limpeza profissional</li>
-                    <li><strong><a href="/tratamentos/exodontia/">Exodontia</a></strong> — extração dentária segura</li>
-                </ul>
+                <h2>Tipos de clareamento dental</h2>
+                <p>Existem duas abordagens principais, que também podem ser combinadas conforme o caso:</p>
+                <table>
+                    <caption>Comparativo entre os tipos de clareamento</caption>
+                    <thead>
+                        <tr><th>Característica</th><th>No consultório</th><th>Caseiro supervisionado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Onde é feito</td><td>Na clínica, pelo dentista</td><td>Em casa, com moldeira e gel indicados pelo dentista</td></tr>
+                        <tr><td>Concentração do gel</td><td>Mais alta</td><td>Mais baixa</td></tr>
+                        <tr><td>Ritmo do resultado</td><td>Mais rápido (poucas sessões)</td><td>Gradual (uso diário por algumas semanas)</td></tr>
+                        <tr><td>Acompanhamento</td><td>Direto, na cadeira</td><td>Orientado e revisado em consultas</td></tr>
+                    </tbody>
+                </table>
+                <p>Nenhuma das opções é "melhor" em termos absolutos: a escolha depende da sua rotina, da sensibilidade dos seus dentes e do que o dentista observar na avaliação.</p>
 
-                <h2>Como chegar de Cruz do Espírito Santo</h2>
-                <p>O consultório fica na <strong>Rua Lourival Lacerda, 06, sala 207 — Centro de Sapé/PB</strong>. Partindo de Cruz do Espírito Santo:</p>
-                <ul>
-                    <li>Siga pela <strong>BR-230</strong> em direção a Sapé</li>
-                    <li>Tempo estimado: <strong>12 minutos</strong> de carro</li>
-                    <li>Distância: aproximadamente <strong>12km</strong></li>
-                </ul>
-                <p><a href="https://www.google.com/maps/dir/Cruz+do+Esp%C3%ADrito+Santo,+PB/Consultório+dra+Jaqueline+Sayonara,+R.+Lourival+Lacerda,+06+-+Centro,+Sapé+-+PB" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);font-weight:600">Ver rota no Google Maps →</a></p>
+                <h3>E o clareamento caseiro por conta própria?</h3>
+                <p>Kits comprados sem orientação, fitas e receitas caseiras (como bicarbonato ou limão) merecem atenção. Produtos ácidos ou abrasivos podem desgastar o esmalte, e o uso sem avaliação pode causar sensibilidade e irritação na gengiva. O clareamento caseiro seguro é aquele indicado e supervisionado por um profissional.</p>
 
-                <h2>Horários de atendimento</h2>
+                <h2>Quanto tempo dura o clareamento?</h2>
+                <p>A duração é individual, mas em geral o resultado se mantém por vários meses a alguns anos. O que faz diferença são os hábitos: consumo frequente de alimentos e bebidas que mancham, tabagismo e a qualidade da higiene bucal. Sessões de manutenção periódicas ajudam a prolongar o efeito.</p>
+
+                <h2>Cuidados e quando o clareamento não é indicado</h2>
+                <p>Para uma experiência confortável e segura, alguns cuidados são recomendados:</p>
                 <ul>
-                    <li><strong>Segunda a sexta:</strong> 8h às 12h e 14h às 18h</li>
-                    <li><strong>Sábado:</strong> 8h às 13h</li>
-                    <li><strong>Domingo e feriados:</strong> fechado</li>
+                    <li>Fazer uma avaliação antes de começar, para tratar cáries ou problemas na gengiva primeiro.</li>
+                    <li>Nos dias do clareamento, reduzir alimentos e bebidas muito pigmentados.</li>
+                    <li>Seguir as orientações do dentista sobre tempo de uso e produtos.</li>
+                    <li>Comunicar qualquer sensibilidade para que o protocolo seja ajustado.</li>
                 </ul>
+                <p>O clareamento também pode não ser indicado, ou exigir cuidados especiais, em algumas situações: gengivas inflamadas, sensibilidade acentuada, restaurações e próteses visíveis (que não clareiam junto com o dente natural) e durante a gestação. Só o dentista, na avaliação, pode dizer o que é adequado para o seu caso.</p>
+
+                <!-- FAQ (alimenta o FAQPage do Schema - manter em sincronia) -->
+                <div class="treatment-faq">
+                    <h2>Perguntas frequentes</h2>
+                                        <details>
+                        <summary>O clareamento dental dói?</summary>
+                        <p>Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável.</p>
+                    </details>
+                    <details>
+                        <summary>Quanto tempo dura o resultado do clareamento?</summary>
+                        <p>Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção.</p>
+                    </details>
+                    <details>
+                        <summary>Clareamento caseiro é seguro?</summary>
+                        <p>Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes.</p>
+                    </details>
+                    <details>
+                        <summary>Restaurações e próteses clareiam junto com os dentes?</summary>
+                        <p>Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor.</p>
+                    </details>
+                </div>
+
+                <!-- Aviso de responsabilidade -->
+                <p class="treatment-summary"><em>Este conteúdo é informativo e não substitui uma consulta odontológica. Para avaliar o seu caso, agende uma consulta.</em></p>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta-final fade-in">
             <div>
-                <h2 class="section-title">Mora em Cruz do Espírito Santo? Agende sua consulta!</h2>
-                <p class="cta-final-text">Atendimento especializado a apenas 12 minutos de você. Agende pelo WhatsApp.</p>
-                <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
-                    Agendar pelo WhatsApp
+                <h2 class="section-title">Quer saber se o clareamento é indicado para você?</h2>
+                <p class="cta-final-text">Agende uma avaliação com a Dra. Jaqueline Sayonara e tire suas dúvidas sobre clareamento dental.</p>
+                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20saber%20mais%20sobre%20clareamento%20dental" class="btn-cta">
+                    Falar pelo WhatsApp
                 </a>
             </div>
         </section>
 
+        <!-- Leia tambem (1 tratamento vinculado + 2 relacionados; NAO linkar para si mesmo) -->
+        <section class="related-treatments fade-in">
+            <div>
+                <h2 class="section-title">Leia também</h2>
+                <div class="related-grid">
+                    <a href="/tratamentos/clareamento-dental/" class="related-card">
+                        <span class="related-card-icon">✨</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Clareamento Dental</h3>
+                            <p class="related-card-desc">Conheça o procedimento de clareamento oferecido no consultório.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/limpeza-dental-importancia-frequencia/" class="related-card">
+                        <span class="related-card-icon">🪥</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Limpeza Dental: Por Que Fazer e Com Que Frequência</h3>
+                            <p class="related-card-desc">Por que a profilaxia importa e de quanto em quanto tempo fazer.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/protese-dentaria-autoestima-saude/" class="related-card">
+                        <span class="related-card-icon">🦷</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Prótese Dentária, Autoestima e Saúde</h3>
+                            <p class="related-card-desc">Como a reposição de dentes impacta a confiança e o bem-estar.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -328,3 +455,4 @@
 </body>
 
 </html>
+

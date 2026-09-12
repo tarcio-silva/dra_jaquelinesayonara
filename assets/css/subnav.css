@@ -1,0 +1,97 @@
+/* --- Sub-navegação (apenas na home) ---
+ * Barra secundária FIXA logo abaixo do header, sempre visível durante o scroll,
+ * permitindo navegação rápida pelas âncoras. O scroll-spy (main.js) marca
+ * .subnav-link.active conforme a seção visível.
+ *
+ * Nota: sticky não funcionava porque o .header-nav é position:fixed (fora do
+ * fluxo); a subnav rolava junto e sumia sob o header. Fixed resolve.
+ */
+
+.subnav {
+  position: fixed;
+  top: 64px; /* altura do header desktop */
+  left: 0;
+  right: 0;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(162, 83, 86, 0.08);
+}
+
+.subnav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 6px 24px; /* mesmo padding lateral do header */
+}
+
+.subnav-link {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--logo-pallete-velvety-cherry);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.subnav-link:hover {
+  background-color: rgba(162, 83, 86, 0.1);
+}
+
+/* Ativo de SEÇÃO (scroll-spy): mesmo padrão do item ativo do menu primário
+   (fundo rosado), para consistência visual. */
+.subnav-link.active {
+  background-color: rgba(162, 83, 86, 0.1);
+  color: var(--logo-pallete-velvety-cherry);
+  font-weight: 700;
+}
+
+/* Compensar o scroll das âncoras: header (64px) + subnav (~45px).
+   As seções com id só existem na home, onde a subnav está presente. */
+@media screen and (min-width: 1200px) {
+  section[id] {
+    scroll-margin-top: 116px;
+  }
+}
+
+/* Mobile: header tem 52px; esconder a subnav em telas pequenas
+   (a navegação por seção no mobile já é servida pelo offcanva). */
+@media only screen and (max-width: 1199px) {
+  .subnav {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subnav-link {
+    transition: none;
+  }
+}
+
+
+/* --- Dark mode (co-localizado com a subnav; só entra no bundle home) --- */
+.dark-theme .subnav {
+  background: rgba(26, 18, 24, 0.85);
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.dark-theme .subnav-link {
+  color: var(--color-text);
+}
+
+.dark-theme .subnav-link:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.dark-theme .subnav-link.active {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--color-text);
+}

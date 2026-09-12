@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<!--
+  TEMPLATE DE ARTIGO DE BLOG - NAO PUBLICAR ESTE ARQUIVO.
+  Como usar (ver docs/melhorias/pendentes/SPEC_BLOG.md §6 e skill repo-site):
+  1. cp blog/_template.html blog/<slug>/index.html
+  2. Substituir TODOS os placeholders {{...}} (lista no fim do arquivo).
+  3. Escrever o conteudo do artigo em .treatment-content (3-5 h2, tabela/lista, FAQ).
+  4. Ajustar os cards de "Leia tambem" (1 tratamento vinculado + 2 artigos/servicos).
+  5. Rodar: ./update-inline-css.sh  (preenche o CSS inline com o bundle treatment)
+  6. Adicionar a URL ao sitemap.xml e um card em blog/index.html.
+  7. npm test  (o suite valida a11y, SEO, JSON-LD, 1 H1).
+  REGRA CRITICA: apenas 1 H1 por pagina (no hero). NAO adicionar h1 sr-only
+  no header (isso e o EC-01 do SPEC - o template de tratamento faz isso e viola a regra).
+  NOTA: o bloco de CSS inline abaixo comeca vazio de proposito; o passo 5 o preenche.
+  Nunca escreva a tag de estilo literal dentro deste comentario (quebra o pipeline).
+-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,33 +24,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="keywords" content="dentista cruz do espirito santo pb, dentista perto de cruz do espirito santo, ortodontista cruz espirito santo paraiba, clareamento dental cruz do espirito santo">
+    <meta name="description" content="Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.">
+    <meta name="keywords" content="limpeza dental, profilaxia, de quanto em quanto tempo fazer limpeza, limpeza dental dói, tártaro, dentista sapé pb">
     <meta name="author" content="Dra Jaqueline Sayonara">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta property="og:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
-    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Limpeza Dental: Por Que Fazer e Com Que Frequência">
+    <meta property="og:description" content="Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar do procedimento.">
+    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
+    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/">
+    <meta property="og:type" content="article">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dra. Jaqueline Sayonara">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara">
-    <meta name="twitter:description" content="Dentista para moradores de Cruz do Espírito Santo/PB — Dra. Jaqueline Sayonara. Consultório em Sapé, a apenas 12km. Ortodontia, clareamento, prótese. Agende pelo WhatsApp!">
-    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp">
+    <meta name="twitter:title" content="Limpeza Dental: Por Que Fazer e Com Que Frequência">
+    <meta name="twitter:description" content="Por que a profilaxia é importante, de quanto em quanto tempo fazer e o que esperar.">
+    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png">
 
-    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/">
+    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/">
     <link rel="preload" href="/assets/font/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="shortcut icon" href="/assets/img/favicon.webp" type="image/x-icon">
 
-    <title>Dentista para Moradores de Cruz do Espírito Santo/PB | Dra. Jaqueline Sayonara</title>
+    <title>Limpeza Dental: Por Que Fazer e Com Que Frequência</title>
 
-    <!-- CSS inline (bundle treatment - preenchido pelo update-inline-css.sh) -->
+    <!-- CSS inline (bundle treatment - preenchido por ./update-inline-css.sh) -->
     <style>/*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -50,35 +66,87 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Dentist",
-          "@id": "https://www.drajaquelinesayonara.com.br/#dentist",
-          "name": "Dra. Jaqueline Sayonara",
-          "url": "https://www.drajaquelinesayonara.com.br",
-          "telephone": "+5583994058749",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Rua Lourival Lacerda, 06, sl 207",
-            "addressLocality": "Sapé",
-            "addressRegion": "PB",
-            "addressCountry": "BR"
+          "@type": "BlogPosting",
+          "headline": "Limpeza Dental: Por Que Fazer e Com Que Frequência",
+          "description": "Limpeza dental (profilaxia): por que é importante, de quanto em quanto tempo fazer, se dói e o que esperar. Entenda os cuidados de forma simples.",
+          "image": "https://www.drajaquelinesayonara.com.br/assets/img/og/care/profilaxia.png",
+          "author": {
+            "@type": "Person",
+            "name": "Dra. Jaqueline Sayonara"
           },
-          "areaServed": {
-            "@type": "City",
-            "name": "Cruz do Espírito Santo",
-            "containedInPlace": { "@type": "State", "name": "Paraíba" }
+          "publisher": {
+            "@type": "Organization",
+            "name": "Dra. Jaqueline Sayonara",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp"
+            }
           },
-          "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "5.0",
-            "ratingCount": "7"
+          "datePublished": "2026-09-11",
+          "dateModified": "2026-09-11",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/"
           }
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://www.drajaquelinesayonara.com.br/" },
-            { "@type": "ListItem", "position": 2, "name": "Atendimento", "item": "https://www.drajaquelinesayonara.com.br/atendimento/" },
-            { "@type": "ListItem", "position": 3, "name": "Cruz do Espírito Santo", "item": "https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/" }
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Início",
+              "item": "https://www.drajaquelinesayonara.com.br/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Limpeza Dental: Por Que Fazer e Com Que Frequência",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "De quanto em quanto tempo devo fazer limpeza dental?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza profissional substitui a escovação em casa?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "A limpeza dental clareia os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento."
+              }
+            }
           ]
         }
       ]
@@ -119,13 +187,13 @@
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
                             <p>Tratamentos</p>
                         </a></li>
-                    <li><a class="offcanva-nav--link" href="/blog/">
+                    <li><a class="offcanva-nav--link active" aria-current="page" href="/blog/">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                             <p>Blog</p>
                         </a></li>
                     <li>
-                        <details class="offcanva-group" open>
-                            <summary class="offcanva-nav--link active">
+                        <details class="offcanva-group">
+                            <summary class="offcanva-nav--link">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                 <p>Atendimento</p>
                                 <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -133,7 +201,7 @@
                             <ul>
                                 <li><a href="/atendimento/mari/">Mari</a></li>
                                 <li><a href="/atendimento/sobrado/">Sobrado</a></li>
-                                <li><a href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                                <li><a href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                                 <li><a href="/atendimento/pilar/">Pilar</a></li>
                                 <li><a href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                                 <li><a href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -172,18 +240,18 @@
                 <li><a class="header-link" href="/tratamentos/">
                         <span>Tratamentos</span>
                     </a></li>
-                <li><a class="header-link" href="/blog/">
+                <li><a class="header-link active" aria-current="page" href="/blog/">
                         <span>Blog</span>
                     </a></li>
                 <li class="header-dropdown">
-                    <button type="button" class="header-dropdown-toggle active" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
+                    <button type="button" class="header-dropdown-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="dropdown-atendimento">
                         <span>Atendimento</span>
                         <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                     </button>
                     <ul class="header-dropdown-menu" id="dropdown-atendimento" role="menu">
                         <li role="none"><a role="menuitem" href="/atendimento/mari/">Mari</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/sobrado/">Sobrado</a></li>
-                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/" aria-current="page">Cruz do Espírito Santo</a></li>
+                        <li role="none"><a role="menuitem" href="/atendimento/cruz-do-espirito-santo/">Cruz do Espírito Santo</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/pilar/">Pilar</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/riachao-do-poco/">Riachão do Poço</a></li>
                         <li role="none"><a role="menuitem" href="/atendimento/caldas-brandao/">Caldas Brandão</a></li>
@@ -208,79 +276,130 @@
         <nav class="breadcrumb" aria-label="Navegação estrutural">
             <ol>
                 <li><a href="/">Início</a></li>
-                <li aria-current="page">Atendimento em Cruz do Espírito Santo</li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">Limpeza Dental: Por Que Fazer e Com Que Frequência</li>
             </ol>
         </nav>
 
-        <!-- Hero -->
+        <!-- Hero (UNICO H1 da pagina) -->
         <section class="treatment-hero fade-in">
             <div>
                 <div>
-                    <h1>Dentista para moradores de Cruz do Espírito Santo</h1>
-                    <p class="treatment-subtitle">Consultório da Dra. Jaqueline Sayonara em Sapé — a apenas 12km de Cruz do Espírito Santo. Ortodontia, estética e saúde bucal completa.</p>
-                    <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
+                    <h1>Limpeza Dental: Por Que Fazer e Com Que Frequência</h1>
+                    <p class="treatment-subtitle">Entenda por que a limpeza profissional é importante, com que frequência fazer e o que esperar do procedimento — com informação clara.</p>
+                    <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20limpeza%20dental" class="btn-cta">
                         Agendar consulta
                     </a>
                 </div>
+                <img src="/assets/img/care/profilaxia.webp"
+                     alt="Limpeza dental (profilaxia) - Dra. Jaqueline Sayonara em Sapé/PB"
+                     width="600" height="400"
+                     loading="eager">
             </div>
         </section>
 
-        <!-- Conteúdo principal -->
+        <!-- Conteudo principal -->
         <section class="treatment-content">
             <div>
-                <p class="treatment-summary">A Dra. Jaqueline Sayonara atende pacientes de Cruz do Espírito Santo/PB em seu consultório em Sapé, localizado a apenas 12km — cerca de 12 minutos de carro. Oferecemos ortodontia, clareamento dental, facetas, próteses, restaurações e limpezas profissionais com atendimento humanizado.</p>
+                <p class="treatment-summary">A limpeza dental profissional (profilaxia) vai muito além de deixar o sorriso mais limpo: ela ajuda a prevenir cáries, gengivite e mau hálito. Mas de quanto em quanto tempo fazer? Dói? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples o que é a profilaxia e por que ela faz parte da rotina de quem cuida da saúde bucal.</p>
 
-                <h2>Por que escolher nosso consultório?</h2>
-                <p>Para os moradores de Cruz do Espírito Santo, nosso consultório é a opção mais próxima de atendimento odontológico especializado. A Dra. Jaqueline Sayonara é especialista em Ortodontia e oferece um atendimento completo e acolhedor.</p>
+                                <h2>O que é a limpeza dental (profilaxia)?</h2>
+                <p>A limpeza dental profissional, chamada de profilaxia, é o procedimento em que o dentista remove a placa bacteriana e o tártaro que se acumulam nos dentes e perto da gengiva — inclusive em pontos que a escova e o fio dental não alcançam sozinhos. Ao final, é comum fazer um polimento que deixa a superfície do dente mais lisa.</p>
+                <p>Mesmo com uma boa higiene em casa, parte da placa endurece e vira tártaro, que só é removido por instrumentos apropriados no consultório. Por isso a limpeza caseira e a profissional se complementam: uma não substitui a outra.</p>
+
+                <h2>Por que a limpeza dental é importante?</h2>
+                <p>Além da estética de um sorriso mais limpo, a profilaxia ajuda a prevenir problemas comuns:</p>
                 <ul>
-                    <li><strong>Proximidade:</strong> apenas 12km — o município mais próximo de Sapé</li>
-                    <li><strong>Especialista em Ortodontia:</strong> aparelhos metálicos, estéticos e móveis</li>
-                    <li><strong>Planos aceitos:</strong> Clin e Unidentis</li>
-                    <li><strong>Facilidade de pagamento:</strong> PIX, cartão, dinheiro e parcelamento</li>
-                    <li><strong>Horários flexíveis:</strong> seg-sex 8h-18h, sáb 8h-13h</li>
+                    <li><strong>Cáries:</strong> a remoção da placa reduz o acúmulo de bactérias que atacam o esmalte.</li>
+                    <li><strong>Gengivite:</strong> o tártaro perto da gengiva favorece a inflamação; removê-lo ajuda a manter a gengiva saudável.</li>
+                    <li><strong>Mau hálito:</strong> boa parte do mau hálito tem origem no acúmulo de placa e resíduos.</li>
+                    <li><strong>Diagnóstico precoce:</strong> na consulta, o dentista aproveita para observar sinais iniciais de problemas e orientar.</li>
                 </ul>
 
-                <h2>Tratamentos disponíveis</h2>
-                <p>Cuidamos do seu sorriso com uma gama completa de serviços:</p>
+                <h2>De quanto em quanto tempo fazer limpeza?</h2>
+                <p>A recomendação mais comum é a cada seis meses, mas esse intervalo é uma referência, não uma regra fixa. A frequência ideal depende do seu caso: pessoas com tendência a acúmulo de tártaro, que usam aparelho ortodôntico, fumam ou têm histórico de doença na gengiva podem se beneficiar de intervalos mais curtos. Quem tem boa higiene e baixa formação de tártaro pode seguir o intervalo padrão. Quem define isso é o dentista, na avaliação.</p>
+
+                <h3>Sinais de que pode estar na hora</h3>
                 <ul>
-                    <li><strong><a href="/tratamentos/aparelho-ortodontico/">Aparelho Ortodôntico</a></strong> — correção do alinhamento dos dentes</li>
-                    <li><strong><a href="/tratamentos/clareamento-dental/">Clareamento Dental</a></strong> — dentes mais brancos em 1 sessão</li>
-                    <li><strong><a href="/tratamentos/facetas-dentarias/">Facetas Dentárias</a></strong> — lâminas estéticas em resina ou porcelana</li>
-                    <li><strong><a href="/tratamentos/protese-dentaria/">Prótese Dentária</a></strong> — reposição de dentes perdidos</li>
-                    <li><strong><a href="/tratamentos/restauracao-dentaria/">Restauração Dentária</a></strong> — reparo de cáries e fraturas</li>
-                    <li><strong><a href="/tratamentos/profilaxia/">Profilaxia</a></strong> — limpeza profissional</li>
-                    <li><strong><a href="/tratamentos/exodontia/">Exodontia</a></strong> — extração dentária segura</li>
+                    <li>Gengiva que sangra ao escovar ou usar fio dental.</li>
+                    <li>Sensação de "aspereza" ou acúmulo perto da gengiva.</li>
+                    <li>Mau hálito persistente.</li>
+                    <li>Faz mais de seis meses desde a última limpeza.</li>
                 </ul>
 
-                <h2>Como chegar de Cruz do Espírito Santo</h2>
-                <p>O consultório fica na <strong>Rua Lourival Lacerda, 06, sala 207 — Centro de Sapé/PB</strong>. Partindo de Cruz do Espírito Santo:</p>
-                <ul>
-                    <li>Siga pela <strong>BR-230</strong> em direção a Sapé</li>
-                    <li>Tempo estimado: <strong>12 minutos</strong> de carro</li>
-                    <li>Distância: aproximadamente <strong>12km</strong></li>
-                </ul>
-                <p><a href="https://www.google.com/maps/dir/Cruz+do+Esp%C3%ADrito+Santo,+PB/Consultório+dra+Jaqueline+Sayonara,+R.+Lourival+Lacerda,+06+-+Centro,+Sapé+-+PB" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);font-weight:600">Ver rota no Google Maps →</a></p>
+                <h2>A limpeza dental dói? O que esperar</h2>
+                <p>Na maioria dos casos a limpeza não dói. Pode haver uma leve sensibilidade, especialmente se a gengiva já estiver inflamada ou houver bastante tártaro acumulado. Quando a gengiva está saudável, o procedimento tende a ser tranquilo e rápido. Se você sente muita sensibilidade, avise o dentista para que o atendimento seja ajustado.</p>
+                <p>Depois da limpeza, manter a rotina em casa é o que preserva o resultado: escovar os dentes ao menos duas vezes ao dia, usar fio dental diariamente e comparecer às consultas de acompanhamento.</p>
 
-                <h2>Horários de atendimento</h2>
-                <ul>
-                    <li><strong>Segunda a sexta:</strong> 8h às 12h e 14h às 18h</li>
-                    <li><strong>Sábado:</strong> 8h às 13h</li>
-                    <li><strong>Domingo e feriados:</strong> fechado</li>
-                </ul>
+                <!-- FAQ (alimenta o FAQPage do Schema - manter em sincronia) -->
+                <div class="treatment-faq">
+                    <h2>Perguntas frequentes</h2>
+                                        <details>
+                        <summary>De quanto em quanto tempo devo fazer limpeza dental?</summary>
+                        <p>A referência mais comum é a cada seis meses, mas o intervalo ideal depende do seu caso. Quem acumula mais tártaro, usa aparelho, fuma ou tem histórico de problema na gengiva pode precisar de intervalos mais curtos. O dentista define isso na avaliação.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental dói?</summary>
+                        <p>Na maioria dos casos não dói. Pode haver leve sensibilidade, sobretudo se a gengiva estiver inflamada ou houver muito tártaro. Com a gengiva saudável, o procedimento costuma ser tranquilo. Avise o dentista se sentir desconforto para ajustar o atendimento.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza profissional substitui a escovação em casa?</summary>
+                        <p>Não. Elas se complementam: a escovação e o fio dental controlam a placa no dia a dia, mas parte dela endurece e vira tártaro, que só é removido no consultório. Manter a higiene em casa é o que preserva o resultado da limpeza.</p>
+                    </details>
+                    <details>
+                        <summary>A limpeza dental clareia os dentes?</summary>
+                        <p>A profilaxia remove manchas superficiais e a película de placa, o que pode deixar os dentes com aparência mais limpa e o tom natural mais visível. Mas ela não é um clareamento: não altera a cor interna do dente. Para clarear o tom, existe o procedimento específico de clareamento.</p>
+                    </details>
+                </div>
+
+                <!-- Aviso de responsabilidade -->
+                <p class="treatment-summary"><em>Este conteúdo é informativo e não substitui uma consulta odontológica. Para avaliar o seu caso, agende uma consulta.</em></p>
             </div>
         </section>
 
         <!-- CTA -->
         <section class="cta-final fade-in">
             <div>
-                <h2 class="section-title">Mora em Cruz do Espírito Santo? Agende sua consulta!</h2>
-                <p class="cta-final-text">Atendimento especializado a apenas 12 minutos de você. Agende pelo WhatsApp.</p>
-                <a href="https://wa.me/+5583994058749/?text=Ol%C3%A1!%20Moro%20em%20Cruz%20do%20Esp%C3%ADrito%20Santo%20e%20gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
-                    Agendar pelo WhatsApp
+                <h2 class="section-title">Está na hora da sua limpeza?</h2>
+                <p class="cta-final-text">Agende sua profilaxia com a Dra. Jaqueline Sayonara e mantenha a saúde do seu sorriso em dia.</p>
+                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20limpeza%20dental" class="btn-cta">
+                    Falar pelo WhatsApp
                 </a>
             </div>
         </section>
 
+        <!-- Leia tambem (1 tratamento vinculado + 2 relacionados; NAO linkar para si mesmo) -->
+        <section class="related-treatments fade-in">
+            <div>
+                <h2 class="section-title">Leia também</h2>
+                <div class="related-grid">
+                    <a href="/tratamentos/profilaxia/" class="related-card">
+                        <span class="related-card-icon">🪥</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Profilaxia</h3>
+                            <p class="related-card-desc">Conheça a limpeza dental profissional oferecida no consultório.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/clareamento-dental-vale-a-pena/" class="related-card">
+                        <span class="related-card-icon">✨</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Clareamento Dental Vale a Pena?</h3>
+                            <p class="related-card-desc">Tipos, duração e cuidados para clarear o sorriso com segurança.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/blog/gengivite-sintomas-tratamento/" class="related-card">
+                        <span class="related-card-icon">🩺</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Gengivite: Sintomas, Causas e Como Tratar</h3>
+                            <p class="related-card-desc">Sangramento na gengiva é sinal de alerta: entenda e trate a tempo.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
@@ -328,3 +447,4 @@
 </body>
 
 </html>
+

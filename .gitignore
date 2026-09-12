@@ -29,3 +29,4 @@ coverage/
 
 # Lighthouse CI output
 .lighthouseci/
+.aider*

@@ -66,6 +66,32 @@ for (const dir of readdirSync(tratDir)) {
   try { statSync(f); htmlFiles.push(f); } catch {}
 }
 
+// Listagem do blog
+const blogIndex = resolve(ROOT, 'blog/index.html');
+try { statSync(blogIndex); htmlFiles.push(blogIndex); } catch {}
+
+// Artigos individuais de blog
+const blogDir = resolve(ROOT, 'blog');
+try {
+  for (const dir of readdirSync(blogDir)) {
+    const f = join(blogDir, dir, 'index.html');
+    try { statSync(f); htmlFiles.push(f); } catch {}
+  }
+} catch {}
+
+// Páginas de atendimento (cidades)
+const atendDir = resolve(ROOT, 'atendimento');
+try {
+  for (const dir of readdirSync(atendDir)) {
+    const f = join(atendDir, dir, 'index.html');
+    try { statSync(f); htmlFiles.push(f); } catch {}
+  }
+} catch {}
+
+// Primeira consulta
+const pc = resolve(ROOT, 'primeira-consulta/index.html');
+try { statSync(pc); htmlFiles.push(pc); } catch {}
+
 let validCount = 0;
 for (const file of htmlFiles) {
   const content = readFileSync(file, 'utf-8');

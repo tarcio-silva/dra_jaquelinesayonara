@@ -113,6 +113,78 @@
   font-weight: 700;
 }
 
+/* --- Grupo expansível (Atendimento) via <details> nativo --- */
+.offcanva-group {
+  margin-bottom: 4px;
+}
+
+.offcanva-group summary {
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  display: flex;
+  cursor: pointer;
+  list-style: none;
+  transition: background 0.2s;
+}
+
+/* Remover o marcador nativo do <summary> */
+.offcanva-group summary::-webkit-details-marker {
+  display: none;
+}
+
+.offcanva-group summary img,
+.offcanva-group summary svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.offcanva-group summary p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+/* Chevron do grupo */
+.offcanva-group summary .chevron {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+}
+
+.offcanva-group[open] summary .chevron {
+  transform: rotate(180deg);
+}
+
+/* Sublista de cidades */
+.offcanva-group ul {
+  list-style: none;
+  padding: 4px 0 4px 30px;
+}
+
+.offcanva-group ul a {
+  padding: 10px 16px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-radius: 8px;
+  display: block;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.offcanva-group ul a:hover,
+.offcanva-group ul a:focus-visible {
+  background-color: rgba(162, 83, 86, 0.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .offcanva-group summary .chevron {
+    transition: none;
+  }
+}
+
 /* --- Social links --- */
 
 .offcanva-nav--social {

@@ -295,7 +295,7 @@ describe('Menu Offcanva', () => {
       const observers = getObserverInstances();
       // Encontrar o observer que observa sections (o do active section indicator)
       const navObserverIndex = observers.findIndex(obs =>
-        obs.options && obs.options.threshold === 0.3
+        obs.options && typeof obs.options.rootMargin === 'string' && obs.options.rootMargin.includes('-120px')
       );
 
       const aboutSection = document.getElementById('about');
@@ -308,7 +308,7 @@ describe('Menu Offcanva', () => {
     it('outros links perdem classe .active quando nova seção fica visível', () => {
       const observers = getObserverInstances();
       const navObserverIndex = observers.findIndex(obs =>
-        obs.options && obs.options.threshold === 0.3
+        obs.options && typeof obs.options.rootMargin === 'string' && obs.options.rootMargin.includes('-120px')
       );
 
       const aboutSection = document.getElementById('about');
