@@ -91,9 +91,9 @@ Falta propagar às demais páginas e então executar o blog.
       novos receberam citações no texto (autor, ano) + seção "Referências" ao final (CSS
       `.treatment-references`). Conteúdo reescrito pela Dra.; fontes registradas em
       `docs/melhorias/pendentes/referencias-blog/*.txt`.
-      > PENDENTE: o artigo pré-existente `protese-dentaria-autoestima-saude` NÃO tem
-      > referências (não passou pela reescrita). Se desejado, gerar o .txt dele e a Dra.
-      > adiciona as citações — mesmo fluxo. Não inventar referências.
+      > RESOLVIDO 2026-09-11: o artigo `protese-dentaria-autoestima-saude` recebeu citações
+      > (Hugo et al. 2007; Locker & Miller 1994; Pegoraro 2014; Sheiham & Steele 2001; Okeson
+      > 2013; Cullinan & Seymour 2013) + 6 referências. Os 4 artigos do blog agora têm referências.
 - [x] T7 Review (após conteúdo) — CONCLUÍDO 2026-09-11. Revisão semântica
       (semantic-review/2026-09-12-155008-blog.md): APPROVED_WITH_NOTES. Achou 1 ERRO que os
       testes não pegavam — a 1ª seção de cada artigo estava comentada por um comentário-guia
