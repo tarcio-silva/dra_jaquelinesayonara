@@ -77,9 +77,18 @@ Falta propagar às demais páginas e então executar o blog.
       gengivite-sintomas-tratamento. Cada um: 1 H1, FAQ (4) com FAQPage no Schema,
       "Leia também" com reciprocidade interna. Listagem/ItemList/sitemap atualizados;
       gengivite reusa a imagem de profilaxia (DA-04). 451 testes verdes.
-- [ ] T7 Review (após conteúdo) — em andamento (revisão semântica do conjunto).
+- [x] T7 Review (após conteúdo) — CONCLUÍDO 2026-09-11. Revisão semântica
+      (semantic-review/2026-09-12-155008-blog.md): APPROVED_WITH_NOTES. Achou 1 ERRO que os
+      testes não pegavam — a 1ª seção de cada artigo estava comentada por um comentário-guia
+      residual do template (corrigido em fix 9f428d3). Notas aplicadas: disclaimer no artigo de
+      prótese; cross-linking enriquecido. Testes de regressão adicionados (4ee8d28). Notas NÃO
+      aplicadas (débito): OG images em PNG pesado (>0,6MB) → converter para WebP num passe futuro.
+      463/463 testes verdes.
 
 ### Débito conhecido
+- [ ] OG images em PNG pesado (`assets/img/og/care/*.png`, 0,6–1,7 MB) — débito herdado
+      (contraria "WebP obrigatório"); não afeta render/LCP, só previews sociais. Converter
+      para WebP e atualizar `og:image`/`twitter:image` num passe futuro. (T7 SUGESTÃO 4)
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
 - [ ] Decisão pendente: subnav sempre-fixa (atual) vs aparecer após o hero. Mantido fixo.
 - [ ] Commits herdados do artigo (autor `you@example.com`, msg em inglês) — reescrever antes
