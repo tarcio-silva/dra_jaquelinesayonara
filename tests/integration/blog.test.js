@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { resolve } from 'path';
 
 // Cobertura da listagem /blog/ (SPEC_BLOG T1/T6).
@@ -143,6 +143,158 @@ describe('Blog — listagem (/blog/index.html)', () => {
       const script = doc.querySelector('script[src*="main.js"]');
       expect(script).not.toBeNull();
       expect(script.hasAttribute('defer')).toBe(true);
+    });
+  });
+});
+
+// Cobertura dos artigos individuais (blog/<slug>/index.html), exceto o _template.
+const blogDir = resolve(__dirname, '../../blog');
+const articleSlugs = readdirSync(blogDir).filter(
+  f => !f.startsWith('_') && !f.includes('.')
+);
+
+describe.each(articleSlugs)('Blog — artigo (%s)', (slug) => {
+  let doc, html, schema;
+
+  beforeAll(() => {
+    html = readFileSync(resolve(blogDir, slug, 'index.html'), 'utf-8');
+    const parser = new DOMParser();
+    doc = parser.parseFromString(html, 'text/html');
+    const script = doc.querySelector('script[type="application/ld+json"]');
+    schema = JSON.parse(script.textContent);
+  });
+
+  describe('Acessibilidade', () => {
+    it('skip link aponta para #main-content', () => {
+      expect(doc.querySelector('a.skip-link')?.getAttribute('href')).toBe('#main-content');
+    });
+
+    it('#main-content existe', () => {
+      expect(doc.getElementById('main-content')).not.toBeNull();
+    });
+
+    it('apenas um H1 na página', () => {
+      expect(doc.querySelectorAll('h1').length).toBe(1);
+    });
+
+    it('todas as imagens possuem alt', () => {
+      const semAlt = Array.from(doc.querySelectorAll('img')).filter(i => !i.hasAttribute('alt'));
+      expect(semAlt).toHaveLength(0);
+    });
+
+    it('links target="_blank" com rel noopener noreferrer', () => {
+      doc.querySelectorAll('a[target="_blank"]').forEach(link => {
+        const rel = link.getAttribute('rel') || '';
+        expect(rel).toContain('noopener');
+        expect(rel).toContain('noreferrer');
+      });
+    });
+
+    it('breadcrumb com aria-label e aria-current="page"', () => {
+      const nav = doc.querySelector('nav.breadcrumb');
+      expect(nav).not.toBeNull();
+      expect(nav.getAttribute('aria-label')).toBeTruthy();
+      expect(nav.querySelector('[aria-current="page"]')).not.toBeNull();
+    });
+
+    it('hierarquia de headings sem saltos (h1 antes de h2, h2 antes de h3)', () => {
+      let foundH1 = false, foundH2 = false;
+      for (const h of doc.querySelectorAll('h1, h2, h3')) {
+        if (h.tagName === 'H1') foundH1 = true;
+        if (h.tagName === 'H2') { expect(foundH1).toBe(true); foundH2 = true; }
+        if (h.tagName === 'H3') expect(foundH2).toBe(true);
+      }
+    });
+  });
+
+  describe('SEO', () => {
+    it('title ≤60 caracteres', () => {
+      expect(doc.querySelector('title').textContent.length).toBeLessThanOrEqual(60);
+    });
+
+    it('meta description entre 120-160 caracteres', () => {
+      const content = doc.querySelector('meta[name="description"]').getAttribute('content');
+      expect(content.length).toBeGreaterThanOrEqual(120);
+      expect(content.length).toBeLessThanOrEqual(160);
+    });
+
+    it('canonical correta (com www e trailing slash, apontando ao próprio slug)', () => {
+      expect(doc.querySelector('link[rel="canonical"]').getAttribute('href')).toBe(
+        `https://www.drajaquelinesayonara.com.br/blog/${slug}/`
+      );
+    });
+
+    it('Open Graph type "article" e completo', () => {
+      ['og:title', 'og:description', 'og:image', 'og:url', 'og:type', 'og:locale'].forEach(p => {
+        expect(doc.querySelector(`meta[property="${p}"]`)).not.toBeNull();
+      });
+      expect(doc.querySelector('meta[property="og:type"]').getAttribute('content')).toBe('article');
+    });
+
+    it('lang="pt-br"', () => {
+      expect(doc.querySelector('html').getAttribute('lang')).toBe('pt-br');
+    });
+  });
+
+  describe('Schema.org', () => {
+    it('contém BlogPosting com headline e datas', () => {
+      const post = schema['@graph'].find(i => i['@type'] === 'BlogPosting');
+      expect(post).toBeDefined();
+      expect(post.headline).toBeTruthy();
+      expect(post.datePublished).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+      expect(post.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    });
+
+    it('contém BreadcrumbList (Home › Blog › artigo)', () => {
+      const bc = schema['@graph'].find(i => i['@type'] === 'BreadcrumbList');
+      expect(bc).toBeDefined();
+      expect(bc.itemListElement).toHaveLength(3);
+      expect(bc.itemListElement[2].item).toContain(slug);
+    });
+
+    it('contém FAQPage com 3-4 perguntas', () => {
+      const faq = schema['@graph'].find(i => i['@type'] === 'FAQPage');
+      expect(faq).toBeDefined();
+      expect(faq.mainEntity.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it('FAQ do Schema e FAQ do HTML têm a mesma contagem (sincronizados)', () => {
+      const faq = schema['@graph'].find(i => i['@type'] === 'FAQPage');
+      const htmlDetails = doc.querySelectorAll('.treatment-faq details');
+      expect(htmlDetails.length).toBe(faq.mainEntity.length);
+    });
+  });
+
+  describe('Estrutura e Conteúdo', () => {
+    it('possui <header>, <main>, <footer>', () => {
+      expect(doc.querySelector('header')).not.toBeNull();
+      expect(doc.querySelector('main')).not.toBeNull();
+      expect(doc.querySelector('footer')).not.toBeNull();
+    });
+
+    it('FAQ com ao menos 3 details/summary', () => {
+      const details = doc.querySelectorAll('.treatment-faq details');
+      expect(details.length).toBeGreaterThanOrEqual(3);
+      details.forEach(d => expect(d.querySelector('summary')).not.toBeNull());
+    });
+
+    it('"Leia também" com 3 cards, sem link para si mesmo', () => {
+      const related = doc.querySelector('.related-treatments');
+      expect(related).not.toBeNull();
+      const cards = related.querySelectorAll('a.related-card');
+      expect(cards.length).toBe(3);
+      expect(related.querySelector(`a[href="/blog/${slug}/"]`)).toBeNull();
+    });
+
+    it('CTA WhatsApp e float presentes', () => {
+      expect(doc.querySelector('a[href*="wa.me"]')).not.toBeNull();
+      expect(doc.querySelector('.whatsapp-float')).not.toBeNull();
+    });
+
+    it('CSS inline preenchido (não placeholder)', () => {
+      const style = doc.querySelector('style');
+      expect(style).not.toBeNull();
+      expect(style.textContent.length).toBeGreaterThan(1000);
     });
   });
 });

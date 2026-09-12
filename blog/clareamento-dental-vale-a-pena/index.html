@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<!--
+  TEMPLATE DE ARTIGO DE BLOG - NAO PUBLICAR ESTE ARQUIVO.
+  Como usar (ver docs/melhorias/pendentes/SPEC_BLOG.md §6 e skill repo-site):
+  1. cp blog/_template.html blog/<slug>/index.html
+  2. Substituir TODOS os placeholders {{...}} (lista no fim do arquivo).
+  3. Escrever o conteudo do artigo em .treatment-content (3-5 h2, tabela/lista, FAQ).
+  4. Ajustar os cards de "Leia tambem" (1 tratamento vinculado + 2 artigos/servicos).
+  5. Rodar: ./update-inline-css.sh  (preenche o CSS inline com o bundle treatment)
+  6. Adicionar a URL ao sitemap.xml e um card em blog/index.html.
+  7. npm test  (o suite valida a11y, SEO, JSON-LD, 1 H1).
+  REGRA CRITICA: apenas 1 H1 por pagina (no hero). NAO adicionar h1 sr-only
+  no header (isso e o EC-01 do SPEC - o template de tratamento faz isso e viola a regra).
+  NOTA: o bloco de CSS inline abaixo comeca vazio de proposito; o passo 5 o preenche.
+  Nunca escreva a tag de estilo literal dentro deste comentario (quebra o pipeline).
+-->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -8,33 +24,33 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="description" content="Blog da Dra. Jaqueline Sayonara: artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso, em linguagem simples e acolhedora.">
-    <meta name="keywords" content="blog odontologia, saúde bucal, dentista sapé pb, cuidados com os dentes, dra jaqueline sayonara">
+    <meta name="description" content="Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.">
+    <meta name="keywords" content="clareamento dental, clareamento dental vale a pena, clareamento dental funciona, quanto tempo dura o clareamento, dentista sapé pb">
     <meta name="author" content="Dra Jaqueline Sayonara">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Blog de Saúde Bucal | Dra. Jaqueline Sayonara">
-    <meta property="og:description" content="Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso, escritos pela Dra. Jaqueline Sayonara em Sapé/PB.">
-    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/protese.png">
-    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/">
-    <meta property="og:type" content="website">
+    <meta property="og:title" content="Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara">
+    <meta property="og:description" content="Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado, em linguagem simples.">
+    <meta property="og:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png">
+    <meta property="og:url" content="https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/">
+    <meta property="og:type" content="article">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="Dra. Jaqueline Sayonara">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog de Saúde Bucal | Dra. Jaqueline Sayonara">
-    <meta name="twitter:description" content="Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso.">
-    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/protese.png">
+    <meta name="twitter:title" content="Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara">
+    <meta name="twitter:description" content="Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado.">
+    <meta name="twitter:image" content="https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png">
 
-    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/">
+    <link rel="canonical" href="https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/">
     <link rel="preload" href="/assets/font/Manrope-VariableFont_wght.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="shortcut icon" href="/assets/img/favicon.webp" type="image/x-icon">
 
-    <title>Blog de Saúde Bucal | Dra. Jaqueline Sayonara</title>
+    <title>Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara</title>
 
-    <!-- CSS inline (bundle treatment - preenchido pelo update-inline-css.sh) -->
+    <!-- CSS inline (bundle treatment - preenchido por ./update-inline-css.sh) -->
     <style>/*!
  * Hamburgers
  * @description Tasty CSS-animated hamburgers
@@ -50,10 +66,14 @@
       "@context": "https://schema.org",
       "@graph": [
         {
-          "@type": "Blog",
-          "name": "Blog de Saúde Bucal — Dra. Jaqueline Sayonara",
-          "description": "Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso.",
-          "url": "https://www.drajaquelinesayonara.com.br/blog/",
+          "@type": "BlogPosting",
+          "headline": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados",
+          "description": "Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.",
+          "image": "https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png",
+          "author": {
+            "@type": "Person",
+            "name": "Dra. Jaqueline Sayonara"
+          },
           "publisher": {
             "@type": "Organization",
             "name": "Dra. Jaqueline Sayonara",
@@ -61,24 +81,13 @@
               "@type": "ImageObject",
               "url": "https://www.drajaquelinesayonara.com.br/assets/img/logo_js_2026.webp"
             }
+          },
+          "datePublished": "2026-09-11",
+          "dateModified": "2026-09-11",
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/"
           }
-        },
-        {
-          "@type": "ItemList",
-          "itemListElement": [
-            {
-              "@type": "ListItem",
-              "position": 1,
-              "url": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/",
-              "name": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados"
-            },
-            {
-              "@type": "ListItem",
-              "position": 2,
-              "url": "https://www.drajaquelinesayonara.com.br/blog/protese-dentaria-autoestima-saude/",
-              "name": "Prótese Dentária, Autoestima e Saúde"
-            }
-          ]
         },
         {
           "@type": "BreadcrumbList",
@@ -94,6 +103,49 @@
               "position": 2,
               "name": "Blog",
               "item": "https://www.drajaquelinesayonara.com.br/blog/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados",
+              "item": "https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "O clareamento dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quanto tempo dura o resultado do clareamento?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Clareamento caseiro é seguro?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Restaurações e próteses clareiam junto com os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor."
+              }
             }
           ]
         }
@@ -210,52 +262,176 @@
         <nav class="breadcrumb" aria-label="Navegação estrutural">
             <ol>
                 <li><a href="/">Home</a></li>
-                <li aria-current="page">Blog</li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados</li>
             </ol>
         </nav>
 
-        <!-- Hero -->
+        <!-- Hero (UNICO H1 da pagina) -->
         <section class="treatment-hero fade-in">
             <div>
                 <div>
-                    <h1>Blog de Saúde Bucal</h1>
-                    <p class="treatment-subtitle">Artigos sobre saúde bucal, tratamentos odontológicos e cuidados com o sorriso — em linguagem simples e acolhedora, escritos pela Dra. Jaqueline Sayonara em Sapé/PB.</p>
+                    <h1>Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados</h1>
+                    <p class="treatment-subtitle">Entenda os tipos de clareamento, quanto tempo o resultado dura e os cuidados necessários — para decidir com informação, no seu tempo.</p>
+                    <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20saber%20mais%20sobre%20clareamento%20dental" class="btn-cta">
+                        Agendar consulta
+                    </a>
                 </div>
+                <img src="/assets/img/care/clareamento.webp"
+                     alt="Clareamento dental - Dra. Jaqueline Sayonara em Sapé/PB"
+                     width="600" height="400"
+                     loading="eager">
             </div>
         </section>
 
-        <!-- Grid de artigos -->
+        <!-- Conteudo principal -->
+        <section class="treatment-content">
+            <div>
+                <p class="treatment-summary">O clareamento dental é um dos procedimentos estéticos mais procurados, mas ainda gera dúvidas: funciona mesmo? Dói? Quanto tempo dura? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples como o clareamento funciona, os tipos disponíveis e os cuidados para um resultado seguro.</p>
+
+                <!--
+                  CONTEUDO DO ARTIGO - substituir                 <h2>Afinal, o clareamento dental funciona?</h2>
+                <p>Sim, o clareamento dental é um procedimento consolidado na odontologia e, quando feito com acompanhamento profissional, costuma clarear o tom dos dentes de forma perceptível. Ele age sobre as manchas e o amarelamento causados pelo tempo, por alimentos e bebidas pigmentados (café, chá, vinho) e pelo cigarro.</p>
+                <p>É importante entender que o resultado varia de pessoa para pessoa: depende da cor inicial dos dentes, do tipo de mancha e dos hábitos de cada um. Por isso, a avaliação com o dentista antes de começar é o que ajuda a alinhar expectativas realistas.</p>
+
+                <h2>Tipos de clareamento dental</h2>
+                <p>Existem duas abordagens principais, que também podem ser combinadas conforme o caso:</p>
+                <table>
+                    <caption>Comparativo entre os tipos de clareamento</caption>
+                    <thead>
+                        <tr><th>Característica</th><th>No consultório</th><th>Caseiro supervisionado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Onde é feito</td><td>Na clínica, pelo dentista</td><td>Em casa, com moldeira e gel indicados pelo dentista</td></tr>
+                        <tr><td>Concentração do gel</td><td>Mais alta</td><td>Mais baixa</td></tr>
+                        <tr><td>Ritmo do resultado</td><td>Mais rápido (poucas sessões)</td><td>Gradual (uso diário por algumas semanas)</td></tr>
+                        <tr><td>Acompanhamento</td><td>Direto, na cadeira</td><td>Orientado e revisado em consultas</td></tr>
+                    </tbody>
+                </table>
+                <p>Nenhuma das opções é "melhor" em termos absolutos: a escolha depende da sua rotina, da sensibilidade dos seus dentes e do que o dentista observar na avaliação.</p>
+
+                <h3>E o clareamento caseiro por conta própria?</h3>
+                <p>Kits comprados sem orientação, fitas e receitas caseiras (como bicarbonato ou limão) merecem atenção. Produtos ácidos ou abrasivos podem desgastar o esmalte, e o uso sem avaliação pode causar sensibilidade e irritação na gengiva. O clareamento caseiro seguro é aquele indicado e supervisionado por um profissional.</p>
+
+                <h2>Quanto tempo dura o clareamento?</h2>
+                <p>A duração é individual, mas em geral o resultado se mantém por vários meses a alguns anos. O que faz diferença são os hábitos: consumo frequente de alimentos e bebidas que mancham, tabagismo e a qualidade da higiene bucal. Sessões de manutenção periódicas ajudam a prolongar o efeito.</p>
+
+                <h2>Cuidados e quando o clareamento não é indicado</h2>
+                <p>Para uma experiência confortável e segura, alguns cuidados são recomendados:</p>
+                <ul>
+                    <li>Fazer uma avaliação antes de começar, para tratar cáries ou problemas na gengiva primeiro.</li>
+                    <li>Nos dias do clareamento, reduzir alimentos e bebidas muito pigmentados.</li>
+                    <li>Seguir as orientações do dentista sobre tempo de uso e produtos.</li>
+                    <li>Comunicar qualquer sensibilidade para que o protocolo seja ajustado.</li>
+                </ul>
+                <p>O clareamento também pode não ser indicado, ou exigir cuidados especiais, em algumas situações: gengivas inflamadas, sensibilidade acentuada, restaurações e próteses visíveis (que não clareiam junto com o dente natural) e durante a gestação. Só o dentista, na avaliação, pode dizer o que é adequado para o seu caso.</p> por 3-5 secoes h2
+                  (com h3 quando necessario, sem pular nivel). Incluir 1 tabela comparativa
+                  OU lista de beneficios quando fizer sentido. Tom acolhedor, PT-BR, sem
+                  promessa de resultado/preco fixo (etica CFO).
+                -->
+                                <h2>Afinal, o clareamento dental funciona?</h2>
+                <p>Sim, o clareamento dental é um procedimento consolidado na odontologia e, quando feito com acompanhamento profissional, costuma clarear o tom dos dentes de forma perceptível. Ele age sobre as manchas e o amarelamento causados pelo tempo, por alimentos e bebidas pigmentados (café, chá, vinho) e pelo cigarro.</p>
+                <p>É importante entender que o resultado varia de pessoa para pessoa: depende da cor inicial dos dentes, do tipo de mancha e dos hábitos de cada um. Por isso, a avaliação com o dentista antes de começar é o que ajuda a alinhar expectativas realistas.</p>
+
+                <h2>Tipos de clareamento dental</h2>
+                <p>Existem duas abordagens principais, que também podem ser combinadas conforme o caso:</p>
+                <table>
+                    <caption>Comparativo entre os tipos de clareamento</caption>
+                    <thead>
+                        <tr><th>Característica</th><th>No consultório</th><th>Caseiro supervisionado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Onde é feito</td><td>Na clínica, pelo dentista</td><td>Em casa, com moldeira e gel indicados pelo dentista</td></tr>
+                        <tr><td>Concentração do gel</td><td>Mais alta</td><td>Mais baixa</td></tr>
+                        <tr><td>Ritmo do resultado</td><td>Mais rápido (poucas sessões)</td><td>Gradual (uso diário por algumas semanas)</td></tr>
+                        <tr><td>Acompanhamento</td><td>Direto, na cadeira</td><td>Orientado e revisado em consultas</td></tr>
+                    </tbody>
+                </table>
+                <p>Nenhuma das opções é "melhor" em termos absolutos: a escolha depende da sua rotina, da sensibilidade dos seus dentes e do que o dentista observar na avaliação.</p>
+
+                <h3>E o clareamento caseiro por conta própria?</h3>
+                <p>Kits comprados sem orientação, fitas e receitas caseiras (como bicarbonato ou limão) merecem atenção. Produtos ácidos ou abrasivos podem desgastar o esmalte, e o uso sem avaliação pode causar sensibilidade e irritação na gengiva. O clareamento caseiro seguro é aquele indicado e supervisionado por um profissional.</p>
+
+                <h2>Quanto tempo dura o clareamento?</h2>
+                <p>A duração é individual, mas em geral o resultado se mantém por vários meses a alguns anos. O que faz diferença são os hábitos: consumo frequente de alimentos e bebidas que mancham, tabagismo e a qualidade da higiene bucal. Sessões de manutenção periódicas ajudam a prolongar o efeito.</p>
+
+                <h2>Cuidados e quando o clareamento não é indicado</h2>
+                <p>Para uma experiência confortável e segura, alguns cuidados são recomendados:</p>
+                <ul>
+                    <li>Fazer uma avaliação antes de começar, para tratar cáries ou problemas na gengiva primeiro.</li>
+                    <li>Nos dias do clareamento, reduzir alimentos e bebidas muito pigmentados.</li>
+                    <li>Seguir as orientações do dentista sobre tempo de uso e produtos.</li>
+                    <li>Comunicar qualquer sensibilidade para que o protocolo seja ajustado.</li>
+                </ul>
+                <p>O clareamento também pode não ser indicado, ou exigir cuidados especiais, em algumas situações: gengivas inflamadas, sensibilidade acentuada, restaurações e próteses visíveis (que não clareiam junto com o dente natural) e durante a gestação. Só o dentista, na avaliação, pode dizer o que é adequado para o seu caso.</p>
+
+                <!-- FAQ (alimenta o FAQPage do Schema - manter em sincronia) -->
+                <div class="treatment-faq">
+                    <h2>Perguntas frequentes</h2>
+                                        <details>
+                        <summary>O clareamento dental dói?</summary>
+                        <p>Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável.</p>
+                    </details>
+                    <details>
+                        <summary>Quanto tempo dura o resultado do clareamento?</summary>
+                        <p>Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção.</p>
+                    </details>
+                    <details>
+                        <summary>Clareamento caseiro é seguro?</summary>
+                        <p>Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes.</p>
+                    </details>
+                    <details>
+                        <summary>Restaurações e próteses clareiam junto com os dentes?</summary>
+                        <p>Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor.</p>
+                    </details>
+                </div>
+
+                <!-- Aviso de responsabilidade -->
+                <p class="treatment-summary"><em>Este conteúdo é informativo e não substitui uma consulta odontológica. Para avaliar o seu caso, agende uma consulta.</em></p>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-final fade-in">
+            <div>
+                <h2 class="section-title">Quer saber se o clareamento é indicado para você?</h2>
+                <p class="cta-final-text">Agende uma avaliação com a Dra. Jaqueline Sayonara e tire suas dúvidas sobre clareamento dental.</p>
+                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20saber%20mais%20sobre%20clareamento%20dental" class="btn-cta">
+                    Falar pelo WhatsApp
+                </a>
+            </div>
+        </section>
+
+        <!-- Leia tambem (1 tratamento vinculado + 2 relacionados; NAO linkar para si mesmo) -->
         <section class="related-treatments fade-in">
             <div>
+                <h2 class="section-title">Leia também</h2>
                 <div class="related-grid">
-                    <a href="/blog/clareamento-dental-vale-a-pena/" class="related-card">
+                    <a href="/tratamentos/clareamento-dental/" class="related-card">
                         <span class="related-card-icon">✨</span>
                         <div class="related-card-content">
-                            <h2 class="related-card-title">Clareamento Dental Vale a Pena?</h2>
-                            <p class="related-card-desc">Tipos de clareamento, quanto tempo dura o resultado e os cuidados para clarear com segurança.</p>
+                            <h3 class="related-card-title">Clareamento Dental</h3>
+                            <p class="related-card-desc">Conheça o procedimento de clareamento oferecido no consultório.</p>
+                        </div>
+                        <span class="related-card-arrow">→</span>
+                    </a>
+                    <a href="/tratamentos/facetas-dentarias/" class="related-card">
+                        <span class="related-card-icon">💎</span>
+                        <div class="related-card-content">
+                            <h3 class="related-card-title">Facetas Dentárias</h3>
+                            <p class="related-card-desc">Quando o objetivo vai além da cor: forma e alinhamento do sorriso.</p>
                         </div>
                         <span class="related-card-arrow">→</span>
                     </a>
                     <a href="/blog/protese-dentaria-autoestima-saude/" class="related-card">
                         <span class="related-card-icon">🦷</span>
                         <div class="related-card-content">
-                            <h2 class="related-card-title">Prótese Dentária, Autoestima e Saúde</h2>
-                            <p class="related-card-desc">Como a reposição de dentes pode transformar não apenas o sorriso, mas também a confiança e o bem-estar geral.</p>
+                            <h3 class="related-card-title">Prótese Dentária, Autoestima e Saúde</h3>
+                            <p class="related-card-desc">Como a reposição de dentes impacta a confiança e o bem-estar.</p>
                         </div>
                         <span class="related-card-arrow">→</span>
                     </a>
                 </div>
-            </div>
-        </section>
-
-        <!-- CTA Final -->
-        <section class="cta-final fade-in">
-            <div>
-                <h2 class="section-title">Ficou com alguma dúvida?</h2>
-                <p class="cta-final-text">Fale com a Dra. Jaqueline Sayonara pelo WhatsApp e agende sua avaliação.</p>
-                <a href="https://wa.me/+5583994058749/?text=Gostaria%20de%20agendar%20uma%20consulta" class="btn-cta">
-                    Agendar pelo WhatsApp
-                </a>
             </div>
         </section>
     </main>
@@ -305,3 +481,122 @@
 </body>
 
 </html>
+
+<!--
+  PLACEHOLDERS a substituir ao criar um artigo:
+  clareamento-dental-vale-a-pena                  slug da pasta (ex.: clareamento-dental-vale-a-pena)
+  Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara            title (<= 60 chars) - ex.: "Titulo do Artigo | Dra. Jaqueline Sayonara"
+  Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.      meta description (120-160 chars, com keyword + CTA)
+  clareamento dental, clareamento dental vale a pena, clareamento dental funciona, quanto tempo dura o clareamento, dentista sapé pb         palavras-chave separadas por virgula
+  Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado, em linguagem simples. https://www.drajaquelinesayonara.com.br/assets/img/og/care/clareamento.png   Open Graph (imagem = URL absoluta .webp/.png)
+  Clareamento Dental Vale a Pena? | Dra. Jaqueline Sayonara Tipos de clareamento, duração e cuidados: entenda como funciona e quando é indicado.       Twitter Cards
+  Clareamento Dental Vale a Pena? Tipos, Duração e Cuidados         titulo do artigo (usado no H1, breadcrumb e Schema)
+  Entenda os tipos de clareamento, quanto tempo o resultado dura e os cuidados necessários — para decidir com informação, no seu tempo.      subtitulo do hero
+  O clareamento dental é um dos procedimentos estéticos mais procurados, mas ainda gera dúvidas: funciona mesmo? Dói? Quanto tempo dura? Neste artigo, a Dra. Jaqueline Sayonara explica de forma simples como o clareamento funciona, os tipos disponíveis e os cuidados para um resultado seguro.       paragrafo-resumo (.treatment-summary)
+  Clareamento dental vale a pena? Entenda os tipos (consultório e caseiro), quanto tempo dura, cuidados e quando é indicado. Tire suas dúvidas.   description do BlogPosting (pode repetir a meta description)
+                  <h2>Afinal, o clareamento dental funciona?</h2>
+                <p>Sim, o clareamento dental é um procedimento consolidado na odontologia e, quando feito com acompanhamento profissional, costuma clarear o tom dos dentes de forma perceptível. Ele age sobre as manchas e o amarelamento causados pelo tempo, por alimentos e bebidas pigmentados (café, chá, vinho) e pelo cigarro.</p>
+                <p>É importante entender que o resultado varia de pessoa para pessoa: depende da cor inicial dos dentes, do tipo de mancha e dos hábitos de cada um. Por isso, a avaliação com o dentista antes de começar é o que ajuda a alinhar expectativas realistas.</p>
+
+                <h2>Tipos de clareamento dental</h2>
+                <p>Existem duas abordagens principais, que também podem ser combinadas conforme o caso:</p>
+                <table>
+                    <caption>Comparativo entre os tipos de clareamento</caption>
+                    <thead>
+                        <tr><th>Característica</th><th>No consultório</th><th>Caseiro supervisionado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Onde é feito</td><td>Na clínica, pelo dentista</td><td>Em casa, com moldeira e gel indicados pelo dentista</td></tr>
+                        <tr><td>Concentração do gel</td><td>Mais alta</td><td>Mais baixa</td></tr>
+                        <tr><td>Ritmo do resultado</td><td>Mais rápido (poucas sessões)</td><td>Gradual (uso diário por algumas semanas)</td></tr>
+                        <tr><td>Acompanhamento</td><td>Direto, na cadeira</td><td>Orientado e revisado em consultas</td></tr>
+                    </tbody>
+                </table>
+                <p>Nenhuma das opções é "melhor" em termos absolutos: a escolha depende da sua rotina, da sensibilidade dos seus dentes e do que o dentista observar na avaliação.</p>
+
+                <h3>E o clareamento caseiro por conta própria?</h3>
+                <p>Kits comprados sem orientação, fitas e receitas caseiras (como bicarbonato ou limão) merecem atenção. Produtos ácidos ou abrasivos podem desgastar o esmalte, e o uso sem avaliação pode causar sensibilidade e irritação na gengiva. O clareamento caseiro seguro é aquele indicado e supervisionado por um profissional.</p>
+
+                <h2>Quanto tempo dura o clareamento?</h2>
+                <p>A duração é individual, mas em geral o resultado se mantém por vários meses a alguns anos. O que faz diferença são os hábitos: consumo frequente de alimentos e bebidas que mancham, tabagismo e a qualidade da higiene bucal. Sessões de manutenção periódicas ajudam a prolongar o efeito.</p>
+
+                <h2>Cuidados e quando o clareamento não é indicado</h2>
+                <p>Para uma experiência confortável e segura, alguns cuidados são recomendados:</p>
+                <ul>
+                    <li>Fazer uma avaliação antes de começar, para tratar cáries ou problemas na gengiva primeiro.</li>
+                    <li>Nos dias do clareamento, reduzir alimentos e bebidas muito pigmentados.</li>
+                    <li>Seguir as orientações do dentista sobre tempo de uso e produtos.</li>
+                    <li>Comunicar qualquer sensibilidade para que o protocolo seja ajustado.</li>
+                </ul>
+                <p>O clareamento também pode não ser indicado, ou exigir cuidados especiais, em algumas situações: gengivas inflamadas, sensibilidade acentuada, restaurações e próteses visíveis (que não clareiam junto com o dente natural) e durante a gestação. Só o dentista, na avaliação, pode dizer o que é adequado para o seu caso.</p>          corpo do artigo (3-5 h2, tabela/lista, sem pular nivel de heading)
+  2026-09-11 2026-09-11   datas ISO (YYYY-MM-DD)
+                      <details>
+                        <summary>O clareamento dental dói?</summary>
+                        <p>Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável.</p>
+                    </details>
+                    <details>
+                        <summary>Quanto tempo dura o resultado do clareamento?</summary>
+                        <p>Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção.</p>
+                    </details>
+                    <details>
+                        <summary>Clareamento caseiro é seguro?</summary>
+                        <p>Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes.</p>
+                    </details>
+                    <details>
+                        <summary>Restaurações e próteses clareiam junto com os dentes?</summary>
+                        <p>Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor.</p>
+                    </details>        blocos details/summary (Pergunta) + p (Resposta), 3-4
+  {
+              "@type": "Question",
+              "name": "O clareamento dental dói?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quanto tempo dura o resultado do clareamento?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Clareamento caseiro é seguro?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Restaurações e próteses clareiam junto com os dentes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor."
+              }
+            }      itens do FAQPage no Schema, um por pergunta:
+                            {"@type":"Question","name":"...","acceptedAnswer":{"@type":"Answer","text":"..."}}
+                            (separados por virgula; DEVEM espelhar o                     <details>
+                        <summary>O clareamento dental dói?</summary>
+                        <p>Em geral não dói. O efeito mais comum é uma sensibilidade passageira nos dentes durante ou após o procedimento, que costuma diminuir em poucos dias. O dentista pode ajustar o protocolo para deixar a experiência mais confortável.</p>
+                    </details>
+                    <details>
+                        <summary>Quanto tempo dura o resultado do clareamento?</summary>
+                        <p>Varia conforme os hábitos de cada pessoa. Costuma durar de vários meses a alguns anos. Evitar excesso de alimentos e bebidas que mancham, não fumar e manter boa higiene ajudam a prolongar o efeito, assim como sessões de manutenção.</p>
+                    </details>
+                    <details>
+                        <summary>Clareamento caseiro é seguro?</summary>
+                        <p>Quando é indicado e supervisionado pelo dentista, sim. Já kits e receitas caseiras usadas por conta própria podem desgastar o esmalte e irritar a gengiva. O ideal é sempre passar por uma avaliação antes.</p>
+                    </details>
+                    <details>
+                        <summary>Restaurações e próteses clareiam junto com os dentes?</summary>
+                        <p>Não. O gel clareador age no dente natural; resinas, coroas e próteses mantêm a cor original. Por isso, quando há restaurações visíveis, o dentista avalia se será necessário trocá-las depois do clareamento para uniformizar a cor.</p>
+                    </details>)
+  /assets/img/care/clareamento.webp Clareamento dental - Dra. Jaqueline Sayonara em Sapé/PB            imagem hero (.webp) + alt descritivo
+  Gostaria%20de%20saber%20mais%20sobre%20clareamento%20dental         texto pre-preenchido do WhatsApp (URL-encoded)
+  Quer saber se o clareamento é indicado para você? Agende uma avaliação com a Dra. Jaqueline Sayonara e tire suas dúvidas sobre clareamento dental.             secao CTA final
+  {{RELATED_N_HREF/ICON/TITLE/DESC}}     3 cards "Leia tambem" (1 tratamento vinculado + 2)
+-->
