@@ -84,6 +84,16 @@ describe.each(INTERNAL)('Navegação — %s', (rel) => {
     expect(doc.querySelector('.subnav')).toBeNull();
   });
 
+  it('CSS do dropdown está no <style> inline (regressão: página fora do pipeline)', () => {
+    // Bug: atendimento/primeira-consulta não estavam no pipeline e ficaram sem o
+    // CSS do dropdown (menu renderizava sem estilo).
+    const html = readFileSync(resolve(ROOT, rel), 'utf-8');
+    const style = html.match(/<style>([\s\S]*?)<\/style>/);
+    expect(style).not.toBeNull();
+    expect(style[1]).toContain('header-dropdown-menu');
+    expect(style[1]).toContain('header-dropdown-toggle');
+  });
+
   it('breadcrumb inicia com "Início" (não "Home")', () => {
     const first = doc.querySelector('nav.breadcrumb ol li a');
     if (first) {

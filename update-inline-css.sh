@@ -61,6 +61,18 @@ for dir in "$SCRIPT_DIR"/blog/*/; do
   fi
 done
 
+# Adicionar páginas de atendimento (cidades)
+for dir in "$SCRIPT_DIR"/atendimento/*/; do
+  if [ -f "${dir}index.html" ]; then
+    HTML_FILES+=("${dir}index.html")
+  fi
+done
+
+# Adicionar primeira-consulta
+if [ -f "$SCRIPT_DIR/primeira-consulta/index.html" ]; then
+  HTML_FILES+=("$SCRIPT_DIR/primeira-consulta/index.html")
+fi
+
 echo "📝 Atualizando ${#HTML_FILES[@]} arquivo(s)..."
 echo ""
 
@@ -83,9 +95,11 @@ for filepath in html_files:
         content = f.read()
 
     # Determinar qual bundle usar.
-    # Páginas de tratamento E de blog usam o bundle treatment (compartilham
-    # os componentes .treatment-*, .related-card/.related-grid, .breadcrumb).
-    is_treatment = '/tratamentos/' in filepath or '/blog/' in filepath
+    # Páginas de tratamento, blog, atendimento e primeira-consulta usam o bundle
+    # treatment (compartilham .treatment-*, .related-card/.related-grid, .breadcrumb
+    # e o header com dropdown). A home usa o bundle próprio.
+    is_treatment = ('/tratamentos/' in filepath or '/blog/' in filepath
+                    or '/atendimento/' in filepath or '/primeira-consulta/' in filepath)
     css = css_treatment_content if is_treatment else css_home_content
     style_block = '<style>' + css + '</style>'
 
