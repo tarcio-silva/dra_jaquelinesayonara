@@ -87,6 +87,13 @@ Falta propagar às demais páginas e então executar o blog.
       gengivite-sintomas-tratamento. Cada um: 1 H1, FAQ (4) com FAQPage no Schema,
       "Leia também" com reciprocidade interna. Listagem/ItemList/sitemap atualizados;
       gengivite reusa a imagem de profilaxia (DA-04). 451 testes verdes.
+- [x] Referências bibliográficas — ADICIONADAS 2026-09-11 (commit e11029d). Os 3 artigos
+      novos receberam citações no texto (autor, ano) + seção "Referências" ao final (CSS
+      `.treatment-references`). Conteúdo reescrito pela Dra.; fontes registradas em
+      `docs/melhorias/pendentes/referencias-blog/*.txt`.
+      > PENDENTE: o artigo pré-existente `protese-dentaria-autoestima-saude` NÃO tem
+      > referências (não passou pela reescrita). Se desejado, gerar o .txt dele e a Dra.
+      > adiciona as citações — mesmo fluxo. Não inventar referências.
 - [x] T7 Review (após conteúdo) — CONCLUÍDO 2026-09-11. Revisão semântica
       (semantic-review/2026-09-12-155008-blog.md): APPROVED_WITH_NOTES. Achou 1 ERRO que os
       testes não pegavam — a 1ª seção de cada artigo estava comentada por um comentário-guia
