@@ -278,6 +278,23 @@ describe.each(articleSlugs)('Blog — artigo (%s)', (slug) => {
       details.forEach(d => expect(d.querySelector('summary')).not.toBeNull());
     });
 
+    it('corpo do artigo tem ao menos 3 seções <h2> (fora do FAQ) — nada comentado', () => {
+      // Regressão: um comentário-guia do template já comentou a 1ª seção silenciosamente.
+      const contentH2 = doc.querySelectorAll('.treatment-content > div > h2');
+      expect(contentH2.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it('não há comentário-guia residual do template', () => {
+      const html = readFileSync(resolve(blogDir, slug, 'index.html'), 'utf-8');
+      expect(html).not.toContain('CONTEUDO DO ARTIGO');
+      expect(html).not.toContain('PLACEHOLDERS a substituir');
+    });
+
+    it('aviso "não substitui consulta" presente', () => {
+      const html = readFileSync(resolve(blogDir, slug, 'index.html'), 'utf-8');
+      expect(html).toContain('não substitui uma consulta');
+    });
+
     it('"Leia também" com 3 cards, sem link para si mesmo', () => {
       const related = doc.querySelector('.related-treatments');
       expect(related).not.toBeNull();
