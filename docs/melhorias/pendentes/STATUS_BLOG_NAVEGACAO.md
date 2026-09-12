@@ -99,10 +99,10 @@ Falta propagar às demais páginas e então executar o blog.
 - [x] OG images em PNG pesado — RESOLVIDO (2026-09-11, commit d1b035e). Convertidas para WebP
       (og/care 0,6-1,7 MB → 19-53 KB); refs atualizadas. Junto: heros do blog (imagens
       dedicadas), slides antes/depois e remoção dos icons legado.
-- [ ] `assets/img/plans/logo-clin.png` é um **AVIF** com extensão `.png` errada — o ImageMagick
-      local não o converte (gera WebP chapado). Mantido como está (navegador decodifica via
-      sniffing). Corrigir com ferramenta AVIF (avifdec/sharp) ou reexportar de fonte válida +
-      renomear a extensão. Ver bugs-recorrentes BUG-012.
+- [x] `assets/img/plans/logo-clin.png` era um **AVIF** com extensão `.png` errada — RESOLVIDO
+      (2026-09-11, commit f336929). Convertido para WebP via Pillow (decodifica AVIF, ao
+      contrário do ImageMagick local), preservando o alpha (logo é silhueta teal). Arquivo
+      AVIF removido. Agora 100% das imagens raster do site estão em WebP. Ver BUG-012.
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
 - [ ] Decisão pendente: subnav sempre-fixa (atual) vs aparecer após o hero. Mantido fixo.
 - [ ] Commits herdados do artigo (autor `you@example.com`, msg em inglês) — reescrever antes
