@@ -248,3 +248,48 @@ com href de âncora). Ajustar seletores sem quebrar as âncoras.
 
 - Steering `repo-site`: breakpoints, bundles, 1 H1, Lighthouse, dark mode, offcanva a11y.
 - Débito relacionado (SPEC_BLOG EC-05): ano hardcoded no footer — fora de escopo aqui.
+
+
+
+---
+
+## 13. Adendo (2026-09-05): Refino de layout do header — Opção 1
+
+> Após implementar N1/N2, a validação no browser revelou problemas de **design**
+> (não de bug): item "Início" redundante com o logo, menu principal desalinhado
+> verticalmente com a subnav, e extremidades "remendadas" (dark-mode duplicado +
+> sociais + CTA). Decisão aprovada: **Opção 1 — navbar clássica logo-esquerda /
+> nav+CTA-direita**.
+
+### Mudanças de layout (desktop)
+- **Logo = Início:** remover o item "Início" do menu (desktop e offcanva). O logo
+  clicável (→ `/`) é o único caminho para a home (convenção universal).
+- **Nav agrupada à direita, junto do CTA:** `Tratamentos · Blog · Atendimento▾ ·
+  Primeira Consulta` + `[dark] [Agendar]`. Fim do item solto à esquerda.
+- **Um único toggle dark-mode:** remover a duplicação (havia um ao lado do logo e
+  outro nas ações). Manter só o das ações (à direita), antes do "Agendar".
+- **Remover ícones sociais do header desktop:** já existem no footer. Header limpo.
+- **Subnav alinhada ao container do header:** mesmo `max-width` e mesmo padding
+  lateral, para os eixos baterem (elimina a sensação de "remendo").
+
+### Estrutura desktop resultante
+```
+[logo]                         [Tratamentos · Blog · Atendimento▾ · Primeira Consulta]  [🌙] [Agendar]
+  → /                                    (nav agrupada à direita)                        toggle  CTA
+```
+
+### Offcanva (mobile)
+- Remover o item "Início" (logo/ხheader já leva à home; manter foco nas seções/páginas).
+  Itens: Tratamentos · Blog · Atendimento(grupo) · Primeira Consulta.
+
+### Subnav
+- **Decisão:** manter **fixed sempre visível** abaixo do header (recomendação aceita
+  via "vai com a recomendação"); alinhada ao container do header.
+
+### Impacto
+- Afeta o header de **todas as ~17 páginas** (propagação na N4).
+- Remove `.nav-social` e um `.header-nav-dark-mode` do header (CSS pode ficar, mas
+  markup sai). Testes de a11y que checavam social no header (se houver) — verificar.
+- `aria-current="page"` deixa de existir no menu (não há mais item "Início"); o
+  estado de página passa a ser sinalizado só por contexto (logo). Itens de página
+  ativos (ex.: "Blog" em /blog/) continuam com `.active`.
