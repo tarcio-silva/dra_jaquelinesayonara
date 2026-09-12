@@ -63,14 +63,16 @@ Falta propagar às demais páginas e então executar o blog.
       testes verdes. Menu da listagem = ANTIGO (troca vem na N4). Ver DEC-014.
 
 ### Blog (após navegação)
-- [x] T1 Fundação (listagem) — RESOLVIDO 2026-09-11 (`blog/index.html`). Falta o
-      `blog/_template.html` (parte de T1/T2) para os próximos artigos.
-- [x] T2 Pipeline — parte feita: `update-inline-css.sh` + `build.js` conhecem `blog/`
-      (bundle treatment). Falta só o `_template.html`.
+- [x] T1 Fundação (listagem + template) — RESOLVIDO 2026-09-11. `blog/index.html` (listagem)
+      + `blog/_template.html` (template com placeholders {{...}}, 1 H1, FAQ, "Leia também",
+      Schema BlogPosting+Breadcrumb+FAQPage; NÃO tem o 2º H1 sr-only — EC-01 respeitado).
+- [x] T2 Pipeline — `update-inline-css.sh` + `build.js` conhecem `blog/` (bundle treatment).
+      `_template.html` fica fora do pipeline (como o de tratamento); seu `<style>` foi
+      preenchido uma vez com o bundle treatment.
 - [x] T5 Sitemap — `/blog/` + artigo atual adicionados ao `sitemap.xml`.
 - [x] T6 Testes — cobertura da listagem em `tests/integration/blog.test.js` (19). Suite
       completo (artigos) quando T4 existir.
-- [ ] T4 3 artigos · T7 Review (após conteúdo).
+- [ ] T4 3 artigos (usar `blog/_template.html`) · T7 Review (após conteúdo).
 
 ### Débito conhecido
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
