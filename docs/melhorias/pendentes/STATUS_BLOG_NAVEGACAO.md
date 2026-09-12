@@ -87,6 +87,13 @@ Falta propagar às demais páginas e então executar o blog.
       gengivite-sintomas-tratamento. Cada um: 1 H1, FAQ (4) com FAQPage no Schema,
       "Leia também" com reciprocidade interna. Listagem/ItemList/sitemap atualizados;
       gengivite reusa a imagem de profilaxia (DA-04). 451 testes verdes.
+- [x] Referências bibliográficas — ADICIONADAS 2026-09-11 (commit e11029d). Os 3 artigos
+      novos receberam citações no texto (autor, ano) + seção "Referências" ao final (CSS
+      `.treatment-references`). Conteúdo reescrito pela Dra.; fontes registradas em
+      `docs/melhorias/pendentes/referencias-blog/*.txt`.
+      > RESOLVIDO 2026-09-11: o artigo `protese-dentaria-autoestima-saude` recebeu citações
+      > (Hugo et al. 2007; Locker & Miller 1994; Pegoraro 2014; Sheiham & Steele 2001; Okeson
+      > 2013; Cullinan & Seymour 2013) + 6 referências. Os 4 artigos do blog agora têm referências.
 - [x] T7 Review (após conteúdo) — CONCLUÍDO 2026-09-11. Revisão semântica
       (semantic-review/2026-09-12-155008-blog.md): APPROVED_WITH_NOTES. Achou 1 ERRO que os
       testes não pegavam — a 1ª seção de cada artigo estava comentada por um comentário-guia
@@ -96,9 +103,13 @@ Falta propagar às demais páginas e então executar o blog.
       463/463 testes verdes.
 
 ### Débito conhecido
-- [ ] OG images em PNG pesado (`assets/img/og/care/*.png`, 0,6–1,7 MB) — débito herdado
-      (contraria "WebP obrigatório"); não afeta render/LCP, só previews sociais. Converter
-      para WebP e atualizar `og:image`/`twitter:image` num passe futuro. (T7 SUGESTÃO 4)
+- [x] OG images em PNG pesado — RESOLVIDO (2026-09-11, commit d1b035e). Convertidas para WebP
+      (og/care 0,6-1,7 MB → 19-53 KB); refs atualizadas. Junto: heros do blog (imagens
+      dedicadas), slides antes/depois e remoção dos icons legado.
+- [x] `assets/img/plans/logo-clin.png` era um **AVIF** com extensão `.png` errada — RESOLVIDO
+      (2026-09-11, commit f336929). Convertido para WebP via Pillow (decodifica AVIF, ao
+      contrário do ImageMagick local), preservando o alpha (logo é silhueta teal). Arquivo
+      AVIF removido. Agora 100% das imagens raster do site estão em WebP. Ver BUG-012.
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
 - [ ] Decisão pendente: subnav sempre-fixa (atual) vs aparecer após o hero. Mantido fixo.
 - [ ] Commits herdados do artigo (autor `you@example.com`, msg em inglês) — reescrever antes
