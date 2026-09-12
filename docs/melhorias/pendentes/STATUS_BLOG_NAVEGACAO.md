@@ -72,7 +72,12 @@ Falta propagar às demais páginas e então executar o blog.
 - [x] T5 Sitemap — `/blog/` + artigo atual adicionados ao `sitemap.xml`.
 - [x] T6 Testes — cobertura da listagem em `tests/integration/blog.test.js` (19). Suite
       completo (artigos) quando T4 existir.
-- [ ] T4 3 artigos (usar `blog/_template.html`) · T7 Review (após conteúdo).
+- [x] T4 3 artigos — RESOLVIDO 2026-09-11. Publicados (1 commit cada):
+      clareamento-dental-vale-a-pena, limpeza-dental-importancia-frequencia,
+      gengivite-sintomas-tratamento. Cada um: 1 H1, FAQ (4) com FAQPage no Schema,
+      "Leia também" com reciprocidade interna. Listagem/ItemList/sitemap atualizados;
+      gengivite reusa a imagem de profilaxia (DA-04). 451 testes verdes.
+- [ ] T7 Review (após conteúdo) — em andamento (revisão semântica do conjunto).
 
 ### Débito conhecido
 - [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
