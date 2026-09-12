@@ -91,13 +91,19 @@ describe.each(INTERNAL)('Navegação — %s', (rel) => {
     }
   });
 
-  it('exatamente um item primário marcado como ativo (aria-current="page")', () => {
-    const active = doc.querySelectorAll(
-      '.header-nav-links [aria-current="page"], .header-nav-links .active'
-    );
-    // 1 elemento ativo (link de página OU o toggle do dropdown)
-    const uniq = new Set([...active]);
-    expect(uniq.size).toBeGreaterThanOrEqual(1);
+  it('no máximo um aria-current="page" no menu primário desktop e um no offcanva', () => {
+    // Regressão: cidades chegaram a marcar o toggle "Atendimento" E o link da cidade.
+    const deskNav = doc.querySelector('.header-nav-links');
+    const offNav = doc.querySelector('.offcanva-nav');
+    const deskCur = deskNav ? deskNav.querySelectorAll('[aria-current="page"]').length : 0;
+    const offCur = offNav ? offNav.querySelectorAll('[aria-current="page"]').length : 0;
+    expect(deskCur).toBeLessThanOrEqual(1);
+    expect(offCur).toBeLessThanOrEqual(1);
+  });
+
+  it('o toggle do dropdown "Atendimento" nunca tem aria-current="page" (não é link)', () => {
+    const toggle = doc.querySelector('.header-dropdown-toggle');
+    expect(toggle.getAttribute('aria-current')).toBeNull();
   });
 });
 
@@ -117,11 +123,11 @@ describe('Navegação — estado ativo por seção', () => {
     expect(active).not.toBeNull();
   });
 
-  it('páginas de atendimento marcam o dropdown "Atendimento" e a cidade atual', () => {
+  it('páginas de atendimento marcam o dropdown "Atendimento" (.active) e a cidade atual', () => {
     const { doc } = parse('atendimento/mari/index.html');
-    const toggle = doc.querySelector('.header-dropdown-toggle.active')
-      || doc.querySelector('.header-dropdown-toggle[aria-current="page"]');
+    const toggle = doc.querySelector('.header-dropdown-toggle.active');
     expect(toggle).not.toBeNull();
+    expect(toggle.getAttribute('aria-current')).toBeNull(); // toggle não é link
     const cityActive = doc.querySelector('#dropdown-atendimento a[href="/atendimento/mari/"][aria-current="page"]');
     expect(cityActive).not.toBeNull();
   });
