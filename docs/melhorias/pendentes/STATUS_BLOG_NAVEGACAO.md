@@ -30,17 +30,19 @@ Nada em andamento — ponto de parada limpo.
   (`clamp(1.8rem,2.2vw,2.1rem)`), afeta blog + páginas de tratamento.
 
 ### Pendências / próximos passos
-- [ ] **Merge do PR #58** para `main` (dispara deploy Vercel de produção). Decidir se via
-      `develop` (o `conventions.md` §7 cita `feat/* → develop → main`) ou direto — o PR hoje
-      aponta para `main`.
-- [ ] **Validação visual no browser** (não dá para fazer pelo agente): dropdown "Atendimento"
-      estilizado nas páginas de atendimento; heros novos do blog; slider antes/depois; logo Clin;
-      tamanho dos h3; seção de referências. Rodar Lighthouse (meta ≥95 / a11y 100) e axe.
+- [x] **Merge do PR para `main` — RESOLVIDO.** PR #59 mergeado na `origin/main` (deploy Vercel).
+- [x] **Validação visual no browser — RESOLVIDO (2026-09-20).** Validado pelo usuário:
+      Lighthouse **desktop 100%** e **mobile 95%** (ambos dentro da meta ≥95). Dropdown
+      "Atendimento", heros do blog, slider antes/depois, logo Clin, h3 e seção de referências
+      conferidos.
+- [x] **Débito — footer com ano hardcoded "2025 ©" — RESOLVIDO (2026-09-20).** Substituído por
+      `<span id="footer-year">2026</span>` (ano-base válido sem JS) nas 21 páginas + 2 templates;
+      `main.js` atualiza o `#footer-year` para o ano corrente na virada de ano (progressive
+      enhancement). CI/site OK; 693/693 testes verdes.
 - [ ] **Débito — dropdown desktop sem fallback sem-JS** (`:focus-within`); §13 aceitou
       click-only, footer/breadcrumb dão rota alternativa às cidades.
-- [ ] **Débito — footer com ano hardcoded "2025 ©"** (SPEC_BLOG EC-05).
-- [ ] **Commits herdados do artigo de prótese** (autor `you@example.com` / msg em inglês) —
-      reescrever antes do merge para main, se desejado.
+- [ ] **Commits herdados do artigo de prótese** (autor `you@example.com` / msg em inglês) — já
+      mergeados na `main`; reescrever exigiria rewrite de histórico (provavelmente não vale).
 - [ ] Blog: **T2 restante** — não há; T4 completo. Futuro: mais artigos usando `blog/_template.html`.
 
 ### Aprendizados registrados nos skills (.kiro)
@@ -154,7 +156,8 @@ Falta propagar às demais páginas e então executar o blog.
       (2026-09-11, commit f336929). Convertido para WebP via Pillow (decodifica AVIF, ao
       contrário do ImageMagick local), preservando o alpha (logo é silhueta teal). Arquivo
       AVIF removido. Agora 100% das imagens raster do site estão em WebP. Ver BUG-012.
-- [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
+- [x] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05) — RESOLVIDO (2026-09-20). Trocado por
+      `<span id="footer-year">2026</span>` + atualização via `main.js` (progressive enhancement).
 - [ ] Decisão pendente: subnav sempre-fixa (atual) vs aparecer após o hero. Mantido fixo.
 - [ ] Commits herdados do artigo (autor `you@example.com`, msg em inglês) — reescrever antes
       de merge para main? (SPEC_BLOG DA-05).
