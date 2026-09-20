@@ -21,8 +21,8 @@
 | 11 | `https://www.drajaquelinesayonara.com.br/atendimento/sobrado/` | ✅ 02/Ago |
 | 12 | `https://www.drajaquelinesayonara.com.br/atendimento/cruz-do-espirito-santo/` | ✅ 02/Ago |
 | 13 | `https://www.drajaquelinesayonara.com.br/atendimento/pilar/` | ✅ 02/Ago |
-| 14 | `https://www.drajaquelinesayonara.com.br/atendimento/riachao-do-poco/` | ⏳ Próximo dia |
-| 15 | `https://www.drajaquelinesayonara.com.br/atendimento/caldas-brandao/` | ⏳ Próximo dia |
+| 14 | `https://www.drajaquelinesayonara.com.br/atendimento/riachao-do-poco/` | ✅ 20/Set |
+| 15 | `https://www.drajaquelinesayonara.com.br/atendimento/caldas-brandao/` | ✅ 20/Set |
 
 ## Notas
 
@@ -33,19 +33,21 @@
 
 ---
 
-## Blog (novo — adicionar após o deploy do PR #58)
+## Blog (solicitado após o deploy do PR #60)
 
-**Data:** 2026-09-12
+**Data:** 2026-09-12 (criado) · **Solicitado:** 2026-09-20
 **Contexto:** seção `/blog/` criada (listagem + 4 artigos). Já estão no `sitemap.xml`.
 Solicitar indexação manual acelera (o sitemap sozinho descobre, mas é mais lento).
+As 5 URLs foram adicionadas ao indexador do Search Console em 2026-09-20 (após o deploy
+do PR #60, que já responde 200 em produção).
 
 | # | URL | Solicitado |
 |---|-----|:----------:|
-| 1 | `https://www.drajaquelinesayonara.com.br/blog/` | ⏳ |
-| 2 | `https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/` | ⏳ |
-| 3 | `https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/` | ⏳ |
-| 4 | `https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/` | ⏳ |
-| 5 | `https://www.drajaquelinesayonara.com.br/blog/protese-dentaria-autoestima-saude/` | ⏳ |
+| 1 | `https://www.drajaquelinesayonara.com.br/blog/` | ✅ 20/Set |
+| 2 | `https://www.drajaquelinesayonara.com.br/blog/clareamento-dental-vale-a-pena/` | ✅ 20/Set |
+| 3 | `https://www.drajaquelinesayonara.com.br/blog/limpeza-dental-importancia-frequencia/` | ✅ 20/Set |
+| 4 | `https://www.drajaquelinesayonara.com.br/blog/gengivite-sintomas-tratamento/` | ✅ 20/Set |
+| 5 | `https://www.drajaquelinesayonara.com.br/blog/protese-dentaria-autoestima-saude/` | ✅ 20/Set |
 
 **Como solicitar (Search Console):**
 1. Só faz sentido **após o merge/deploy** — as URLs precisam responder 200 em produção.
