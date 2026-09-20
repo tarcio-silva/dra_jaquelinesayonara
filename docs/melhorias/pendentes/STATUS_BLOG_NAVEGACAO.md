@@ -1,12 +1,58 @@
 # Status da sessão — Blog + Reformulação de Navegação
 
-> **Branch:** `feat/blog-e-navegacao`
-> **Última atualização:** 2026-09-05
+> **Branch:** `feat/blog-e-navegacao` (PR #58 aberto para `main`)
+> **Última atualização:** 2026-09-12
 > **Specs:** `SPEC_BLOG.md`, `SPEC_NAVEGACAO.md` (com adendo §13 do refino de layout)
 
 ---
 
-## Onde paramos
+## Onde paramos (sessão 2026-09-12)
+
+Blog e navegação **concluídos, testados e pushados**. `npm run build` OK (21 arquivos);
+`npm test` **693/693** (11 files). Branch em sincronia com o remoto; PR #58 atualizado.
+Nada em andamento — ponto de parada limpo.
+
+### Feito nesta sessão (resumo)
+- **Blog (SPEC_BLOG T1–T7):** listagem `/blog/`, template de artigo, 3 artigos novos
+  (clareamento, limpeza, gengivite) + pipeline/sitemap. Revisão T7 pegou 1 erro (1ª seção
+  comentada) — corrigido.
+- **Navegação (SPEC_NAVEGACAO N3/N4/N6/N7):** menu novo (Opção 1) propagado a 20 páginas + 2
+  templates; estado ativo por página; 1 H1/página; rótulo padronizado **"Início"** (some "Home"
+  do site). Revisão pegou 1 erro (aria-current duplicado nas cidades) — corrigido.
+  Fix: `atendimento/*` e `primeira-consulta/` estavam fora do pipeline de CSS (dropdown sem
+  estilo) — incluídas.
+- **Imagens → WebP:** blog heros (dedicados), og/care (7), results (2), logo-clin (AVIF→WebP
+  via Pillow); icons legado removidos. ~15 MB → ~600 KB. 100% raster em WebP.
+- **Referências bibliográficas:** os **4 artigos** do blog (incl. prótese) com citações no
+  texto + seção "Referências" (CSS `.treatment-references`). Fontes fornecidas pela Dra.,
+  registradas em `docs/melhorias/pendentes/referencias-blog/*.txt`.
+- **Fix h3:** `.treatment-content h3` não tinha regra (font-size minúsculo) — corrigido
+  (`clamp(1.8rem,2.2vw,2.1rem)`), afeta blog + páginas de tratamento.
+
+### Pendências / próximos passos
+- [x] **Merge do PR para `main` — RESOLVIDO.** PR #59 mergeado na `origin/main` (deploy Vercel).
+- [x] **Validação visual no browser — RESOLVIDO (2026-09-20).** Validado pelo usuário:
+      Lighthouse **desktop 100%** e **mobile 95%** (ambos dentro da meta ≥95). Dropdown
+      "Atendimento", heros do blog, slider antes/depois, logo Clin, h3 e seção de referências
+      conferidos.
+- [x] **Débito — footer com ano hardcoded "2025 ©" — RESOLVIDO (2026-09-20).** Substituído por
+      `<span id="footer-year">2026</span>` (ano-base válido sem JS) nas 21 páginas + 2 templates;
+      `main.js` atualiza o `#footer-year` para o ano corrente na virada de ano (progressive
+      enhancement). CI/site OK; 693/693 testes verdes.
+- [ ] **Débito — dropdown desktop sem fallback sem-JS** (`:focus-within`); §13 aceitou
+      click-only, footer/breadcrumb dão rota alternativa às cidades.
+- [ ] **Commits herdados do artigo de prótese** (autor `you@example.com` / msg em inglês) — já
+      mergeados na `main`; reescrever exigiria rewrite de histórico (provavelmente não vale).
+- [ ] Blog: **T2 restante** — não há; T4 completo. Futuro: mais artigos usando `blog/_template.html`.
+
+### Aprendizados registrados nos skills (.kiro)
+- bugs-recorrentes: BUG-010 (regex `<style>` + comentário apaga head), BUG-011 (página fora do
+  pipeline com CSS desatualizado), BUG-012 (AVIF disfarçado de `.png` / imagem com conteúdo só
+  no alpha). decisoes-tecnicas: DEC-014/015/016.
+
+---
+
+## Onde paramos (sessão 2026-09-05 — histórico)
 
 Reformulação da navegação (Opção A + refino Opção 1) **implementada e validada na home**.
 Falta propagar às demais páginas e então executar o blog.
@@ -110,7 +156,8 @@ Falta propagar às demais páginas e então executar o blog.
       (2026-09-11, commit f336929). Convertido para WebP via Pillow (decodifica AVIF, ao
       contrário do ImageMagick local), preservando o alpha (logo é silhueta teal). Arquivo
       AVIF removido. Agora 100% das imagens raster do site estão em WebP. Ver BUG-012.
-- [ ] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05).
+- [x] Footer com ano hardcoded "2025 ©" (SPEC_BLOG EC-05) — RESOLVIDO (2026-09-20). Trocado por
+      `<span id="footer-year">2026</span>` + atualização via `main.js` (progressive enhancement).
 - [ ] Decisão pendente: subnav sempre-fixa (atual) vs aparecer após o hero. Mantido fixo.
 - [ ] Commits herdados do artigo (autor `you@example.com`, msg em inglês) — reescrever antes
       de merge para main? (SPEC_BLOG DA-05).

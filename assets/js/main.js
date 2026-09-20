@@ -767,3 +767,14 @@ if (lazyVideos.length > 0) {
     ripple.addEventListener('animationend', () => ripple.remove());
   });
 })();
+
+
+// Atualiza o ano do copyright no footer (progressive enhancement).
+// O HTML ja renderiza um ano-base valido sem JS; aqui apenas corrigimos
+// para o ano corrente na virada de ano, sem precisar reeditar o markup.
+(function updateFooterYear() {
+  const yearEl = document.getElementById('footer-year');
+  if (yearEl) {
+    yearEl.textContent = String(new Date().getFullYear());
+  }
+})();
