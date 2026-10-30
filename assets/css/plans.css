@@ -66,6 +66,24 @@
   max-width: 72px;
 }
 
+/* Placeholder de logo (planos sem arquivo de logo disponivel) */
+.plan-card-logo-placeholder {
+  width: 100%;
+  max-width: 100px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: var(--color-bg);
+  color: var(--logo-pallete-velvety-cherry);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+}
+
 .plan-card-name {
   color: var(--logo-pallete-velvety-cherry);
   font-size: 1.5rem;
@@ -141,6 +159,12 @@
     max-width: 64px;
   }
 
+  .plan-card-logo-placeholder {
+    max-width: 88px;
+    height: 52px;
+    font-size: 1.2rem;
+  }
+
   .plan-card-name {
     font-size: 1.4rem;
   }
@@ -172,6 +196,12 @@
 
   .plan-card img.logo-sm {
     max-width: 96px;
+  }
+
+  .plan-card-logo-placeholder {
+    max-width: 140px;
+    height: 80px;
+    font-size: 1.6rem;
   }
 
   .plan-card-name {
