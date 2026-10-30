@@ -235,6 +235,15 @@
   color: var(--color-text);
 }
 
+/* Logos dos planos: placa branca no dark mode para garantir legibilidade
+   (ha logos escuras como Privian e logos com fundo branco como Odonto Serv
+   e Rede Dental que ficariam ilegiveis/destoantes sobre o surface escuro). */
+.dark-theme .plan-card img {
+  background: #fff;
+  padding: 6px 8px;
+  box-sizing: border-box;
+}
+
 /* Hamburger menu icon */
 .dark-theme .hamburger-inner,
 .dark-theme .hamburger-inner:before,
